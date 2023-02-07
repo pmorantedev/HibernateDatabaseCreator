@@ -20,10 +20,8 @@
        <dependency>
            <groupId>org.hibernate</groupId>
            <artifactId>hibernate-core</artifactId>
-           <version>4.3.11.Final</version>
+           <version>6.2.0.CR2</version>
        </dependency>
-
-
 
      <!-- https://logging.apache.org/log4j/2.x/manual/configuration.html -->
      <!-- https://www.codejava.net/frameworks/hibernate/how-to-configure-hibernate-logging-with-log4j2 -->
@@ -36,8 +34,8 @@
     
   </dependencies>
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
     
     

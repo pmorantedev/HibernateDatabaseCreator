@@ -1,5 +1,6 @@
 package main;
 
+
 import entitats.Customer;
 import entitats.Stock;
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
+
 
 
 public class App 
@@ -34,24 +36,27 @@ public class App
             session.getTransaction().begin();
             
             logger.trace("Creem objectes");
+            
             Stock stock1 = new Stock("4715", "STOCK1");
             Stock stock2 = new Stock("4716", "STOCK2");
             Stock stock3 = new Stock("4717", "STOCK3");
 
             logger.trace("Persistim l'estat dels objectes");
-            session.save(stock1);
-            session.save(stock2);
-            session.save(stock3);
+            session.persist(stock1);
+            session.persist(stock2);
+            session.persist(stock3);
             
             logger.trace("Desem a BBDD...");
             
             logger.trace("Iniciem de nou transaccio...");
             
-            session.save(new Customer("12345678B","Juan","Perez","Lopez","666778899","Carrer tal i cual","Portal A, 3er primera","Reus","Michigan","08987","Afganistan",2345,23.8f));
-            session.save(new Customer("12345679B","Pepe","Perez","Lopez","666778890","Carrer tal i cual","Portal A, 3er primera","Reus","Michigan","08987","Afganistan",2345,23.8f));
+            session.persist(new Customer("12345678B","Juan","Perez","Lopez","666778899","Carrer tal i cual","Portal A, 3er primera","Reus","Michigan","08987","Afganistan",2345,23.8f));
+            session.persist(new Customer("87654321J","Pepe","Perez","Lopez","666778890","Carrer tal i cual","Portal A, 3er primera","Reus","Michigan","08987","Afganistan",2345,23.8f));
             
             logger.info("Finalitzem transacció i desem a BBDD...");
             session.getTransaction().commit();
+            
+            System.out.println(stock1);
         
         } catch (ConstraintViolationException ex){
              if (session.getTransaction() !=null) 
@@ -63,7 +68,13 @@ public class App
                 session.getTransaction().rollback();
             
             logger.error("Excepció d'hibernate: " + ex.getMessage());
-      } finally {
+      } catch (Exception ex){
+             if (session.getTransaction() !=null) 
+                 session.getTransaction().rollback();
+             logger.error("Excepció: " + ex.getMessage());
+            
+        }
+        finally {
             
          //Tanquem la sessió
          session.close();

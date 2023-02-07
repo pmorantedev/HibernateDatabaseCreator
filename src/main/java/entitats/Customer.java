@@ -5,14 +5,14 @@
  */
 package entitats;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  *
@@ -70,8 +70,7 @@ public class Customer implements Serializable {
     @Column
     private Integer salesRepEmployeeNumber;
     
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(precision = 12, scale = 2) //al cas d'un float, indica la longitud i els decimals
+    @Column
     private Float creditLimit;
 
     public Customer() {
