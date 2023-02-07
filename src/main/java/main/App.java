@@ -17,11 +17,12 @@ public class App
     private static Session session;
     private static final Logger logger = LogManager.getLogger(App.class);
     
-    public static void main( String[] args ) throws InterruptedException
+    public static void main( String[] args )
     {
         
         try
         {
+            
             factory = new Configuration().configure().buildSessionFactory();
             
             logger.trace("Iniciem sessió...");
