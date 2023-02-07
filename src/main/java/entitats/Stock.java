@@ -17,7 +17,7 @@ import javax.persistence.Table;
  *
  * @author manel
  */
-@Entity()
+@Entity
 @Table(name="stock")
 public class Stock implements Serializable {
 

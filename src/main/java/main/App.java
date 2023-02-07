@@ -23,7 +23,7 @@ public class App
         try
         {
             
-            factory = new Configuration().configure().buildSessionFactory();
+            factory = new Configuration().configure("hibernateConfig/hibernate.cfg.xml").buildSessionFactory();
             
             logger.trace("Iniciem sessió...");
             session = factory.openSession();
@@ -44,10 +44,10 @@ public class App
             session.save(stock3);
             
             logger.trace("Desem a BBDD...");
-            session.getTransaction().commit();
+            //session.getTransaction().commit();
             
             logger.trace("Iniciem de nou transaccio...");
-            session.beginTransaction();
+            //session.beginTransaction();
             
             session.save(new Customer("12345678B","Juan","Perez","Lopez","666778899","Carrer tal i cual","Portal A, 3er primera","Reus","Michigan","08987","Afganistan",2345,23.8f));
             session.save(new Customer("12345679B","Pepe","Perez","Lopez","666778890","Carrer tal i cual","Portal A, 3er primera","Reus","Michigan","08987","Afganistan",2345,23.8f));
@@ -58,7 +58,6 @@ public class App
         } catch (ConstraintViolationException ex){
              if (session.getTransaction() !=null) 
                  session.getTransaction().rollback();
-             
              logger.error("Violació de la restricció: " + ex.getMessage());
             
         } catch (HibernateException ex) {
