@@ -29,8 +29,6 @@ public class App
             
             logger.trace("Iniciem sessió...");
             session = factory.openSession();
-
-            Integer employeeID = null;
             
             logger.trace("Iniciem transaccio...");
             session.getTransaction().begin();
