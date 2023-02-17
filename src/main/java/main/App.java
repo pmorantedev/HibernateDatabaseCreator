@@ -66,11 +66,10 @@ public class App
                 session.getTransaction().rollback();
             
             logger.error("Excepció d'hibernate: " + ex.getMessage());
-      } catch (Exception ex){
-             if (session.getTransaction() !=null) 
-                 session.getTransaction().rollback();
-             logger.error("Excepció: " + ex.getMessage());
-            
+        } catch (Exception ex){
+               if (session.getTransaction() !=null) 
+                   session.getTransaction().rollback();
+               logger.error("Excepció: " + ex.getMessage());
         }
         finally {
             
