@@ -23,15 +23,15 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Basic(optional = false)
-    @Column(name = "speciality", nullable = false) 
+    @Column(name = "speciality", nullable = false)
     private String speciality;
 
     @Basic(optional = false)
     @ColumnDefault("1.0")
-    @Column(name = "repairSpeed", nullable = false) 
+    @Column(name = "repairSpeed", nullable = false)
     private Float repairSpeed;
 
-    public Mecanic(int operatingNumber, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku, , String speciality, Float repairSpeed) {
+    public Mecanic(String speciality, Float repairSpeed, int operatingNumber, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
         super(operatingNumber, nickname, healingSpeed, lastDrugTestDate, isOtaku);
         this.speciality = speciality;
         this.repairSpeed = repairSpeed;
@@ -56,7 +56,6 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
         this.repairSpeed = repairSpeed;
     }
 
-    
     @Override
     public Integer getAtributIdentificador() {
         return super.getOperatingNumber();
@@ -64,7 +63,7 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
 
     @Override
     public String getAtributString() {
-         return super.getNickname();
+        return super.getNickname();
     }
 
     @Override

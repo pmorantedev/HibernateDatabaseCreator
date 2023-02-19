@@ -1,5 +1,6 @@
 package entitats;
 
+import interficies.TesteableEntity;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.ColumnDefault;
  * @author Txell Llanas: Implementació
  */
 @Entity(name = "Soldat")
-public abstract class Soldat implements Serializable {
+public abstract class Soldat implements TesteableEntity, Serializable {
 
     private static final long serialVersionUID = 1L;
 
