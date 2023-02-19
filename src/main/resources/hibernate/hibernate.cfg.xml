@@ -11,6 +11,6 @@
         <property name="hibernate.hbm2ddl.auto">create</property> <!-- Crea un nou esquema, eliminant les dades prèviament desades -->
         <property name="hibernate.connection.characterEncoding">utf8</property>
         <mapping class="entitats.Mecanic"></mapping>
-
+        <mapping class="entitats.Missio"></mapping>
     </session-factory>
 </hibernate-configuration>
