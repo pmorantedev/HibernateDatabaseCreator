@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
@@ -21,9 +22,10 @@ import org.hibernate.annotations.ColumnDefault;
  * @author Txell Llanas: Implementació
  */
 @Entity(name = "Soldat")
-public abstract class Soldat implements TesteableEntity, Serializable {
+@Table(name = "soldat")
+public abstract class Soldat implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;                            // Permet detectar quan els atributs de l'objecte canvien
 
     @Id //defineix la clau primaria de la taula
     @GeneratedValue(strategy = GenerationType.IDENTITY) //defineix que el id és autogenerat per la base de dades i és de tipus AI (autoincrement)

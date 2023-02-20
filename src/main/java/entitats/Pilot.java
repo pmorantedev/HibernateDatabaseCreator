@@ -4,44 +4,66 @@ import interficies.TesteableEntity;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
 import org.hibernate.annotations.ColumnDefault;
 
 /**
- * Classe que defineix l'objecte de tipus Pilot, que deriva de la Classe
- * mare 'Soldat' (RF01)
- * 
+ * Classe que defineix l'objecte de tipus Pilot, que deriva de la Classe mare
+ * 'Soldat' i les seves relacions amb la classe 'Aeronau Pilotada'. (RF01, RF04)
+ *
  * @author pablomorante: Creació
  * @author Txell Llanas: Implementació
  */
 @Entity(name = "Pilot")
-@Table(name="pilot")
+@Table(name = "pilot")
 public class Pilot extends Soldat implements TesteableEntity, Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-        @Basic(optional = false)
-        @ColumnDefault("3.0")
-	@Column(name = "max_gforce", nullable = false, precision = 1, scale = 2) // Estableix el mapeig entre l’atribut de l’entitat i el camp de la taula
-    	private Float maxGForce;
+    private static final long serialVersionUID = 1L;
 
-	public Pilot() {
-	}
-	public Pilot(int operatingNumber, String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku, Float maxGForce) {
-		super(operatingNumber, nickname, healingSpeed, lastDrugTestDate, isOtaku);
-		this.maxGForce = maxGForce;
-	}
+    @Basic(optional = false)
+    @ColumnDefault("3.0")
+    @Column(name = "max_gforce", nullable = false, precision = 1, scale = 2)
+    private Float maxGForce;
 
-        public Float getMaxGForce() {
-            return maxGForce;
-        }
+    // (RF04) Cardinalitat Propietària amb la classe 'Pilotada'
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nauPilotada_id") // FK (Anotació opcional)
+    private Pilotada pilotada;
 
-        public void setMaxGForce(Float maxGForce) {
-            this.maxGForce = maxGForce;
-        }
-        
+    public Pilot() {
+    }
+
+    public Pilot(int operatingNumber, String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku, Float maxGForce) {
+        super(operatingNumber, nickname, healingSpeed, lastDrugTestDate, isOtaku);
+        this.maxGForce = maxGForce;
+    }
+    
+    // Getters, Setters
+    /**
+     * (RF04) Mètode que estableix la Clau Forània (FK) amb la que està relacionada.
+     * Relació (0,1 : 0,1) bidireccional amb la classe 'Pilotada'. 
+     * És molt important actualitzar (SET) el costat propietari de la relació i
+     * que conté la clau forània.
+     * 
+     * @param pilotada Instància que defineix la nau pilotada pel 'Pilot' actual.
+     * @author Txell Llanas: Creació/Implementació
+     */
+    public void setPilotada(Pilotada pilotada) {    
+        this.pilotada = pilotada;
+    }
+
+    public Float getMaxGForce() {
+        return maxGForce;
+    }
+
+    public void setMaxGForce(Float maxGForce) {
+        this.maxGForce = maxGForce;
+    }
 
     @Override
     public Integer getAtributIdentificador() {
@@ -50,7 +72,7 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
 
     @Override
     public String getAtributString() {
-         return super.getNickname();
+        return super.getNickname();
     }
 
     @Override
