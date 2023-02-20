@@ -9,7 +9,7 @@ package test;
 import java.util.ArrayList;
 import java.util.List;
 import main.ClassFactory;
-import main.SingleSession;
+import main.SingletonSession;
 import entitats.Combat;
 import entitats.Transport;
 import entitats.Mecanic;
@@ -57,7 +57,7 @@ public class Test1 {
    @Test
    public void RF01() {
       
-      session = SingleSession.getInstance().getSessio();
+      session = SingletonSession.getInstance().getSessio();
        
       assertTrue(session.getCriteriaBuilder().createQuery(Combat.class).getOrderList().size() >= 0 );
       assertTrue(session.getCriteriaBuilder().createQuery(Mecanic.class).getOrderList().size() >= 0 );
@@ -81,7 +81,7 @@ public class Test1 {
        assertTrue(! o1.getAtributFloat().equals(o2.getAtributFloat()));
        assertTrue(! o1.getAtributDate().equals(o2.getAtributDate()));
 
-       session = SingleSession.getInstance().getSessio();
+       session = SingletonSession.getInstance().getSessio();
        
        session.beginTransaction();
        
@@ -113,7 +113,7 @@ public class Test1 {
        assertTrue(! o1.getAtributDate().equals(o2.getAtributDate()));
        
 
-       session = SingleSession.getInstance().getSessio();
+       session = SingletonSession.getInstance().getSessio();
        
        session.beginTransaction();
        
@@ -145,7 +145,7 @@ public class Test1 {
        assertTrue(! o1.getAtributFloat().equals(o2.getAtributFloat()));
        assertTrue(! o1.getAtributDate().equals(o2.getAtributDate()));
 
-       session = SingleSession.getInstance().getSessio();
+       session = SingletonSession.getInstance().getSessio();
        
        session.beginTransaction();
        
@@ -174,7 +174,7 @@ public class Test1 {
        assertTrue(! o1.getAtributFloat().equals(o2.getAtributFloat()));
        assertTrue(! o1.getAtributDate().equals(o2.getAtributDate()));
 
-       session = SingleSession.getInstance().getSessio();
+       session = SingletonSession.getInstance().getSessio();
        
        session.beginTransaction();
        
@@ -206,7 +206,7 @@ public class Test1 {
        assertTrue(! o1.getAtributFloat().equals(o2.getAtributFloat()));
        assertTrue(! o1.getAtributDate().equals(o2.getAtributDate()));
 
-       session = SingleSession.getInstance().getSessio();
+       session = SingletonSession.getInstance().getSessio();
        
        session.beginTransaction();
        
@@ -237,7 +237,7 @@ public class Test1 {
        assertTrue(! o1.getAtributFloat().equals(o2.getAtributFloat()));
        assertTrue(! o1.getAtributDate().equals(o2.getAtributDate()));
 
-       session = SingleSession.getInstance().getSessio();
+       session = SingletonSession.getInstance().getSessio();
        
        session.beginTransaction();
        
@@ -258,7 +258,7 @@ public class Test1 {
     public void RF04() {
 
        //relació ok 1 a 1
-       session = SingleSession.getInstance().getSessio();
+       session = SingletonSession.getInstance().getSessio();
        session.beginTransaction();
 
        Pilot p, p2;
@@ -288,7 +288,7 @@ public class Test1 {
     public void RF05() {
         
        
-        session = SingleSession.getInstance().getSessio();
+        session = SingletonSession.getInstance().getSessio();
         session.beginTransaction();
 
         Aeronau v;
@@ -333,7 +333,7 @@ public class Test1 {
     @Test
     public void RF07() {
         
-        session = SingleSession.getInstance().getSessio();
+        session = SingletonSession.getInstance().getSessio();
         
         session.beginTransaction();
         
@@ -378,7 +378,7 @@ public class Test1 {
     @Test
     public void RF08() {
         
-        session = SingleSession.getInstance().getSessio();
+        session = SingletonSession.getInstance().getSessio();
         
         session.beginTransaction();
         

@@ -25,20 +25,20 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
         @Basic(optional = false)
         @ColumnDefault("3.0")
 	@Column(name = "max_gforce", nullable = false, precision = 1, scale = 2) // Estableix el mapeig entre l’atribut de l’entitat i el camp de la taula
-    	private float maxGForce;
+    	private Float maxGForce;
 
 	public Pilot() {
 	}
-	public Pilot(int operatingNumber, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku, Float maxGForce) {
+	public Pilot(int operatingNumber, String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku, Float maxGForce) {
 		super(operatingNumber, nickname, healingSpeed, lastDrugTestDate, isOtaku);
 		this.maxGForce = maxGForce;
 	}
 
-        public float getMaxGForce() {
+        public Float getMaxGForce() {
             return maxGForce;
         }
 
-        public void setMaxGForce(float maxGForce) {
+        public void setMaxGForce(Float maxGForce) {
             this.maxGForce = maxGForce;
         }
         
