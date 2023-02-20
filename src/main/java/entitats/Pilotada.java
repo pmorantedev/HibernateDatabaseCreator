@@ -1,21 +1,32 @@
 package entitats;
 
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Column;
+import java.sql.Date;
 
 /**
  *
  * @author pablomorante
  */
 public abstract class Pilotada extends Aeronau {
-
+    
+    @Column(nullable = false)
     private boolean hasEjectoSeat;
+    @Column(nullable = false)
     private float shellCapacity;
-
+    // @ManyToMany
+    // private Pilot pilots;
+    
     // (RF04) Cardinalitat No Propietària (Costat invers)
     @OneToOne(mappedBy="pilotada")  // Entitat inversa a la relació
     private Pilot pilot;
-    
+
+    public Pilotada(boolean hasEjectoSeat, float shellCapacity, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+        super(fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
+        this.hasEjectoSeat = hasEjectoSeat;
+        this.shellCapacity = shellCapacity;
+    }
+
     // Getters, Setters
     /**
      * (RF04) Mètode que obté la Clau Forània (FK) amb la que està relacionada.
@@ -28,4 +39,20 @@ public abstract class Pilotada extends Aeronau {
         return pilot;
     }
     
+    public boolean getHasEjectoSeat() {
+        return hasEjectoSeat;
+    }
+
+    public float getShellCapacity() {
+        return shellCapacity;
+    }
+
+    public void setHasEjectoSeat(boolean hasEjectoSeat) {
+        this.hasEjectoSeat = hasEjectoSeat;
+    }
+
+    public void setShellCapacity(float shellCapacity) {
+        this.shellCapacity = shellCapacity;
+    }
+
 }

@@ -1,58 +1,91 @@
 package entitats;
 
 import interficies.TesteableEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import java.sql.Date;
 
 /**
  *
  * @author pablomorante
  */
+@Entity
+@Table
+@MappedSuperclass
 public class Combat extends Pilotada implements TesteableEntity {
-	private boolean nuclearPower;
-	private int totalAmmunition;    
+
+    @Column(nullable = false)
+    private boolean nuclearPower;
+    @Column(nullable = false)
+    private int totalAmmunition;
+
+    public Combat(boolean nuclearPower, int totalAmmunition, boolean hasEjectoSeat, float shellCapacity, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+        super(hasEjectoSeat, shellCapacity, fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
+        this.nuclearPower = nuclearPower;
+        this.totalAmmunition = totalAmmunition;
+    }
+
+    public boolean getNuclearPower() {
+        return nuclearPower;
+    }
+
+    public int getTotalAmmunition() {
+        return totalAmmunition;
+    }
+
+    public void setNuclearPower(boolean nuclearPower) {
+        this.nuclearPower = nuclearPower;
+    }
+
+    public void setTotalAmmunition(int totalAmmunition) {
+        this.totalAmmunition = totalAmmunition;
+    }
 
     @Override
     public Integer getAtributIdentificador() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return super.getFabricationNumber();
     }
 
     @Override
     public String getAtributString() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return super.getCorporation();
     }
 
     @Override
     public Float getAtributFloat() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return super.getShellCapacity();
     }
 
     @Override
     public Date getAtributDate() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return super.getAutodestructionDate();
     }
 
     @Override
     public Boolean getAtributBoolean() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return super.getHasDeathLaser();
     }
 
     @Override
     public void setAtributString(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        super.setCorporation(s);
     }
 
     @Override
     public void setAtributFloat(Float f) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        super.setEngineTorque(f);
     }
 
     @Override
     public void setAtributDate(Date d) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        super.setAutodestructionDate(d);
     }
 
     @Override
     public void setAtributBoolean(Boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        super.setHasDeathLaser(b);
     }
+
 }

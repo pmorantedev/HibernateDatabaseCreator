@@ -8,8 +8,10 @@
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/M06UF2PracTD?createDatabaseIfNotExist=true</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.hbm2ddl.auto">create</property> <!-- Crea un nou esquema, eliminant les dades prèviament desades -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.connection.characterEncoding">utf8</property>
+        <mapping class="entitats.Combat"></mapping>
+        <mapping class="entitats.Transport"></mapping>
         <mapping class="entitats.Mecanic"></mapping>
         <mapping class="entitats.Missio"></mapping>
         <mapping class="entitats.Soldat"></mapping>
