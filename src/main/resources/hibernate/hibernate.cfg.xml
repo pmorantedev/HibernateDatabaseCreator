@@ -12,5 +12,7 @@
         <property name="hibernate.connection.characterEncoding">utf8</property>
         <mapping class="entitats.Combat"></mapping>
         <mapping class="entitats.Transport"></mapping>
+        <mapping class="entitats.Mecanic"></mapping>
+        <mapping class="entitats.Missio"></mapping>
     </session-factory>
 </hibernate-configuration>
