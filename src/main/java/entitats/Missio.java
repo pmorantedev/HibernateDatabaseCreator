@@ -47,6 +47,10 @@ public class Missio implements TesteableEntity, Serializable {
     @Column(name = "accomplished")
     private boolean accomplished;
 
+    public Missio() {
+        
+    }
+    
     public Missio(int cosmicMissionCode, String targetName, float missionBudget, Date limitDate, boolean accomplished) {
         this.cosmicMissionCode = cosmicMissionCode;
         this.targetName = targetName;

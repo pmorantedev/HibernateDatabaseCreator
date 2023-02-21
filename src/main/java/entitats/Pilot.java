@@ -27,13 +27,13 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
 
     @Basic(optional = false)
     @ColumnDefault("3.0")
-    @Column(name = "max_gforce", nullable = false, precision = 1, scale = 2)
+    @Column(name = "max_gforce", nullable = false)
     private Float maxGForce;
 
     // (RF04) Cardinalitat Propietària amb la classe 'Pilotada'
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nauPilotada_id") // FK (Anotació opcional)
-    private Pilotada pilotada;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "nauPilotada_id") // FK (Anotació opcional)
+//    private Pilotada pilotada;
 
     public Pilot() {
     }
@@ -53,9 +53,9 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
      * @param pilotada Instància que defineix la nau pilotada pel 'Pilot' actual.
      * @author Txell Llanas: Creació/Implementació
      */
-    public void setPilotada(Pilotada pilotada) {    
-        this.pilotada = pilotada;
-    }
+//    public void setPilotada(Pilotada pilotada) {    
+//        this.pilotada = pilotada;
+//    }
 
     public Float getMaxGForce() {
         return maxGForce;
