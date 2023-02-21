@@ -5,24 +5,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.sql.Date;
 
 /**
  *
  * @author pablomorante
  */
-
+@MappedSuperclass
 public abstract class Aeronau {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int fabricationNumber;
     @Column(nullable = false)
     private String corporation;
     @Column(nullable = false)
     private float engineTorque;
     @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date autodestructionDate;
     @Column(nullable = false)
     private Boolean hasDeathLaser;

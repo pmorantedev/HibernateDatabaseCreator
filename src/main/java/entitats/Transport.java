@@ -3,7 +3,6 @@ package entitats;
 import interficies.TesteableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import java.sql.Date;
 import java.io.Serializable;
@@ -13,9 +12,10 @@ import java.io.Serializable;
  * @author pablomorante
  */
 @Entity
-@MappedSuperclass
-@Table
+@Table(name = "transport")
 public class Transport extends Pilotada implements TesteableEntity, Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     @Column(nullable = false)
     private int itemsCapacity;
