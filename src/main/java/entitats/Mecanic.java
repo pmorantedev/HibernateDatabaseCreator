@@ -4,6 +4,10 @@ import interficies.TesteableEntity;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
@@ -30,6 +34,10 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     @ColumnDefault("1.0")
     @Column(name = "repairSpeed", nullable = false)
     private Float repairSpeed;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nauPilotada_id") // FK (Anotació opcional)
+    private Pilotada pilotada;
 
     public Mecanic(String speciality, Float repairSpeed, int operatingNumber, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
         super(operatingNumber, nickname, healingSpeed, lastDrugTestDate, isOtaku);

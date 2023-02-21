@@ -2,7 +2,10 @@ package entitats;
 
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,6 +22,10 @@ public abstract class Pilotada extends Aeronau {
     @OneToOne(mappedBy="pilotada")  // Entitat inversa a la relació
     private Pilot pilot;
 
+        // (RF05)
+    @OneToMany(mappedBy = "pilotada")
+    private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
+    
     public Pilotada(boolean hasEjectoSeat, float shellCapacity, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         super(fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.hasEjectoSeat = hasEjectoSeat;
@@ -54,3 +61,7 @@ public abstract class Pilotada extends Aeronau {
     }
 
 }
+
+    // (RF05)
+//    @OneToMany(mappedBy = "pilotada")
+//    private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
