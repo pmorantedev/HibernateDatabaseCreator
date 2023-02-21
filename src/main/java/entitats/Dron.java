@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -14,9 +15,8 @@ import java.sql.Date;
  * @author Víctor García: Implementació
  */
 @Entity
-@Table
-@MappedSuperclass
-public class Dron extends Autonoma implements TesteableEntity {
+@Table(name = "dron")
+public class Dron extends Autonoma implements TesteableEntity, Serializable {
 
     @Column(nullable = false)
     private float meltingTemperature;
