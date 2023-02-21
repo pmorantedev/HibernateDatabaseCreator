@@ -2,6 +2,7 @@ package entitats;
 
 import interficies.TesteableEntity;
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,7 +32,7 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
     private Float maxGForce;
 
     // (RF04) Cardinalitat Propietària amb la classe 'Pilotada'
-//    @OneToOne(fetch = FetchType.LAZY)
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "nauPilotada_id") // FK (Anotació opcional)
 //    private Pilotada pilotada;
 

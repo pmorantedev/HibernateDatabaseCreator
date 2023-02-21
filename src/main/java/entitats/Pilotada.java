@@ -25,9 +25,10 @@ public abstract class Pilotada extends Aeronau {
 //    @OneToOne(mappedBy="pilotada")  // Entitat inversa a la relació
 //    private Pilot pilot;
 
-        // (RF05)
-    @OneToMany(mappedBy = "pilotada")
-    private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
+    // (RF05)
+//    @OneToMany(mappedBy = "pilotada")
+//    private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
+    
     public Pilotada(){
         
     }
