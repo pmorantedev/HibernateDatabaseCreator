@@ -22,6 +22,10 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
     @Column(nullable = false)
     private int totalAmmunition;
 
+    public Combat(){
+        
+    }
+    
     public Combat(boolean nuclearPower, int totalAmmunition, boolean hasEjectoSeat, float shellCapacity, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         super(hasEjectoSeat, shellCapacity, fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.nuclearPower = nuclearPower;

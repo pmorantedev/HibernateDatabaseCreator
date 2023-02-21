@@ -1,12 +1,15 @@
 package entitats;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import java.sql.Date;
 
 /**
  *
  * @author pablomorante
  */
+@MappedSuperclass
 public abstract class Autonoma extends Aeronau {
 
     @Column(nullable = false)
@@ -14,6 +17,10 @@ public abstract class Autonoma extends Aeronau {
     @Column(nullable = false)
     private int batteryAutonomy;
 
+    public Autonoma(){
+        
+    }
+    
     public Autonoma(boolean invisibilityPower, int batteryAutonomy, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         super(fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.invisibilityPower = invisibilityPower;

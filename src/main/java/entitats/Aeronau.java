@@ -31,6 +31,10 @@ public abstract class Aeronau {
     @Column(nullable = false)
     private Boolean hasDeathLaser;
 
+    public Aeronau() {
+        
+    }
+    
     public Aeronau(int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         this.fabricationNumber = fabricationNumber;
         this.corporation = corporation;

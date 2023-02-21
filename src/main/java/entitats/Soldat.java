@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -20,8 +21,9 @@ import org.hibernate.annotations.ColumnDefault;
  * @author pablomorante: Creació
  * @author Txell Llanas: Implementació
  */
-@Entity(name = "Soldat")
-@Table(name = "soldat")
+@MappedSuperclass
+//@Entity(name = "Soldat")
+//@Table(name = "soldat")
 public abstract class Soldat implements Serializable {
 
     private static final long serialVersionUID = 1L;                            // Permet detectar quan els atributs de l'objecte canvien
