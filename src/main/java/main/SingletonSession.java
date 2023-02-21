@@ -1,5 +1,8 @@
 package main;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import java.util.Scanner;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -17,6 +20,7 @@ public final class SingletonSession {                                           
     private static SingletonSession instancia;
     private SessionFactory sessionFactory;
     private Session session;
+    private static final Logger logger = LogManager.getLogger(SingletonSession.class);
 
     private SingletonSession() {                                                // Constructor privat per evitar que es pugui instanciar des de fora
         InitSessionFactory();
@@ -29,13 +33,28 @@ public final class SingletonSession {                                           
      * @author Txell Llanas: Creació/Implementació
      */
     private void InitSessionFactory() {
+        Scanner in = new Scanner(System.in);
         
         // Configurar la sessió d'Hibernate
-        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
+        
+        logger.info("Introdueix el nom d'usuari: ");
+        String username = in.nextLine();
+        logger.info("Introdueix la constrasenya: ");
+        String password = in.nextLine();
+        logger.info("Introdueix el nom de la BD: ");
+        String BDname = in.nextLine();
+        
+        configuration.setProperty("hibernate.connection.username", username);
+        configuration.setProperty("hibernate.connection.password", password);
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/" + BDname + "?createDatabaseIfNotExist=true");
         
         this.sessionFactory = configuration.buildSessionFactory();
         this.session = sessionFactory.openSession();
+        
     }
+    
+    
 
     /**
      * Mètode per retornar una nova instància de 'SingleSession'.

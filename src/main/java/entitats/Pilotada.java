@@ -2,12 +2,14 @@ package entitats;
 
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import java.sql.Date;
 
 /**
  *
  * @author pablomorante
  */
+@Entity
 public abstract class Pilotada extends Aeronau {
     
     @Column(nullable = false)
