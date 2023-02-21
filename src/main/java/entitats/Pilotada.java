@@ -14,8 +14,6 @@ public abstract class Pilotada extends Aeronau {
     private boolean hasEjectoSeat;
     @Column(nullable = false)
     private float shellCapacity;
-    // @ManyToMany
-    // private Pilot pilots;
     
     // (RF04) Cardinalitat No Propietària (Costat invers)
     @OneToOne(mappedBy="pilotada")  // Entitat inversa a la relació

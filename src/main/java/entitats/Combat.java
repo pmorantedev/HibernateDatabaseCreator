@@ -3,8 +3,8 @@ package entitats;
 import interficies.TesteableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -12,9 +12,10 @@ import java.sql.Date;
  * @author pablomorante
  */
 @Entity
-@Table
-@MappedSuperclass
-public class Combat extends Pilotada implements TesteableEntity {
+@Table(name = "combat")
+public class Combat extends Pilotada implements TesteableEntity, Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     @Column(nullable = false)
     private boolean nuclearPower;
