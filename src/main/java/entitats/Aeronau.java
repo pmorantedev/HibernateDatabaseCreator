@@ -5,7 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.sql.Date;
@@ -14,7 +17,9 @@ import java.sql.Date;
  *
  * @author pablomorante
  */
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="aeronau")
 public abstract class Aeronau {
 
     @Id

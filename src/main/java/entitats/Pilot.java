@@ -30,6 +30,7 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
     @ColumnDefault("3.0")
     @Column(name = "max_gforce", nullable = false)
     private Float maxGForce;
+    
 
     // (RF04) Cardinalitat Propietària amb la classe 'Pilotada'
 //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

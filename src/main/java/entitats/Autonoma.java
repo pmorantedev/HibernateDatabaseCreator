@@ -2,14 +2,19 @@ package entitats;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import java.sql.Date;
 
 /**
  *
  * @author pablomorante
  */
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="autonoma")
 public abstract class Autonoma extends Aeronau {
 
     @Column(nullable = false)
