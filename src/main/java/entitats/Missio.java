@@ -7,11 +7,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.ColumnDefault;
 
 /**
@@ -46,6 +49,10 @@ public class Missio implements TesteableEntity, Serializable {
     @Basic
     @Column(name = "accomplished")
     private boolean accomplished;
+    
+    @ManyToMany(mappedBy = "missions")
+    @Column(length = 2)
+    private Set<Aeronau> aeronaus = new HashSet<>();
 
     public Missio() {
         
