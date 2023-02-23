@@ -5,16 +5,21 @@
         <!-- The dialect specifies the type of database used in hibernate so that hibernate generate appropriate type of SQL statements. For connecting any hibernate application with the database, it is required to provide the configuration of SQL dialect. -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.password">123456</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/M06UF2PracTD?createDatabaseIfNotExist=true</property>
         <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123456</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.connection.characterEncoding">utf8</property>
-        <mapping class="entitats.Combat"></mapping>
+        
         <mapping class="entitats.Transport"></mapping>
+        <mapping class="entitats.Combat"></mapping>
+        <mapping class="entitats.Dron"></mapping>
+        
         <mapping class="entitats.Mecanic"></mapping>
+        
         <mapping class="entitats.Missio"></mapping>
-        <mapping class="entitats.Soldat"></mapping>
+        
         <mapping class="entitats.Pilot"></mapping>
+        
     </session-factory>
 </hibernate-configuration>

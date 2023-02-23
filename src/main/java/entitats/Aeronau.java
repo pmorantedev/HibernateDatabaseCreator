@@ -1,19 +1,31 @@
 package entitats;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author pablomorante
  */
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "aeronau")
 public abstract class Aeronau {
 
     @Id
@@ -29,6 +41,20 @@ public abstract class Aeronau {
     private Date autodestructionDate;
     @Column(nullable = false)
     private Boolean hasDeathLaser;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "Aeronau_Missio",
+            joinColumns = {
+                @JoinColumn(name = "aeronauFabricationNumber")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "cosmicMissionCode")}
+    )
+    @Column(length = 2)
+    Set<Missio> missions = new HashSet<>();
+
+    public Aeronau() {
+
+    }
 
     public Aeronau(int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         this.fabricationNumber = fabricationNumber;
