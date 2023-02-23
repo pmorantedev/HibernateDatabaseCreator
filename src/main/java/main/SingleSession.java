@@ -14,15 +14,15 @@ import org.hibernate.cfg.Configuration;
  *
  * @author Txell Llanas: Creació/Implementació
  */
-public final class SingletonSession {                                           // Fer la classe 'final' per garantir que només hi hagi una sola instància d'aquesta classe
+public final class SingleSession {                                           // Fer la classe 'final' per garantir que només hi hagi una sola instància d'aquesta classe
 
     // Atributs sessió
-    private static SingletonSession instancia;
+    private static SingleSession instancia;
     private SessionFactory sessionFactory;
     private Session session;
-    private static final Logger logger = LogManager.getLogger(SingletonSession.class);
+    private static final Logger logger = LogManager.getLogger(SingleSession.class);
 
-    private SingletonSession() {                                                // Constructor privat per evitar que es pugui instanciar des de fora
+    private SingleSession() {                                                // Constructor privat per evitar que es pugui instanciar des de fora
         InitSessionFactory();
     }
 
@@ -94,9 +94,9 @@ public final class SingletonSession {                                           
      * connexió a una BD
      * @author Txell Llanas: Creació/Implementació
      */
-    public static SingletonSession getInstance() {
+    public static SingleSession getInstance() {
         if (instancia == null) {
-            instancia = new SingletonSession();
+            instancia = new SingleSession();
         }
 
         return instancia;

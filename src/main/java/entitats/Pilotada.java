@@ -8,6 +8,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import java.sql.Date;
+import org.hibernate.mapping.List;
 
 /**
  *
@@ -50,7 +51,7 @@ public abstract class Pilotada extends Aeronau {
      * @author Txell Llanas: Creació/Implementació
      * @return pilot Instància que defineix el 'Pilot' que pilota aquesta nau.
      */
-    public Pilot getPilot() {
+    public Pilot getPilotAeronau() {
         return pilot;
     }
     /**

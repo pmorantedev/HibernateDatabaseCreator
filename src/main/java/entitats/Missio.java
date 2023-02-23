@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -16,6 +18,8 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.annotations.ColumnDefault;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Classe que defineix l'objecte de tipus Mecanic, que deriva de la Classe mare
@@ -49,15 +53,15 @@ public class Missio implements TesteableEntity, Serializable {
     @Basic
     @Column(name = "accomplished")
     private boolean accomplished;
-    
+
     @ManyToMany(mappedBy = "missions")
     @Column(length = 8)
-    private Set<Aeronau> aeronaus = new HashSet<>();
+    private List<Aeronau> aeronaus = new ArrayList<>();
 
     public Missio() {
-        
+
     }
-    
+
     public Missio(int cosmicMissionCode, String targetName, float missionBudget, Date limitDate, boolean accomplished) {
         this.cosmicMissionCode = cosmicMissionCode;
         this.targetName = targetName;
@@ -65,6 +69,16 @@ public class Missio implements TesteableEntity, Serializable {
         this.limitDate = limitDate;
         this.accomplished = accomplished;
     }
+
+    public List<Aeronau> getAeronaus() {
+        return aeronaus;
+    }
+
+    public void setAeronaus(List<Aeronau> aeronaus) {
+        this.aeronaus = aeronaus;
+    }
+    
+    
 
     public int getCosmicMissionCode() {
         return cosmicMissionCode;
@@ -149,6 +163,14 @@ public class Missio implements TesteableEntity, Serializable {
     @Override
     public void setAtributBoolean(Boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validateAeronaus() {
+        if (aeronaus.size() > 8) {
+            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
+        }
     }
 
 }
