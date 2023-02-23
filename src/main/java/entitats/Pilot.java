@@ -5,7 +5,6 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -32,20 +31,30 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
     private Float maxGForce;
     
 
-    // (RF04) Cardinalitat Propietària amb la classe 'Pilotada'
-//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "nauPilotada_id") // FK (Anotació opcional)
-//    private Pilotada pilotada;
+    // (RF04) Cardinalitat Propietària i dependent amb la classe 'Pilotada'
+    @OneToOne()                                      // cascade: enllaça les dades entre ambdues entitats (si eliminem la relació propietària, s'esborra les dades referenciades)
+    @JoinColumn(name = "nauPilotada_id")                                        // FK (Indica que la relació és la propietària i apunta a l'ID mostrat en aquest camp)
+    private Pilotada pilotada;
 
     public Pilot() {
     }
 
-    public Pilot(int operatingNumber, String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku, Float maxGForce) {
-        super(operatingNumber, nickname, healingSpeed, lastDrugTestDate, isOtaku);
+    public Pilot(String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku, Float maxGForce) {
+        super(nickname, healingSpeed, lastDrugTestDate, isOtaku);
         this.maxGForce = maxGForce;
     }
     
     // Getters, Setters
+    /**
+     * (RF04) Mètode que obté la Clau Forània (FK) amb la que està relacionada.
+     * Relació (0,1 : 0,1) bidireccional amb la classe 'Pilotada'. 
+     * 
+     * @param pilotada Instància que defineix la nau pilotada pel 'Pilot' actual.
+     * @author Txell Llanas: Creació/Implementació
+     */
+    public Pilotada getPilotada() {
+        return pilotada;
+    }
     /**
      * (RF04) Mètode que estableix la Clau Forània (FK) amb la que està relacionada.
      * Relació (0,1 : 0,1) bidireccional amb la classe 'Pilotada'. 
@@ -55,9 +64,10 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
      * @param pilotada Instància que defineix la nau pilotada pel 'Pilot' actual.
      * @author Txell Llanas: Creació/Implementació
      */
-//    public void setPilotada(Pilotada pilotada) {    
-//        this.pilotada = pilotada;
-//    }
+    public void setPilotada(Pilotada pilotada) {    
+        this.pilotada = pilotada;
+    }
+    
 
     public Float getMaxGForce() {
         return maxGForce;
@@ -111,4 +121,11 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
     public void setAtributBoolean(Boolean b) {
         super.setIsOtaku(b);
     }
+
+    @Override
+    public String toString() {
+        return "Pilot{" + "pilot=" + super.getNickname() + ", Nau pilotada=" + pilotada.getCorporation() + '}';
+    }
+    
+    
 }

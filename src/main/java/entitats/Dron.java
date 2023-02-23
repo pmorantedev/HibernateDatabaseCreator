@@ -25,8 +25,8 @@ public class Dron extends Autonoma implements TesteableEntity, Serializable {
         
     }
     
-    public Dron(float meltingTemperature, boolean invisibilityPower, int batteryAutonomy, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
-        super(invisibilityPower, batteryAutonomy, fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
+    public Dron(float meltingTemperature, boolean invisibilityPower, int batteryAutonomy, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+        super(invisibilityPower, batteryAutonomy, corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.meltingTemperature = meltingTemperature;
     }
     

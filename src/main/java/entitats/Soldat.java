@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -30,21 +29,21 @@ public abstract class Soldat implements Serializable {
 
     private static final long serialVersionUID = 1L;                            // Permet detectar quan els atributs de l'objecte canvien
 
-    @Id //defineix la clau primaria de la taula
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //defineix que el id és autogenerat per la base de dades i és de tipus AI (autoincrement)
-    @Basic(optional = false) //camp no opcional (obligatòri) a nivell de Java
-    @Column(name="operating_number", nullable = false) //camp no opcional (obligatòri) a nivell de SQL
+    @Id                                                                         //defineix la clau primaria de la taula
+    @GeneratedValue(strategy = GenerationType.IDENTITY)                         //defineix que el id és autogenerat per la base de dades i és de tipus AI (autoincrement)
+    @Basic(optional = false)                                                    //camp no opcional (obligatòri) a nivell de Java
+    @Column(name="operating_number", nullable = false)                          //camp no opcional (obligatòri) a nivell de SQL
     private int operatingNumber;
     
     @Basic(optional = false)
-    @Column(length = 10, nullable = false, unique=true)
+    @Column(nullable = false)
     private String nickname;
     
     @ColumnDefault("5.0")
-    @Column(name="healing_speed")  //, nullable = false
+    @Column(name="healing_speed", nullable = false)
     private float healingSpeed;
     
-    @Column(name="last_drug_test_date", nullable = false)
+    @Column(name="last_drug_test_date", nullable = true)
     @Temporal(TemporalType.DATE)
     private Date lastDrugTestDate;
     
@@ -55,8 +54,7 @@ public abstract class Soldat implements Serializable {
     public Soldat() {
     }
 
-    public Soldat(int operatingNumber, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
-        this.operatingNumber = operatingNumber;
+    public Soldat(String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
         this.nickname = nickname;
         this.healingSpeed = healingSpeed;
         this.lastDrugTestDate = lastDrugTestDate;

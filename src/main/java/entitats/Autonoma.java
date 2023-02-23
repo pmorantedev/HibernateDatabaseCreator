@@ -26,8 +26,8 @@ public abstract class Autonoma extends Aeronau {
         
     }
     
-    public Autonoma(boolean invisibilityPower, int batteryAutonomy, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
-        super(fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
+    public Autonoma(boolean invisibilityPower, int batteryAutonomy, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+        super(corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.invisibilityPower = invisibilityPower;
         this.batteryAutonomy = batteryAutonomy;
     }

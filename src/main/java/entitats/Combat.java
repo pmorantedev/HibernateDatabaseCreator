@@ -3,13 +3,9 @@ package entitats;
 import interficies.TesteableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 
 /**
  *
@@ -30,8 +26,8 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
         
     }
     
-    public Combat(boolean nuclearPower, int totalAmmunition, boolean hasEjectoSeat, float shellCapacity, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
-        super(hasEjectoSeat, shellCapacity, fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
+    public Combat(boolean nuclearPower, int totalAmmunition, boolean hasEjectoSeat, float shellCapacity, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser, Pilot pilot) {
+        super(hasEjectoSeat, shellCapacity, corporation, engineTorque, autodestructionDate, hasDeathLaser, pilot);
         this.nuclearPower = nuclearPower;
         this.totalAmmunition = totalAmmunition;
     }
