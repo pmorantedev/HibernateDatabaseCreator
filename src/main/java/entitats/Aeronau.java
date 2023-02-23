@@ -12,12 +12,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -49,14 +51,13 @@ public abstract class Aeronau {
             inverseJoinColumns = {
                 @JoinColumn(name = "cosmicMissionCode")}
     )
-    @Column(length = 8)
-    Set<Missio> missions = new HashSet<>();
+    List<Missio> missions = new ArrayList<>();
 
     public Aeronau() {
 
     }
 
-    public Aeronau( String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+    public Aeronau(String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
 //        this.fabricationNumber = fabricationNumber;
         this.corporation = corporation;
         this.engineTorque = engineTorque;
@@ -102,6 +103,24 @@ public abstract class Aeronau {
 
     public void setHasDeathLaser(Boolean hasDeathLaser) {
         this.hasDeathLaser = hasDeathLaser;
+    }
+
+    public List<Missio> getMissions() {
+        return missions;
+    }
+
+    public void setMissions(List<Missio> missions) {
+        this.missions = missions;
+    }
+    
+    
+
+    @PrePersist
+    @PreUpdate
+    private void validateMissions() {
+        if (missions.size() > 2) {
+            throw new IllegalArgumentException("An Aeronau can have at most 2 missions");
+        }
     }
 
 }

@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
+import main.SingleSession;
 
 /**
  * JavaFX App
@@ -28,7 +29,10 @@ public class App {
 
     public static void main(String[] args) {
 
+        SingleSession singleton = SingleSession.getInstance();
+        
         //menu();
+
         try {
 
             factory = new Configuration().configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
@@ -63,7 +67,7 @@ public class App {
 
             // FK
             pilot1.setPilotada(nauCombat1);
-            nauCombat1.setPilot(pilot1);
+            nauCombat1.setPilotAeronau(pilot1);
             System.out.println("Pilot: " + pilot1.toString());
 
             logger.trace("Persistim l'estat dels objectes");

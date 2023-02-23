@@ -56,7 +56,7 @@ public abstract class Pilotada extends Aeronau {
      * @author Txell Llanas: Creació/Implementació
      * @return pilot Instància que defineix el 'Pilot' que pilota aquesta nau.
      */
-    public Pilot getPilot() {
+    public Pilot getPilotAeronau() {
         return pilot;
     }
 
@@ -66,7 +66,7 @@ public abstract class Pilotada extends Aeronau {
      *
      * @author Txell Llanas: Creació/Implementació
      */
-    public void setPilot(Pilot pilot) {
+    public void setPilotAeronau(Pilot pilot) {
         this.pilot = pilot;
     }
 
@@ -95,7 +95,3 @@ public abstract class Pilotada extends Aeronau {
     }
 
 }
-
-// (RF05)
-//    @OneToMany(mappedBy = "pilotada")
-//    private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
