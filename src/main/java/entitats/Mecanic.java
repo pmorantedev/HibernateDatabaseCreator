@@ -38,8 +38,8 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    private Pilotada pilotada;
 
-    public Mecanic(String speciality, Float repairSpeed, int operatingNumber, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
-        super(operatingNumber, nickname, healingSpeed, lastDrugTestDate, isOtaku);
+    public Mecanic(String speciality, Float repairSpeed, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
+        super(nickname, healingSpeed, lastDrugTestDate, isOtaku);
         this.speciality = speciality;
         this.repairSpeed = repairSpeed;
     }

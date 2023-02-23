@@ -1,6 +1,10 @@
 package main;
 
 import com.github.javafaker.Faker;
+import entitats.Combat;
+import entitats.Pilot;
+import entitats.Pilotada;
+import java.sql.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
@@ -23,21 +27,66 @@ public class App {
 
     public static void main(String[] args) {
 
-        menu();
+        //menu();
 
         try {
+            
             factory = new Configuration().configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
-
+            
+            logger.trace("Iniciem sessió...");
             session = factory.openSession();
-
+            
+            logger.trace("Iniciem transaccio...");
             session.getTransaction().begin();
-
+            
             Faker faker = new Faker();
 
+            // Test relacions Pilot-Pilotada (nau de combat)
+            logger.trace("Creem objectes");
+            Combat nauCombat1 = new Combat();
+            nauCombat1.setNuclearPower(true);
+            nauCombat1.setTotalAmmunition(12000);
+            nauCombat1.setHasEjectoSeat(true);
+            nauCombat1.setShellCapacity(12.7f);
+            //nauCombat1.setFabricationNumber(123456);
+            nauCombat1.setCorporation("Funny Bunny");
+            nauCombat1.setEngineTorque(12.67f);
+//            nauCombat1.setAutodestructionDate(date);
+            nauCombat1.setHasDeathLaser(Boolean.TRUE);
+            
+            Pilot pilot1 = new Pilot();
+            pilot1.setNickname("chimichurri");
+            pilot1.setHealingSpeed(5.0f);
+            //pilot1.setLastDrugTestDate(date);
+            pilot1.setIsOtaku(false);
+            pilot1.setMaxGForce(7.0f);
+            
+            // FK
+                        
+            pilot1.setPilotada(nauCombat1);
+            nauCombat1.setPilot(pilot1);
+            System.out.println("Pilot: " + pilot1.toString());
+            
+            logger.trace("Persistim l'estat dels objectes");
+            
+            logger.info("Persistint Nau de Combat...");
+            session.persist(nauCombat1);
+            
+            logger.info("Persistint Pilot...");
+            session.persist(pilot1);
+            
+            
+            
+            
+            // fi test
+            
+            
 //            for (int i = 0; i < 1000; i++) {
 //
 //                session.save(new Dron(faker.code().ean8(), faker.harryPotter().character()));
 //            }
+
+            logger.info("Finalitzem transacció i desem a BBDD...");
             session.getTransaction().commit();
 
         } catch (ConstraintViolationException ex) {
@@ -46,6 +95,8 @@ public class App {
             }
 
         } catch (HibernateException ex) {
+            
+            logger.info("HibernateException..." + ex.getMessage());
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }

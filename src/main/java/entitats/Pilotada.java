@@ -3,15 +3,11 @@ package entitats;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -28,8 +24,8 @@ public abstract class Pilotada extends Aeronau {
     private float shellCapacity;
     
     // (RF04) Cardinalitat No Propietària (Costat invers)
-//    @OneToOne(mappedBy="pilotada")  // Entitat inversa a la relació
-//    private Pilot pilot;
+    @OneToOne(mappedBy="pilotada", fetch = FetchType.LAZY)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
+    private Pilot pilot;
 
     // (RF05)
 //    @OneToMany(mappedBy = "pilotada")
@@ -40,23 +36,32 @@ public abstract class Pilotada extends Aeronau {
         
     }
     
-    public Pilotada(boolean hasEjectoSeat, float shellCapacity, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
-        super(fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
+    public Pilotada(boolean hasEjectoSeat, float shellCapacity, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser, Pilot pilot) {
+        super(corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.hasEjectoSeat = hasEjectoSeat;
         this.shellCapacity = shellCapacity;
+        this.pilot = pilot;
     }
 
     // Getters, Setters
     /**
-     * (RF04) Mètode que obté la Clau Forània (FK) amb la que està relacionada.
+     * (RF04) Mètode que obté la Clau Forània (FK) amb la que està relacionada.Relació (0,1 : 0,1) bidireccional amb la classe 'Pilot'.
+     * 
+     * @author Txell Llanas: Creació/Implementació
+     * @return pilot Instància que defineix el 'Pilot' que pilota aquesta nau.
+     */
+    public Pilot getPilot() {
+        return pilot;
+    }
+    /**
+     * (RF04) Mètode que estableix la Clau Forània (FK) amb la que està relacionada.
      * Relació (0,1 : 0,1) bidireccional amb la classe 'Pilot'.
      * 
-     * @param pilot Instància que defineix el 'Pilot' que pilota aquesta nau.
      * @author Txell Llanas: Creació/Implementació
      */
-//    public Pilot getPilot() {
-//        return pilot;
-//    }
+    public void setPilot(Pilot pilot) {
+        this.pilot = pilot;
+    }
     
     public boolean getHasEjectoSeat() {
         return hasEjectoSeat;

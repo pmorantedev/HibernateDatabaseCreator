@@ -28,8 +28,8 @@ public class Transport extends Pilotada implements TesteableEntity, Serializable
         
     }
     
-    public Transport(int itemsCapacity, boolean hasEjectoSeat, float shellCapacity, int fabricationNumber, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
-        super(hasEjectoSeat, shellCapacity, fabricationNumber, corporation, engineTorque, autodestructionDate, hasDeathLaser);
+    public Transport(int itemsCapacity, boolean hasEjectoSeat, float shellCapacity, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser, Pilot pilot) {
+        super(hasEjectoSeat, shellCapacity, corporation, engineTorque, autodestructionDate, hasDeathLaser, pilot);
         this.itemsCapacity = itemsCapacity;
     }
 
