@@ -30,8 +30,8 @@ public class App {
     public static void main(String[] args) {
 
         SingleSession singleton = SingleSession.getInstance();
-        
-        //menu();
+
+        menu();
 
         try {
 
@@ -82,7 +82,7 @@ public class App {
             session.persist(c1);
             Mecanic m1 = new Mecanic("avions", 10f, c1, "sonic", 0, null, true);
             Mecanic m2 = new Mecanic("alas", 10f, c1, "mario", 0, null, true);
-            Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0, null, true);    
+            Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0, null, true);
             Mecanic m4 = new Mecanic("aa", 10f, c1, "aa", 0, null, true);
 
             session.persist(m1);
@@ -90,13 +90,11 @@ public class App {
             session.persist(m3);
             session.persist(m4);
 
-
             for (Mecanic mecanic : c1.getMecanics()) {
                 System.out.println(mecanic.getPilotada());
             }
-            
-            //session.find(Combat.class, c1);
 
+            //session.find(Combat.class, c1);
             // fi test
 //            for (int i = 0; i < 1000; i++) {
 //
@@ -132,52 +130,36 @@ public class App {
     public static void menu() {
 
         Scanner in = new Scanner(System.in);
-        int opcioMenu = 0;
+        int opcio = 0;
 
         do {
             logger.info("\n" + "------------------------------------------------------------------------" + "\n"
-                    + "___  ___ _____  _   _  _   _ \n"
-                    + "|  \\/  ||  ___|| \\ | || | | |\n"
-                    + "| .  . || |__  |  \\| || | | |\n"
-                    + "| |\\/| ||  __| | . ` || | | |\n"
-                    + "| |  | || |___ | |\\  || |_| |\n"
-                    + "\\_|  |_/\\____/ \\_| \\_/ \\___/ \n"
+                    + " __  __ ______ _   _ _    _ \n"
+                    + "|  \\/  |  ____| \\ | | |  | |\n"
+                    + "| \\  / | |__  |  \\| | |  | |\n"
+                    + "| |\\/| |  __| | . ` | |  | |\n"
+                    + "| |  | | |____| |\\  | |__| |\n"
+                    + "|_|  |_|______|_| \\_|\\____/ \n"
                     + "                             " + "\n"
                     + "1. Generar classe" + "\n"
                     + "2. Llistar classe" + "\n"
                     + "3. Eliminar classe" + "\n"
                     + "4. Sortir" + "\n\n"
-                    + "Escull una de les opcions anteriors:");
+                    + ">> Escull una de les opcions anteriors:");
 
-            boolean error = false;
-            boolean showError = false;
-            do {
-                if (in.hasNextInt()) {
-                    opcioMenu = in.nextInt();
-                    error = false;
-                } else {
-                    in.next();
-                    error = true;
-                    if (!showError) {
-                        logger.info("\n" + "Només es poden introduïr números!!" + "\n" + "Introdueix un número:");
-                        showError = true;
-                    }
-                }
-            } while (error);
-
-            showError = false;
+            opcio = (utils.ValidadorOpcioMenu.validador(in));
 
             logger.info("------------------------------------------------------------------------" + "\n");
 
-            switch (opcioMenu) {
+            switch (opcio) {
                 case 1:
-                    menuGenerarClasse();
+                    menuGenerarClasse(in);
                     break;
                 case 2:
-                    menuLlistarClasse();
+                    menuLlistarClasse(in);
                     break;
                 case 3:
-                    menuEliminarClasse();
+                    menuEliminarClasse(in);
                     break;
                 case 4:
                     logger.info("Gràcies per utilitzar el nostre programa. Fins aviat!" + "\n");
@@ -187,18 +169,133 @@ public class App {
                             + "Introdueix un dels números del menú");
             }
 
-        } while (opcioMenu != 4);
+        } while (opcio != 4);
     }
 
-    public static void menuGenerarClasse() {
-        logger.info("Classe generada");
+    public static void menuGenerarClasse(Scanner in) {
+
+        int opcioMenuGenerarClasse = 0;
+
+        do {
+            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
+                    + "\n" + "GENERAR CLASSE" + "\n\n" 
+                    + "Quina classe vols generar?");
+            utils.LlistatMenuClasses.retornaClasses();
+
+            opcioMenuGenerarClasse = utils.ValidadorOpcioMenu.validador(in);
+
+            logger.info("------------------------------------------------------------------------" + "\n");
+
+            switch (opcioMenuGenerarClasse) {
+                case 1:
+                    logger.info("Classe combat generada!");
+                    break;
+                case 2:
+                    logger.info("Classe dron generada!");
+                    break;
+                case 3:
+                    logger.info("Classe mecànic generada!");
+                    break;
+                case 4:
+                    logger.info("Classe missió generada!");
+                    break;
+                case 5:
+                    logger.info("Classe pilot generada!");
+                    break;
+                case 6:
+                    logger.info("Classe transport generada!");
+                    break;
+                case 7:
+                    break;
+                default:
+                    logger.info("Número introduït no vàlid!!" + "\n"
+                            + "Introdueix un dels números del menú");
+            }
+
+        } while (opcioMenuGenerarClasse != 7);
     }
 
-    public static void menuLlistarClasse() {
-        logger.info("Classe llistada");
+    public static void menuLlistarClasse(Scanner in) {
+        int opcioMenuLlistarClasse = 0;
+
+        do {
+            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
+                    + "\n" + "LLISTAR CLASSE" + "\n\n" 
+                    + "Quina classe vols llistar?");
+            utils.LlistatMenuClasses.retornaClasses();
+
+            opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);
+
+            logger.info("------------------------------------------------------------------------" + "\n");
+
+            switch (opcioMenuLlistarClasse) {
+                case 1:
+                    logger.info("Classe combat llistada!");
+                    break;
+                case 2:
+                    logger.info("Classe dron llistada!");
+                    break;
+                case 3:
+                    logger.info("Classe mecànic llistada!");
+                    break;
+                case 4:
+                    logger.info("Classe missió llistada!");
+                    break;
+                case 5:
+                    logger.info("Classe pilot llistada!");
+                    break;
+                case 6:
+                    logger.info("Classe transport llistada!");
+                    break;
+                case 7:
+                    break;
+                default:
+                    logger.info("Número introduït no vàlid!!" + "\n"
+                            + "Introdueix un dels números del menú");
+            }
+
+        } while (opcioMenuLlistarClasse != 7);
     }
 
-    public static void menuEliminarClasse() {
-        logger.info("Classe eliminada");
+    public static void menuEliminarClasse(Scanner in) {
+        int opcioMenuEliminarClasse = 0;
+
+        do {
+            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
+                    + "\n" + "ELIMINAR CLASSE" + "\n\n" 
+                    + "Quina classe vols eliminar?");
+            utils.LlistatMenuClasses.retornaClasses();
+
+            opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);
+
+            logger.info("------------------------------------------------------------------------" + "\n");
+
+            switch (opcioMenuEliminarClasse) {
+                case 1:
+                    logger.info("Classe combat eliminada!");
+                    break;
+                case 2:
+                    logger.info("Classe dron eliminada!");
+                    break;
+                case 3:
+                    logger.info("Classe mecànic eliminada!");
+                    break;
+                case 4:
+                    logger.info("Classe missió eliminada!");
+                    break;
+                case 5:
+                    logger.info("Classe pilot eliminada!");
+                    break;
+                case 6:
+                    logger.info("Classe transport eliminada!");
+                    break;
+                case 7:
+                    break;
+                default:
+                    logger.info("Número introduït no vàlid!!" + "\n"
+                            + "Introdueix un dels números del menú");
+            }
+
+        } while (opcioMenuEliminarClasse != 7);
     }
 }

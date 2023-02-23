@@ -21,7 +21,7 @@ public final class SingleSession {                                           // 
     private SessionFactory sessionFactory;
     private Session session;
     private static final Logger logger = LogManager.getLogger(SingleSession.class);
-
+    
     private SingleSession() {                                                // Constructor privat per evitar que es pugui instanciar des de fora
         InitSessionFactory();
     }
@@ -39,9 +39,16 @@ public final class SingleSession {                                           // 
 
         // Configurar la sessió d'Hibernate
         Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
-
+        
+        logger.info("  _      ____   _____ _____ _   _ \n"
+                + " | |    / __ \\ / ____|_   _| \\ | |\n"
+                + " | |   | |  | | |  __  | | |  \\| |\n"
+                + " | |   | |  | | | |_ | | | | . ` |\n"
+                + " | |___| |__| | |__| |_| |_| |\\  |\n"
+                + " |______\\____/ \\_____|_____|_| \\_|\n");
+        
         do {
-            logger.info("Introdueix el nom d'usuari: ");
+            logger.info("\n" + ">> Introdueix el nom d'usuari: ");
             username = in.nextLine();
             if (username == null) {
                 error = true;
@@ -50,11 +57,11 @@ public final class SingleSession {                                           // 
             } else {
                 error = false;
             }
-
+            
         } while (error);
-
+        
         do {
-            logger.info("Introdueix la constrasenya: ");
+            logger.info("\n" + ">> Introdueix la constrasenya: ");
             password = in.nextLine();
             if (password == null) {
                 error = true;
@@ -64,9 +71,9 @@ public final class SingleSession {                                           // 
                 error = false;
             }
         } while (error);
-
+        
         do {
-            logger.info("Introdueix el nom de la BD: ");
+            logger.info("\n" + ">> Introdueix el nom de la BD: ");
             BDname = in.nextLine();
             if (BDname == null) {
                 error = true;
@@ -76,14 +83,14 @@ public final class SingleSession {                                           // 
                 error = false;
             }
         } while (error);
-
+        
         configuration.setProperty("hibernate.connection.username", username);
         configuration.setProperty("hibernate.connection.password", password);
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/" + BDname + "?createDatabaseIfNotExist=true");
-
+        
         this.sessionFactory = configuration.buildSessionFactory();
         this.session = sessionFactory.openSession();
-
+        
     }
 
     /**
@@ -98,7 +105,7 @@ public final class SingleSession {                                           // 
         if (instancia == null) {
             instancia = new SingleSession();
         }
-
+        
         return instancia;
     }
 
@@ -109,7 +116,7 @@ public final class SingleSession {                                           // 
      * @author Txell Llanas: Creació/Implementació
      */
     public Session getSessio() {
-
+        
         return session;
     }
 
