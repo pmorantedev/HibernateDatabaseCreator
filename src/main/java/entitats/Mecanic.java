@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
@@ -35,14 +34,18 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     @Column(name = "repairSpeed", nullable = false)
     private Float repairSpeed;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Pilotada pilotada;
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pilotada")
+    private Pilotada pilotada;
 
-    public Mecanic(String speciality, Float repairSpeed, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
+    public Mecanic(String speciality, Float repairSpeed, Pilotada pilotada, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
         super(nickname, healingSpeed, lastDrugTestDate, isOtaku);
         this.speciality = speciality;
         this.repairSpeed = repairSpeed;
+        this.pilotada = pilotada;
     }
+
+    
 
     public Mecanic() {
     }
@@ -62,6 +65,16 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     public void setRepairSpeed(Float repairSpeed) {
         this.repairSpeed = repairSpeed;
     }
+
+    public Pilotada getPilotada() {
+        return pilotada;
+    }
+
+    public void setPilotada(Pilotada pilotada) {
+        this.pilotada = pilotada;
+    }
+    
+    
 
     @Override
     public Integer getAtributIdentificador() {

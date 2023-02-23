@@ -2,6 +2,7 @@ package main;
 
 import com.github.javafaker.Faker;
 import entitats.Combat;
+import entitats.Mecanic;
 import entitats.Pilot;
 import entitats.Pilotada;
 import java.sql.Date;
@@ -28,17 +29,16 @@ public class App {
     public static void main(String[] args) {
 
         //menu();
-
         try {
-            
+
             factory = new Configuration().configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
-            
+
             logger.trace("Iniciem sessió...");
             session = factory.openSession();
-            
+
             logger.trace("Iniciem transaccio...");
             session.getTransaction().begin();
-            
+
             Faker faker = new Faker();
 
             // Test relacions Pilot-Pilotada (nau de combat)
@@ -53,49 +53,62 @@ public class App {
             nauCombat1.setEngineTorque(12.67f);
 //            nauCombat1.setAutodestructionDate(date);
             nauCombat1.setHasDeathLaser(Boolean.TRUE);
-            
+
             Pilot pilot1 = new Pilot();
             pilot1.setNickname("chimichurri");
             pilot1.setHealingSpeed(5.0f);
             //pilot1.setLastDrugTestDate(date);
             pilot1.setIsOtaku(false);
             pilot1.setMaxGForce(7.0f);
-            
+
             // FK
-                        
             pilot1.setPilotada(nauCombat1);
             nauCombat1.setPilot(pilot1);
             System.out.println("Pilot: " + pilot1.toString());
-            
+
             logger.trace("Persistim l'estat dels objectes");
-            
+
             logger.info("Persistint Nau de Combat...");
             session.persist(nauCombat1);
-            
+
             logger.info("Persistint Pilot...");
             session.persist(pilot1);
+
+            Combat c1 = new Combat(true, 0, true, 0, "C1", 0, new Date(2000, 2, 25), Boolean.FALSE, pilot1);
+            session.persist(c1);
+            Mecanic m1 = new Mecanic("avions", 10f, c1, "sonic", 0, null, true);
+            Mecanic m2 = new Mecanic("alas", 10f, c1, "mario", 0, null, true);
+            Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0, null, true);    
+            Mecanic m4 = new Mecanic("aa", 10f, c1, "aa", 0, null, true);
+
+            session.persist(m1);
+            session.persist(m2);
+            session.persist(m3);
+            session.persist(m4);
+
+
+            for (Mecanic mecanic : c1.getMecanics()) {
+                System.out.println(mecanic.getPilotada());
+            }
             
-            
-            
-            
+            //session.find(Combat.class, c1);
+
             // fi test
-            
-            
 //            for (int i = 0; i < 1000; i++) {
 //
 //                session.save(new Dron(faker.code().ean8(), faker.harryPotter().character()));
 //            }
-
             logger.info("Finalitzem transacció i desem a BBDD...");
             session.getTransaction().commit();
 
+//            
         } catch (ConstraintViolationException ex) {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
 
         } catch (HibernateException ex) {
-            
+
             logger.info("HibernateException..." + ex.getMessage());
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
@@ -113,7 +126,7 @@ public class App {
     }
 
     public static void menu() {
-        
+
         Scanner in = new Scanner(System.in);
         int opcioMenu = 0;
 
