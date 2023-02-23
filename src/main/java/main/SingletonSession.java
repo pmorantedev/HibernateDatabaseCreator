@@ -34,34 +34,64 @@ public final class SingletonSession {                                           
      */
     private void InitSessionFactory() {
         Scanner in = new Scanner(System.in);
-        
+        Boolean error = false;
+        String username, password, BDname;
+
         // Configurar la sessió d'Hibernate
         Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
-        
-        logger.info("Introdueix el nom d'usuari: ");
-        String username = in.nextLine();
-        logger.info("Introdueix la constrasenya: ");
-        String password = in.nextLine();
-        logger.info("Introdueix el nom de la BD: ");
-        String BDname = in.nextLine();
-        
+
+        do {
+            logger.info("Introdueix el nom d'usuari: ");
+            username = in.nextLine();
+            if (username == null) {
+                error = true;
+            } else if (username.isEmpty()) {
+                error = true;
+            } else {
+                error = false;
+            }
+
+        } while (error);
+
+        do {
+            logger.info("Introdueix la constrasenya: ");
+            password = in.nextLine();
+            if (password == null) {
+                error = true;
+            } else if (password.isEmpty()) {
+                error = true;
+            } else {
+                error = false;
+            }
+        } while (error);
+
+        do {
+            logger.info("Introdueix el nom de la BD: ");
+            BDname = in.nextLine();
+            if (BDname == null) {
+                error = true;
+            } else if (BDname.isEmpty()) {
+                error = true;
+            } else {
+                error = false;
+            }
+        } while (error);
+
         configuration.setProperty("hibernate.connection.username", username);
         configuration.setProperty("hibernate.connection.password", password);
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/" + BDname + "?createDatabaseIfNotExist=true");
-        
+
         this.sessionFactory = configuration.buildSessionFactory();
         this.session = sessionFactory.openSession();
-        
+
     }
-    
-    
 
     /**
-     * Mètode per retornar una nova instància de 'SingleSession'.
-     * Si la instància encara no existeix, la crea.
+     * Mètode per retornar una nova instància de 'SingleSession'. Si la
+     * instància encara no existeix, la crea.
      *
-     * @return instancia de tipus 'SingletonSession' que obre una sessió
-                         de connexió a una BD
+     * @return instancia de tipus 'SingletonSession' que obre una sessió de
+     * connexió a una BD
      * @author Txell Llanas: Creació/Implementació
      */
     public static SingletonSession getInstance() {
@@ -85,7 +115,7 @@ public final class SingletonSession {                                           
 
     /**
      * Mètode per tancar la sessió actual d'Hibernate.
-     * 
+     *
      * @author Txell Llanas: Creació/Implementació
      */
     public void closeFactory() {
