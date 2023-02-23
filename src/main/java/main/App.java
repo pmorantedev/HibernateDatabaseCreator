@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
+import main.SingletonSession;
 
 /**
  * JavaFX App
@@ -27,7 +28,9 @@ public class App {
 
     public static void main(String[] args) {
 
-        //menu();
+        SingletonSession singleton = SingletonSession.getInstance();
+        
+        menu();
 
         try {
             
