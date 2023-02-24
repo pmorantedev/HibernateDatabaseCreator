@@ -3,17 +3,19 @@ package main;
 import com.github.javafaker.Faker;
 import entitats.Combat;
 import entitats.Mecanic;
+import entitats.Missio;
 import entitats.Pilot;
 import entitats.Pilotada;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import java.sql.Date;
-import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
 import main.SingleSession;
 
@@ -22,27 +24,110 @@ import main.SingleSession;
  */
 public class App {
 
-    private static SessionFactory factory;
-    private static Session session;
-
     private static final Logger logger = LogManager.getLogger(App.class);
 
     public static void main(String[] args) {
 
         SingleSession singleton = SingleSession.getInstance();
 
-        menu();
+        menu(singleton);
 
+    }
+
+    public static void menu(SingleSession singleton) {
+
+        Scanner in = new Scanner(System.in);
+        int opcio = 0;
+
+        do {
+            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
+                    + " __  __ ______ _   _ _    _ \n"
+                    + "|  \\/  |  ____| \\ | | |  | |\n"
+                    + "| \\  / | |__  |  \\| | |  | |\n"
+                    + "| |\\/| |  __| | . ` | |  | |\n"
+                    + "| |  | | |____| |\\  | |__| |\n"
+                    + "|_|  |_|______|_| \\_|\\____/ \n"
+                    + "                             " + "\n"
+                    + "1. Generar classe" + "\n"
+                    + "2. Llistar classe" + "\n"
+                    + "3. Eliminar classe" + "\n"
+                    + "4. Sortir" + "\n\n"
+                    + ">> Escull una de les opcions anteriors:");
+
+            opcio = (utils.ValidadorOpcioMenu.validador(in));
+
+            logger.info("------------------------------------------------------------------------" + "\n");
+
+            switch (opcio) {
+                case 1:
+                    menuGenerarClasse(in, singleton);
+                    break;
+                case 2:
+                    menuLlistarClasse(in, singleton);
+                    break;
+                case 3:
+                    menuEliminarClasse(in);
+                    break;
+                case 4:
+                    logger.info("Gràcies per utilitzar el nostre programa. Fins aviat!" + "\n");
+                    singleton.closeSessio();
+                    singleton.closeFactory();
+                    System.exit(0);
+                default:
+                    logger.info("Número introduït no vàlid!!" + "\n"
+                            + "Introdueix un dels números del menú");
+            }
+
+        } while (opcio != 4);
+    }
+
+    public static void menuGenerarClasse(Scanner in, SingleSession singleton) {
+
+        int opcioMenuGenerarClasse = 0;
+
+        do {
+            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
+                    + "\n" + "GENERAR CLASSE" + "\n\n"
+                    + "Quina classe vols generar?");
+            utils.LlistatMenuClasses.retornaClasses();
+
+            opcioMenuGenerarClasse = utils.ValidadorOpcioMenu.validador(in);
+
+            logger.info("------------------------------------------------------------------------" + "\n");
+
+            switch (opcioMenuGenerarClasse) {
+                case 1:
+                    pruebaGenerarClase(singleton);
+                    break;
+                case 2:
+                    logger.info("Classe dron generada!");
+                    break;
+                case 3:
+                    logger.info("Classe mecànic generada!");
+                    break;
+                case 4:
+                    logger.info("Classe missió generada!");
+                    break;
+                case 5:
+                    logger.info("Classe pilot generada!");
+                    break;
+                case 6:
+                    logger.info("Classe transport generada!");
+                    break;
+                case 7:
+                    break;
+                default:
+                    logger.info("Número introduït no vàlid!!" + "\n"
+                            + "Introdueix un dels números del menú");
+            }
+
+        } while (opcioMenuGenerarClasse != 7);
+    }
+
+    public static void pruebaGenerarClase(SingleSession singleton) {
         try {
 
-            factory = new Configuration().configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
-
-            logger.trace("Iniciem sessió...");
-            session = factory.openSession();
-
-            logger.trace("Iniciem transaccio...");
-            session.getTransaction().begin();
-
+            singleton.getInstance().getSessio().getTransaction().begin();
             Faker faker = new Faker();
 
             // Test relacions Pilot-Pilotada (nau de combat)
@@ -73,164 +158,107 @@ public class App {
             logger.trace("Persistim l'estat dels objectes");
 
             logger.info("Persistint Nau de Combat...");
-            session.persist(nauCombat1);
+            singleton.getInstance().getSessio().persist(nauCombat1);
 
             logger.info("Persistint Pilot...");
-            session.persist(pilot1);
+            singleton.getInstance().getSessio().persist(pilot1);
 
             Combat c1 = new Combat(true, 0, true, 0, "C1", 0, new Date(2000, 2, 25), Boolean.FALSE, pilot1);
-            session.persist(c1);
+            singleton.getInstance().getSessio().persist(c1);
             Mecanic m1 = new Mecanic("avions", 10f, c1, "sonic", 0, null, true);
             Mecanic m2 = new Mecanic("alas", 10f, c1, "mario", 0, null, true);
             Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0, null, true);
             Mecanic m4 = new Mecanic("aa", 10f, c1, "aa", 0, null, true);
 
-            session.persist(m1);
-            session.persist(m2);
-            session.persist(m3);
-            session.persist(m4);
+            singleton.getInstance().getSessio().persist(m1);
+            singleton.getInstance().getSessio().persist(m2);
+            singleton.getInstance().getSessio().persist(m3);
+            singleton.getInstance().getSessio().persist(m4);
 
             for (Mecanic mecanic : c1.getMecanics()) {
                 System.out.println(mecanic.getPilotada());
             }
 
-            //session.find(Combat.class, c1);
+            //singleton.getInstance().getSession().find(Combat.class, c1);
             // fi test
 //            for (int i = 0; i < 1000; i++) {
 //
-//                session.save(new Dron(faker.code().ean8(), faker.harryPotter().character()));
+//                singleton.getInstance().getSession().save(new Dron(faker.code().ean8(), faker.harryPotter().character()));
 //            }
             logger.info("Finalitzem transacció i desem a BBDD...");
-            session.getTransaction().commit();
+            singleton.getInstance().getSessio().getTransaction().commit();
 
 //            
         } catch (ConstraintViolationException ex) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
+            if (singleton.getInstance().getSessio().getTransaction() != null) {
+                singleton.getInstance().getSessio().getTransaction().rollback();
             }
 
         } catch (HibernateException ex) {
 
             logger.info("HibernateException..." + ex.getMessage());
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
+            if (singleton.getInstance().getSessio().getTransaction() != null) {
+                singleton.getInstance().getSessio().getTransaction().rollback();
             }
-
-        } finally {
-
-            //Tanquem la sessió
-            session.close();
-
-            //Finalitzem Hibernate
-            factory.close();
         }
-
     }
 
-    public static void menu() {
-
-        Scanner in = new Scanner(System.in);
-        int opcio = 0;
-
-        do {
-            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
-                    + " __  __ ______ _   _ _    _ \n"
-                    + "|  \\/  |  ____| \\ | | |  | |\n"
-                    + "| \\  / | |__  |  \\| | |  | |\n"
-                    + "| |\\/| |  __| | . ` | |  | |\n"
-                    + "| |  | | |____| |\\  | |__| |\n"
-                    + "|_|  |_|______|_| \\_|\\____/ \n"
-                    + "                             " + "\n"
-                    + "1. Generar classe" + "\n"
-                    + "2. Llistar classe" + "\n"
-                    + "3. Eliminar classe" + "\n"
-                    + "4. Sortir" + "\n\n"
-                    + ">> Escull una de les opcions anteriors:");
-
-            opcio = (utils.ValidadorOpcioMenu.validador(in));
-
-            logger.info("------------------------------------------------------------------------" + "\n");
-
-            switch (opcio) {
-                case 1:
-                    menuGenerarClasse(in);
-                    break;
-                case 2:
-                    menuLlistarClasse(in);
-                    break;
-                case 3:
-                    menuEliminarClasse(in);
-                    break;
-                case 4:
-                    logger.info("Gràcies per utilitzar el nostre programa. Fins aviat!" + "\n");
-                    System.exit(0);
-                default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
-            }
-
-        } while (opcio != 4);
-    }
-
-    public static void menuGenerarClasse(Scanner in) {
-
-        int opcioMenuGenerarClasse = 0;
-
-        do {
-            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
-                    + "\n" + "GENERAR CLASSE" + "\n\n" 
-                    + "Quina classe vols generar?");
-            utils.LlistatMenuClasses.retornaClasses();
-
-            opcioMenuGenerarClasse = utils.ValidadorOpcioMenu.validador(in);
-
-            logger.info("------------------------------------------------------------------------" + "\n");
-
-            switch (opcioMenuGenerarClasse) {
-                case 1:
-                    logger.info("Classe combat generada!");
-                    break;
-                case 2:
-                    logger.info("Classe dron generada!");
-                    break;
-                case 3:
-                    logger.info("Classe mecànic generada!");
-                    break;
-                case 4:
-                    logger.info("Classe missió generada!");
-                    break;
-                case 5:
-                    logger.info("Classe pilot generada!");
-                    break;
-                case 6:
-                    logger.info("Classe transport generada!");
-                    break;
-                case 7:
-                    break;
-                default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
-            }
-
-        } while (opcioMenuGenerarClasse != 7);
-    }
-
-    public static void menuLlistarClasse(Scanner in) {
+    public static void menuLlistarClasse(Scanner in, SingleSession singleton) {
         int opcioMenuLlistarClasse = 0;
 
         do {
             logger.info("\n" + "------------------------------------------------------------------------" + "\n"
-                    + "\n" + "LLISTAR CLASSE" + "\n\n" 
+                    + "\nLLISTAR CLASSE\n\n"
                     + "Quina classe vols llistar?");
             utils.LlistatMenuClasses.retornaClasses();
 
             opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);
 
+            //PASAR A UTILS
+            boolean ok = false;
+            int idInicial = 0, idFinal = 0;
+            if (opcioMenuLlistarClasse != 7) {
+                do {
+                    logger.info(">> Introdueix l'identificador inicial");
+                    idInicial = utils.ValidadorOpcioMenu.validador(in);
+
+                    logger.info(">> Introdueix l'identificador final");
+                    idFinal = utils.ValidadorOpcioMenu.validador(in);
+
+                    if (idFinal < idInicial) {
+                        logger.info("L'identificador final no pot ser més petit que l'inicial.\n");
+                    } else {
+                        ok = true;
+                    }
+                } while (ok != true);
+            }
+            //HASTA AQUI
+            
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcioMenuLlistarClasse) {
                 case 1:
-                    logger.info("Classe combat llistada!");
+                    for (int i = idInicial; i <= idFinal; i++) {
+                        Combat combat = singleton.getSessio().get(Combat.class, i);
+                        if (combat != null) {
+                            
+                            CriteriaBuilder cb = singleton.getSessio().getCriteriaBuilder();
+                            CriteriaQuery<Mecanic> cqm = cb.createQuery(Mecanic.class);
+                            Root<Mecanic> root = cqm.from(Mecanic.class);
+                            cqm.where(cb.equal(root.get("pilotada"), combat.getFabricationNumber()));
+                            List<Mecanic> list = singleton.getSessio().createQuery(cqm).getResultList();
+                            
+                            CriteriaQuery<Missio> cqmissio = cb.createQuery(Missio.class);
+                            Root<Missio> rootmissio = cqmissio.from(Missio.class);
+                            Predicate predicate = rootmissio.get("aeronaus").in(combat.getMissions());
+                            cqmissio.where(predicate);
+                            List<Missio> listmissions = singleton.getSessio().createQuery(cqmissio).getResultList();
+                            
+                            logger.info(combat.toString() + "\n          Mecànics: " + list + "\n          Missions: " + listmissions);
+                        } else {
+                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                        }
+                    }
                     break;
                 case 2:
                     logger.info("Classe dron llistada!");
@@ -262,7 +290,7 @@ public class App {
 
         do {
             logger.info("\n" + "------------------------------------------------------------------------" + "\n"
-                    + "\n" + "ELIMINAR CLASSE" + "\n\n" 
+                    + "\n" + "ELIMINAR CLASSE" + "\n\n"
                     + "Quina classe vols eliminar?");
             utils.LlistatMenuClasses.retornaClasses();
 
