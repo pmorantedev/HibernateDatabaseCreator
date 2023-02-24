@@ -214,7 +214,6 @@ public class App {
 
             opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);
 
-            //PASAR A UTILS
             boolean ok = false;
             int idInicial = 0, idFinal = 0;
             if (opcioMenuLlistarClasse != 7) {
@@ -232,7 +231,6 @@ public class App {
                     }
                 } while (ok != true);
             }
-            //HASTA AQUI
             
             logger.info("------------------------------------------------------------------------" + "\n");
 
