@@ -130,6 +130,15 @@ public final class SingleSession {                                           // 
     /**
      * Mètode per tancar la sessió actual d'Hibernate.
      *
+     * @author Víctor García: Creació/Implementació
+     */
+    public void closeSessio() {
+        session.close();
+    }
+    
+    /**
+     * Mètode per tancar la sessió actual d'Hibernate.
+     *
      * @author Txell Llanas: Creació/Implementació
      */
     public void closeFactory() {

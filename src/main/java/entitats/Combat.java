@@ -14,7 +14,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "combat")
 public class Combat extends Pilotada implements TesteableEntity, Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Column(nullable = false)
@@ -22,10 +22,10 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
     @Column(nullable = false)
     private int totalAmmunition;
 
-    public Combat(){
-        
+    public Combat() {
+
     }
-    
+
     public Combat(boolean nuclearPower, int totalAmmunition, boolean hasEjectoSeat, float shellCapacity, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser, Pilot pilot) {
         super(hasEjectoSeat, shellCapacity, corporation, engineTorque, autodestructionDate, hasDeathLaser, pilot);
         this.nuclearPower = nuclearPower;
@@ -91,6 +91,21 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
     @Override
     public void setAtributBoolean(Boolean b) {
         super.setHasDeathLaser(b);
+    }
+
+    @Override
+    public String toString() {
+        return "Combat{"
+                + "nuclearPower=" + nuclearPower
+                + ", totalAmmunition = " + totalAmmunition
+                + ", hasEjectoSeat = " + super.getHasEjectoSeat()
+                + ", shellCapacity = " + super.getShellCapacity()
+                + ", corporation = " + super.getCorporation()
+                + ", engineTorque = " + super.getEngineTorque()
+                + ", autodestructionDate = " + super.getAutodestructionDate()
+                + ", hasDeathLaser = " + super.getHasDeathLaser()
+                + '}'
+                + "\n          Pilot = " + super.getPilotAeronau();
     }
 
 }

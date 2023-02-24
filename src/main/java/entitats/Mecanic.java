@@ -120,4 +120,17 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     public void setAtributBoolean(Boolean b) {
         super.setIsOtaku(b);
     }
+
+    @Override
+    public String toString() {
+        return "Mecanic{" +
+            "speciality = " + speciality +
+            ", repairSpeed = " + repairSpeed +
+            ", nickname = " + super.getNickname() +
+            ", healingSpeed = " + super.getHealingSpeed() +
+            ", lastDrugTestDate = " + super.getLastDrugTestDate() +
+            ", isOtaku = " + super.getIsOtaku() +
+            '}';
+    }
+    
 }
