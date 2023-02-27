@@ -85,4 +85,17 @@ public class Transport extends Pilotada implements TesteableEntity, Serializable
     public void setAtributBoolean(Boolean b) {
         super.setHasDeathLaser(b);
     }
+    
+    @Override
+    public String toString() {
+        return "Combat{"
+                + "itemsCapacity=" + itemsCapacity
+                + ", hasEjectoSeat = " + super.getHasEjectoSeat()
+                + ", shellCapacity = " + super.getShellCapacity()
+                + ", corporation = " + super.getCorporation()
+                + ", engineTorque = " + super.getEngineTorque()
+                + ", autodestructionDate = " + super.getAutodestructionDate()
+                + ", hasDeathLaser = " + super.getHasDeathLaser()
+                + '}';
+    }
 }

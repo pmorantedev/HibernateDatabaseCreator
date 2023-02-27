@@ -173,4 +173,11 @@ public class Missio implements TesteableEntity, Serializable {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Missio{" + "cosmicMissionCode=" + cosmicMissionCode + ", targetName=" + targetName + ", missionBudget=" + missionBudget + ", limitDate=" + limitDate + ", accomplished=" + accomplished + ", aeronaus=" + aeronaus + '}';
+    }
+
+    
+    
 }

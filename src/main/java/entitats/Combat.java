@@ -104,8 +104,7 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
                 + ", engineTorque = " + super.getEngineTorque()
                 + ", autodestructionDate = " + super.getAutodestructionDate()
                 + ", hasDeathLaser = " + super.getHasDeathLaser()
-                + '}'
-                + "\n          Pilot = " + super.getPilotAeronau();
+                + '}';
     }
 
 }

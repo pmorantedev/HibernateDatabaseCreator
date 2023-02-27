@@ -82,4 +82,19 @@ public class Dron extends Autonoma implements TesteableEntity, Serializable {
     public void setAtributBoolean(Boolean b) {
         super.setHasDeathLaser(b);
     }
+
+    @Override
+    public String toString() {
+        return "Dron{" +
+                "meltingTemperature = " + meltingTemperature +
+                ", invisibilityPower = " + super.isInvisibilityPower() +
+                ", batteryAutonomy = " + super.getBatteryAutonomy() +
+                ", corporation = " + super.getCorporation() +
+                ", engineTorque = " + super.getEngineTorque() +
+                ", autodestructionDate = " + super.getAutodestructionDate() +
+                ", hasDeathLaser = " + super.getHasDeathLaser() +
+                '}';
+    }
+    
+    
 }
