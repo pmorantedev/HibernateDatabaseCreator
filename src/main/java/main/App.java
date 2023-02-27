@@ -172,12 +172,12 @@ public class App {
             logger.info("Persistint Pilot...");
             singleton.getInstance().getSessio().persist(pilot1);
 
-            Combat c1 = new Combat(true, 0, true, 0, "C1", 0, new Date(2000, 2, 25), Boolean.FALSE, pilot1);
+            Combat c1 = new Combat(true, 0, true, 0f, "C1", 0f, new Date(2000, 2, 25), Boolean.FALSE, pilot1);
             singleton.getInstance().getSessio().persist(c1);
-            Mecanic m1 = new Mecanic("avions", 10f, c1, "sonic", 0, null, true);
-            Mecanic m2 = new Mecanic("alas", 10f, c1, "mario", 0, null, true);
-            Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0, null, true);
-            Mecanic m4 = new Mecanic("aa", 10f, c1, "aa", 0, null, true);
+            Mecanic m1 = new Mecanic("avions", 10f, c1, "sonic", 0F, null, true);
+            Mecanic m2 = new Mecanic("alas", 10f, c1, "mario", 0F, null, true);
+            Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0F, null, true);
+            Mecanic m4 = new Mecanic("aa", 10f, c1, "aa", 0F, null, true);
 
             singleton.getInstance().getSessio().persist(m1);
             singleton.getInstance().getSessio().persist(m2);

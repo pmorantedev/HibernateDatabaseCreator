@@ -19,22 +19,22 @@ import java.sql.Date;
 public class Dron extends Autonoma implements TesteableEntity, Serializable {
 
     @Column(nullable = false)
-    private float meltingTemperature;
+    private Float meltingTemperature;
 
     public Dron(){
         
     }
     
-    public Dron(float meltingTemperature, boolean invisibilityPower, int batteryAutonomy, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+    public Dron(Float meltingTemperature, boolean invisibilityPower, int batteryAutonomy, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         super(invisibilityPower, batteryAutonomy, corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.meltingTemperature = meltingTemperature;
     }
     
-    public float getMeltingTemperature() {
+    public Float getMeltingTemperature() {
         return meltingTemperature;
     }
 
-    public void setMeltingTemperature(float meltingTemperature) {
+    public void setMeltingTemperature(Float meltingTemperature) {
         this.meltingTemperature = meltingTemperature;
     }
     

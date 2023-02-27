@@ -37,7 +37,7 @@ public abstract class Aeronau {
     @Column(nullable = false)
     private String corporation;
     @Column(nullable = false)
-    private float engineTorque;
+    private Float engineTorque;
     @Column(nullable = true)
     @Temporal(TemporalType.DATE)
     private Date autodestructionDate;
@@ -57,7 +57,7 @@ public abstract class Aeronau {
 
     }
 
-    public Aeronau(String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+    public Aeronau(String corporation, Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
 //        this.fabricationNumber = fabricationNumber;
         this.corporation = corporation;
         this.engineTorque = engineTorque;
@@ -73,7 +73,7 @@ public abstract class Aeronau {
         return corporation;
     }
 
-    public float getEngineTorque() {
+    public Float getEngineTorque() {
         return engineTorque;
     }
 
@@ -93,7 +93,7 @@ public abstract class Aeronau {
         this.corporation = corporation;
     }
 
-    public void setEngineTorque(float engineTorque) {
+    public void setEngineTorque(Float engineTorque) {
         this.engineTorque = engineTorque;
     }
 

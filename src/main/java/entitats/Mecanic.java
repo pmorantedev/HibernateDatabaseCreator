@@ -39,7 +39,7 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     @JoinColumn(name = "id_pilotada")
     private Pilotada pilotada;
 
-    public Mecanic(String speciality, Float repairSpeed, Pilotada pilotada, String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
+    public Mecanic(String speciality, Float repairSpeed, Pilotada pilotada, String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
         super(nickname, healingSpeed, lastDrugTestDate, isOtaku);
         this.speciality = speciality;
         this.repairSpeed = repairSpeed;
