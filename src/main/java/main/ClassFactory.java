@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class ClassFactory implements TesteableFactory {
 
     private static final Faker faker = new Faker();
-    private static final Random r = new Random();
+    private static Random r = new Random();
 
     public ClassFactory() {
 
@@ -90,17 +90,17 @@ public class ClassFactory implements TesteableFactory {
         if (Combat.class.isAssignableFrom(tipus)) {
             novaAeronau = new Combat(faker.bool().bool(), faker.number().numberBetween(1, 10000), faker.bool().bool(),
                     r.nextFloat() * 500.0f, faker.company().name(), r.nextFloat() * 100.0f,
-                    new Date(faker.date().future(r.nextInt(2050), TimeUnit.DAYS).getTime()),
+                    new Date(faker.date().future(r.nextInt(2050) + 1, TimeUnit.DAYS).getTime()),
                     faker.bool().bool(),
                     (Pilot) soldatFactory(Pilot.class)
             );
         } else if (Transport.class.isAssignableFrom(tipus)) {
             novaAeronau = new Transport(r.nextInt(1000), faker.bool().bool(), r.nextFloat() * 500.0f, faker.company().name(), r.nextFloat() * 100.0f,
-                    new Date(faker.date().future(r.nextInt(10), TimeUnit.DAYS).getTime()),
+                    new Date(faker.date().future(r.nextInt(2050) + 1, TimeUnit.DAYS).getTime()),
                     faker.bool().bool(), (Pilot) soldatFactory(Pilot.class));
         } else if (Dron.class.isAssignableFrom(tipus)) {
             novaAeronau = new Dron(r.nextFloat() * 5000.0f, faker.bool().bool(), faker.number().numberBetween(1, 5000), faker.company().name(),
-                    r.nextFloat() * 100.0f, new Date(faker.date().future(r.nextInt(10), TimeUnit.DAYS).getTime()),
+                    r.nextFloat() * 100.0f, new Date(faker.date().future(r.nextInt(2050) + 1, TimeUnit.DAYS).getTime()),
                     faker.bool().bool());
         } else {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -130,7 +130,7 @@ public class ClassFactory implements TesteableFactory {
     @Override
     public Missio missioFactory() {
         return new Missio(r.nextInt(999999), faker.food().spice(), r.nextFloat() * 10000.0f,
-                new Date(faker.date().future(r.nextInt(10), TimeUnit.DAYS).getTime()),
+                new Date(faker.date().future(r.nextInt(10) + 1, TimeUnit.DAYS).getTime()),
                 faker.bool().bool());
 //      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -183,13 +183,13 @@ public class ClassFactory implements TesteableFactory {
             nouSoldat = new Mecanic(faker.company().profession(),
                     r.nextFloat() * 100.0f, pilotada,
                     faker.funnyName().name(), r.nextFloat() * 10.0f,
-                    new Date(faker.date().past(r.nextInt(10), TimeUnit.DAYS).getTime()),
+                    new Date(faker.date().past(r.nextInt(10) + 1, TimeUnit.DAYS).getTime()),
                     faker.bool().bool());
 
         } else if (Pilot.class.isAssignableFrom(tipus)) {
             //un pilot no implementa una pilotada?
             nouSoldat = new Pilot(faker.funnyName().name(), r.nextFloat() * 10.0f,
-                    new Date(faker.date().past(r.nextInt(10), TimeUnit.DAYS).getTime()),
+                    new Date(faker.date().past(r.nextInt(10) + 1, TimeUnit.DAYS).getTime()),
                     faker.bool().bool(), r.nextFloat() * 7.0f);
         } else {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

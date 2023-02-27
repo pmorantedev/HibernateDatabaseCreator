@@ -53,7 +53,7 @@ public class Transport extends Pilotada implements TesteableEntity, Serializable
 
     @Override
     public Float getAtributFloat() {
-        return super.getShellCapacity();
+        return super.getEngineTorque();
     }
 
     @Override

@@ -126,7 +126,7 @@ public final class SingleSession {                                           // 
 
         return instancia;
     }
-    
+
     public static SingleSession getInstance(Boolean user) {
         if (instancia == null) {
             instancia = new SingleSession(user);
@@ -142,6 +142,11 @@ public final class SingleSession {                                           // 
      * @author Txell Llanas: Creació/Implementació
      */
     public Session getSessio() {
+        if (session.getTransaction() != null) {
+            session.close();
+            sessionFactory.close();
+            InitSessionFactory();
+        }
 
         return session;
     }
