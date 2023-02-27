@@ -9,6 +9,8 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -30,11 +32,12 @@ public abstract class Pilotada extends Aeronau {
     private Float shellCapacity;
 
     // (RF04) Cardinalitat No Propietària (Costat invers)
-    @OneToOne(mappedBy = "pilotada", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
+    @OneToOne(mappedBy = "pilotada", cascade = CascadeType.REMOVE)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
+    @JoinColumn(name = "pilot_id")
     private Pilot pilot;
 
 //  (RF05)
-    @OneToMany(mappedBy = "pilotada", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "pilotada", cascade = CascadeType.ALL)
     private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
 
     public Pilotada() {
@@ -101,6 +104,14 @@ public abstract class Pilotada extends Aeronau {
 
     public void setShellCapacity(Float shellCapacity) {
         this.shellCapacity = shellCapacity;
+    }
+    
+    @PrePersist
+    @PreUpdate
+    private void valideMecanics() {
+        if (mecanics.size() > 2) {
+            throw new IllegalArgumentException("An Aeronau can have at most 2 mecanics");
+        }
     }
 
 }

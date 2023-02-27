@@ -52,7 +52,6 @@ public class ClassFactory implements TesteableFactory {
 
     @Override
     public Aeronau addMissionsToAeronau(List<Missio> lm, Aeronau a) throws Exception {
-
         try {
             a.setMissions(lm);
             return a;
@@ -115,8 +114,8 @@ public class ClassFactory implements TesteableFactory {
     public List<Soldat> mecanicsFactory(int elements) {
 
         try {
-            List<Soldat> llistaMecanics = new ArrayList<>(elements);
-            for (int i = 0; i < llistaMecanics.size() - 1; i++) {
+            List<Soldat> llistaMecanics = new ArrayList<>();
+            for (int i = 0; i < elements; i++) {
                 llistaMecanics.add(soldatFactory(Mecanic.class));
             }
             return llistaMecanics;
@@ -137,9 +136,9 @@ public class ClassFactory implements TesteableFactory {
     @Override
     public List<Missio> missionsFactory(int elements) {
         try {
-            List<Missio> llistaMissions = new ArrayList<Missio>(elements);
+            List<Missio> llistaMissions = new ArrayList<Missio>();
 
-            for (int i = 0; i < llistaMissions.size() - 1; i++) {
+            for (int i = 0; i < elements; i++) {
                 llistaMissions.add(missioFactory());
             }
             return llistaMissions;
@@ -154,8 +153,8 @@ public class ClassFactory implements TesteableFactory {
     public List<Soldat> pilotsFactory(int elements) {
 
         try {
-            List<Soldat> llistaSoldats = new ArrayList<>(elements);
-            for (int i = 0; i < llistaSoldats.size() - 1; i++) {
+            List<Soldat> llistaSoldats = new ArrayList<>();
+            for (int i = 0; i < elements; i++) {
                 llistaSoldats.add(soldatFactory(Pilot.class));
             }
             return llistaSoldats;

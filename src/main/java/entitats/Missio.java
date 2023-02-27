@@ -40,7 +40,7 @@ public class Missio implements TesteableEntity, Serializable {
     private int cosmicMissionCode;
 
     @Basic(optional = false)
-    @Column(name = "targetName", nullable = false, unique = true)
+    @Column(name = "targetName", nullable = false)
     private String targetName;
 
     @ColumnDefault("10000.0")
@@ -55,7 +55,7 @@ public class Missio implements TesteableEntity, Serializable {
     @Column(name = "accomplished")
     private boolean accomplished;
 
-    @ManyToMany(mappedBy = "missions", cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "missions", cascade = CascadeType.ALL)
     @Column(length = 8)
     private List<Aeronau> aeronaus = new ArrayList<>();
 

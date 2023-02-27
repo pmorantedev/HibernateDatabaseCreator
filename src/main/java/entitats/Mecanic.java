@@ -35,8 +35,8 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     @Column(name = "repairSpeed", nullable = false)
     private Float repairSpeed;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_pilotada")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pilotada_id")
     private Pilotada pilotada;
 
     public Mecanic(String speciality, Float repairSpeed, Pilotada pilotada, String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
