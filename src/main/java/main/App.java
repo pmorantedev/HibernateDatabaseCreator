@@ -134,82 +134,82 @@ public class App {
     }
 
     public static void pruebaGenerarClase(SingleSession singleton) {
-        try {
+//        try {
 
-            singleton.getInstance().getSessio().getTransaction().begin();
-            Faker faker = new Faker();
-
-            // Test relacions Pilot-Pilotada (nau de combat)
-            logger.trace("Creem objectes");
-            Combat nauCombat1 = new Combat();
-            nauCombat1.setNuclearPower(true);
-            nauCombat1.setTotalAmmunition(12000);
-            nauCombat1.setHasEjectoSeat(true);
-            nauCombat1.setShellCapacity(12.7f);
-            //nauCombat1.setFabricationNumber(123456);
-            nauCombat1.setCorporation("Funny Bunny");
-            nauCombat1.setEngineTorque(12.67f);
-//            nauCombat1.setAutodestructionDate(date);
-            nauCombat1.setHasDeathLaser(Boolean.TRUE);
-
-            Pilot pilot1 = new Pilot();
-            pilot1.setNickname("chimichurri");
-            pilot1.setHealingSpeed(5.0f);
-            //pilot1.setLastDrugTestDate(date);
-            pilot1.setIsOtaku(false);
-            pilot1.setMaxGForce(7.0f);
-
-            // FK
-            pilot1.setPilotada(nauCombat1);
-            nauCombat1.setPilotAeronau(pilot1);
-            System.out.println("Pilot: " + pilot1.toString());
-
-            logger.trace("Persistim l'estat dels objectes");
-
-            logger.info("Persistint Nau de Combat...");
-            singleton.getInstance().getSessio().persist(nauCombat1);
-
-            logger.info("Persistint Pilot...");
-            singleton.getInstance().getSessio().persist(pilot1);
-
-            Combat c1 = new Combat(true, 0, true, 0f, "C1", 0f, new Date(2000, 2, 25), Boolean.FALSE, pilot1);
-            singleton.getInstance().getSessio().persist(c1);
-            Mecanic m1 = new Mecanic("avions", 10f, c1, "sonic", 0F, null, true);
-            Mecanic m2 = new Mecanic("alas", 10f, c1, "mario", 0F, null, true);
-            Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0F, null, true);
-            Mecanic m4 = new Mecanic("aa", 10f, c1, "aa", 0F, null, true);
-
-            singleton.getInstance().getSessio().persist(m1);
-            singleton.getInstance().getSessio().persist(m2);
-            singleton.getInstance().getSessio().persist(m3);
-            singleton.getInstance().getSessio().persist(m4);
-
-            for (Mecanic mecanic : c1.getMecanics()) {
-                System.out.println(mecanic.getPilotada());
-            }
-
-            //singleton.getInstance().getSession().find(Combat.class, c1);
-            // fi test
-//            for (int i = 0; i < 1000; i++) {
+//            singleton.getInstance().getSessio().getTransaction().begin();
+//            Faker faker = new Faker();
 //
-//                singleton.getInstance().getSession().save(new Dron(faker.code().ean8(), faker.harryPotter().character()));
+//            // Test relacions Pilot-Pilotada (nau de combat)
+//            logger.trace("Creem objectes");
+//            Combat nauCombat1 = new Combat();
+//            nauCombat1.setNuclearPower(true);
+//            nauCombat1.setTotalAmmunition(12000);
+//            nauCombat1.setHasEjectoSeat(true);
+//            nauCombat1.setShellCapacity(12.7f);
+//            //nauCombat1.setFabricationNumber(123456);
+//            nauCombat1.setCorporation("Funny Bunny");
+//            nauCombat1.setEngineTorque(12.67f);
+////            nauCombat1.setAutodestructionDate(date);
+//            nauCombat1.setHasDeathLaser(Boolean.TRUE);
+//
+//            Pilot pilot1 = new Pilot();
+//            pilot1.setNickname("chimichurri");
+//            pilot1.setHealingSpeed(5.0f);
+//            //pilot1.setLastDrugTestDate(date);
+//            pilot1.setIsOtaku(false);
+//            pilot1.setMaxGForce(7.0f);
+//
+//            // FK
+//            pilot1.setPilotada(nauCombat1);
+//            nauCombat1.setPilotAeronau(pilot1);
+//            System.out.println("Pilot: " + pilot1.toString());
+//
+//            logger.trace("Persistim l'estat dels objectes");
+//
+//            logger.info("Persistint Nau de Combat...");
+//            singleton.getInstance().getSessio().persist(nauCombat1);
+//
+//            logger.info("Persistint Pilot...");
+//            singleton.getInstance().getSessio().persist(pilot1);
+//
+//            Combat c1 = new Combat(true, 0, true, 0f, "C1", 0f, new Date(2000, 2, 25), Boolean.FALSE, pilot1);
+//            singleton.getInstance().getSessio().persist(c1);
+//            Mecanic m1 = new Mecanic("avions", 10f, c1, "sonic", 0F, null, true);
+//            Mecanic m2 = new Mecanic("alas", 10f, c1, "mario", 0F, null, true);
+//            Mecanic m3 = new Mecanic("aceite", 10f, c1, "liugi", 0F, null, true);
+//            Mecanic m4 = new Mecanic("aa", 10f, c1, "aa", 0F, null, true);
+//
+//            singleton.getInstance().getSessio().persist(m1);
+//            singleton.getInstance().getSessio().persist(m2);
+//            singleton.getInstance().getSessio().persist(m3);
+//            singleton.getInstance().getSessio().persist(m4);
+//
+//            for (Mecanic mecanic : c1.getMecanics()) {
+//                System.out.println(mecanic.getPilotada());
 //            }
-            logger.info("Finalitzem transacció i desem a BBDD...");
-            singleton.getInstance().getSessio().getTransaction().commit();
-
-//            
-        } catch (ConstraintViolationException ex) {
-            if (singleton.getInstance().getSessio().getTransaction() != null) {
-                singleton.getInstance().getSessio().getTransaction().rollback();
-            }
-
-        } catch (HibernateException ex) {
-
-            logger.info("HibernateException..." + ex.getMessage());
-            if (singleton.getInstance().getSessio().getTransaction() != null) {
-                singleton.getInstance().getSessio().getTransaction().rollback();
-            }
-        }
+//
+//            //singleton.getInstance().getSession().find(Combat.class, c1);
+//            // fi test
+////            for (int i = 0; i < 1000; i++) {
+////
+////                singleton.getInstance().getSession().save(new Dron(faker.code().ean8(), faker.harryPotter().character()));
+////            }
+//            logger.info("Finalitzem transacció i desem a BBDD...");
+//            singleton.getInstance().getSessio().getTransaction().commit();
+//
+////            
+//        } catch (ConstraintViolationException ex) {
+//            if (singleton.getInstance().getSessio().getTransaction() != null) {
+//                singleton.getInstance().getSessio().getTransaction().rollback();
+//            }
+//
+//        } catch (HibernateException ex) {
+//
+//            logger.info("HibernateException..." + ex.getMessage());
+//            if (singleton.getInstance().getSessio().getTransaction() != null) {
+//                singleton.getInstance().getSessio().getTransaction().rollback();
+//            }
+//        }
     }
 
     public static void menuLlistarClasse(Scanner in, SingleSession singleton) {

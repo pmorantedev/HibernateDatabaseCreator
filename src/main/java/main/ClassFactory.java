@@ -87,21 +87,19 @@ public class ClassFactory implements TesteableFactory {
         Aeronau novaAeronau;
 
         //s'ha d'implementar javaFacker per fer caa clase diferent
-        if (tipus.getClass().equals(Combat.class)) {
-//            novaAeronau = new Combat(true, 0, true, 0, "test1", 0, null, Boolean.FALSE, new Pilot(
-//                    "nikname1", 0.1f, null, true, Float.MAX_VALUE));
-
-            novaAeronau = new Combat(faker.bool().bool(), faker.number().numberBetween(0, 10000), faker.bool().bool(),
+        if (Combat.class.isAssignableFrom(tipus)) {
+            novaAeronau = new Combat(faker.bool().bool(), faker.number().numberBetween(1, 10000), faker.bool().bool(),
                     r.nextFloat() * 500.0f, faker.company().name(), r.nextFloat() * 100.0f,
-                    new Date(faker.date().future(r.nextInt(), TimeUnit.DAYS).getTime()),
-                    faker.bool().bool(), (Pilot) soldatFactory(Pilot.class)
+                    new Date(faker.date().future(r.nextInt(2050), TimeUnit.DAYS).getTime()),
+                    faker.bool().bool(),
+                    (Pilot) soldatFactory(Pilot.class)
             );
-        } else if (tipus.getClass().equals(Transport.class)) {
+        } else if (Transport.class.isAssignableFrom(tipus)) {
             novaAeronau = new Transport(r.nextInt(1000), faker.bool().bool(), r.nextFloat() * 500.0f, faker.company().name(), r.nextFloat() * 100.0f,
                     new Date(faker.date().future(r.nextInt(10), TimeUnit.DAYS).getTime()),
                     faker.bool().bool(), (Pilot) soldatFactory(Pilot.class));
-        } else if (tipus.getClass().equals(Transport.class)) {
-            novaAeronau = new Dron(r.nextFloat() * 5000.0f, faker.bool().bool(), faker.number().numberBetween(0, 5000), faker.company().name(),
+        } else if (Dron.class.isAssignableFrom(tipus)) {
+            novaAeronau = new Dron(r.nextFloat() * 5000.0f, faker.bool().bool(), faker.number().numberBetween(1, 5000), faker.company().name(),
                     r.nextFloat() * 100.0f, new Date(faker.date().future(r.nextInt(10), TimeUnit.DAYS).getTime()),
                     faker.bool().bool());
         } else {
@@ -174,21 +172,21 @@ public class ClassFactory implements TesteableFactory {
 
         Soldat nouSoldat;
         Pilotada pilotada;
-        if (r.nextInt(1) == 0) {
-            pilotada = (Pilotada) aeronauFactory(Combat.class);
-        } else {
-            pilotada = (Pilotada) aeronauFactory(Transport.class);
-        }
 
         //s'ha d'implementar javaFacker per fer caa clase diferent
-        if (tipus.getClass().equals(Mecanic.class)) {
+        if (Mecanic.class.isAssignableFrom(tipus)) {
+            if (r.nextInt(1) == 0) {
+                pilotada = (Pilotada) aeronauFactory(Combat.class);
+            } else {
+                pilotada = (Pilotada) aeronauFactory(Transport.class);
+            }
             nouSoldat = new Mecanic(faker.company().profession(),
                     r.nextFloat() * 100.0f, pilotada,
                     faker.funnyName().name(), r.nextFloat() * 10.0f,
                     new Date(faker.date().past(r.nextInt(10), TimeUnit.DAYS).getTime()),
                     faker.bool().bool());
 
-        } else if (tipus.getClass().equals(Pilot.class)) {
+        } else if (Pilot.class.isAssignableFrom(tipus)) {
             //un pilot no implementa una pilotada?
             nouSoldat = new Pilot(faker.funnyName().name(), r.nextFloat() * 10.0f,
                     new Date(faker.date().past(r.nextInt(10), TimeUnit.DAYS).getTime()),
