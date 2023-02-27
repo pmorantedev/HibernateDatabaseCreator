@@ -2,6 +2,7 @@ package entitats;
 
 import interficies.TesteableEntity;
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -54,7 +55,7 @@ public class Missio implements TesteableEntity, Serializable {
     @Column(name = "accomplished")
     private boolean accomplished;
 
-    @ManyToMany(mappedBy = "missions")
+    @ManyToMany(mappedBy = "missions", cascade = CascadeType.ALL)
     @Column(length = 8)
     private List<Aeronau> aeronaus = new ArrayList<>();
 

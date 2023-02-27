@@ -1,6 +1,7 @@
 package main;
 
 import com.github.javafaker.Faker;
+import entitats.Aeronau;
 import entitats.Combat;
 import entitats.Dron;
 import entitats.Mecanic;
@@ -20,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 import main.SingleSession;
+import org.hibernate.JDBCException;
 
 /**
  * JavaFX App
@@ -30,8 +32,13 @@ public class App {
 
     public static void main(String[] args) {
 
-        SingleSession singleton = SingleSession.getInstance(true);
+        SingleSession singleton = SingleSession.getInstance();
 
+//        Faker faker = new Faker();
+//        for (int i = 0; i < 100; i++) {
+//            //System.out.println(faker.aviation().aircraft());
+//            System.out.println(faker.esports().game());
+//        }
         menu(singleton);
 
     }
@@ -68,7 +75,7 @@ public class App {
                     menuLlistarClasse(in, singleton);
                     break;
                 case 3:
-                    menuEliminarClasse(in);
+                    menuEliminarClasse(in, singleton);
                     break;
                 case 4:
                     logger.info("Gràcies per utilitzar el nostre programa. Fins aviat!" + "\n");
@@ -140,7 +147,7 @@ public class App {
             nauCombat1.setHasEjectoSeat(true);
             nauCombat1.setShellCapacity(12.7f);
             //nauCombat1.setFabricationNumber(123456);
-            nauCombat1.setCorporation("Funny Bunny"); 
+            nauCombat1.setCorporation("Funny Bunny");
             nauCombat1.setEngineTorque(12.67f);
 //            nauCombat1.setAutodestructionDate(date);
             nauCombat1.setHasDeathLaser(Boolean.TRUE);
@@ -233,7 +240,7 @@ public class App {
                     }
                 } while (ok != true);
             }
-            
+
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcioMenuLlistarClasse) {
@@ -242,19 +249,19 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Combat combat = singleton.getSessio().get(Combat.class, i);
                         if (combat != null) {
-                            
+
                             CriteriaBuilder cb = singleton.getSessio().getCriteriaBuilder();
                             CriteriaQuery<Mecanic> cqm = cb.createQuery(Mecanic.class);
                             Root<Mecanic> root = cqm.from(Mecanic.class);
                             cqm.where(cb.equal(root.get("pilotada"), combat.getFabricationNumber()));
                             List<Mecanic> list = singleton.getSessio().createQuery(cqm).getResultList();
-                            
+
                             CriteriaQuery<Missio> cqmissio = cb.createQuery(Missio.class);
                             Root<Missio> rootmissio = cqmissio.from(Missio.class);
                             Predicate predicate = rootmissio.get("aeronaus").in(combat.getMissions());
                             cqmissio.where(predicate);
                             List<Missio> listmissions = singleton.getSessio().createQuery(cqmissio).getResultList();
-                            
+
                             logger.info(combat.toString() + "\n          Mecànics: " + list + "\n          Missions: " + listmissions);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
@@ -266,14 +273,14 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Dron dron = singleton.getSessio().get(Dron.class, i);
                         if (dron != null) {
-                            
+
                             CriteriaBuilder cb = singleton.getSessio().getCriteriaBuilder();
                             CriteriaQuery<Missio> cqmissio = cb.createQuery(Missio.class);
                             Root<Missio> rootmissio = cqmissio.from(Missio.class);
                             Predicate predicate = rootmissio.get("aeronaus").in(dron.getMissions());
                             cqmissio.where(predicate);
                             List<Missio> listmissions = singleton.getSessio().createQuery(cqmissio).getResultList();
-                            
+
                             logger.info(dron.toString() + "\n          Missions: " + listmissions);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
@@ -285,9 +292,9 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Mecanic mecanic = singleton.getSessio().get(Mecanic.class, i);
                         if (mecanic != null) {
-                            
+
                             Pilotada pilotada = singleton.getSessio().get(Pilotada.class, mecanic.getPilotada());
-                            
+
 //                            CriteriaBuilder cb = singleton.getSessio().getCriteriaBuilder();
 //                            
 //                            CriteriaQuery<Pilotada> cqpilotada = cb.createQuery(Pilotada.class);
@@ -307,27 +314,27 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Missio missio = singleton.getSessio().get(Missio.class, i);
                         if (missio != null) {
-                            
+
                             CriteriaBuilder cb = singleton.getSessio().getCriteriaBuilder();
-                            
+
                             CriteriaQuery<Combat> cqm = cb.createQuery(Combat.class);
                             Root<Combat> root = cqm.from(Combat.class);
                             Predicate predicate = root.get("aeronaus").in(missio.getAeronaus());
                             cqm.where(predicate);
                             List<Combat> list = singleton.getSessio().createQuery(cqm).getResultList();
-                            
+
                             CriteriaQuery<Dron> cqdron = cb.createQuery(Dron.class);
                             Root<Dron> rootdron = cqdron.from(Dron.class);
                             Predicate predicatedron = rootdron.get("aeronaus").in(missio.getAeronaus());
                             cqdron.where(predicatedron);
                             List<Dron> listdrons = singleton.getSessio().createQuery(cqdron).getResultList();
-                            
+
                             CriteriaQuery<Transport> cqtransport = cb.createQuery(Transport.class);
                             Root<Transport> roottransport = cqtransport.from(Transport.class);
                             Predicate predicatetransport = roottransport.get("aeronaus").in(missio.getAeronaus());
                             cqtransport.where(predicatetransport);
                             List<Transport> listransport = singleton.getSessio().createQuery(cqtransport).getResultList();
-                            
+
                             logger.info(missio.toString() + "\n          Dron: " + listdrons + "\n          Aeronau Pilotada de Transport: " + listransport + "\n          Aeronua Pilotada de Combat: " + list);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
@@ -339,7 +346,7 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Pilot pilot = singleton.getSessio().get(Pilot.class, i);
                         if (pilot != null) {
-                            
+
                             Pilotada pilotada = singleton.getSessio().get(Pilotada.class, pilot.getPilotada());
 //                            CriteriaBuilder cb = singleton.getSessio().getCriteriaBuilder();
 //                            
@@ -347,7 +354,7 @@ public class App {
 //                            Root<Pilotada> root = cqp.from(Pilotada.class);
 //                            cqp.where(cb.equal(root.get("pilot"), pilot.getOperatingNumber()));
 //                            List<Pilotada> list = singleton.getSessio().createQuery(cqp).getResultList();
-                            
+
                             logger.info(pilot.toString() + "\n          Pilotada: " + pilotada);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
@@ -359,27 +366,27 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Transport transport = singleton.getSessio().get(Transport.class, i);
                         if (transport != null) {
-                            
+
                             Pilot pilot = singleton.getSessio().byNaturalId(Pilot.class).using("nauPilotada_id", transport.getFabricationNumber()).load();
-                            
+
                             CriteriaBuilder cb = singleton.getSessio().getCriteriaBuilder();
-                            
+
                             CriteriaQuery<Mecanic> cqm = cb.createQuery(Mecanic.class);
                             Root<Mecanic> root = cqm.from(Mecanic.class);
                             cqm.where(cb.equal(root.get("pilotada"), transport.getFabricationNumber()));
                             List<Mecanic> list = singleton.getSessio().createQuery(cqm).getResultList();
-                            
+
                             CriteriaQuery<Missio> cqmissio = cb.createQuery(Missio.class);
                             Root<Missio> rootmissio = cqmissio.from(Missio.class);
                             Predicate predicate = rootmissio.get("aeronaus").in(transport.getMissions());
                             cqmissio.where(predicate);
                             List<Missio> listmissions = singleton.getSessio().createQuery(cqmissio).getResultList();
-                            
+
                             logger.info(transport.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + list + "\n          Missions: " + listmissions);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
                         }
-                    }                    
+                    }
                     break;
                 case 7:
                     break;
@@ -391,7 +398,7 @@ public class App {
         } while (opcioMenuLlistarClasse != 7);
     }
 
-    public static void menuEliminarClasse(Scanner in) {
+    public static void menuEliminarClasse(Scanner in, SingleSession singleton) {
         int opcioMenuEliminarClasse = 0;
 
         do {
@@ -402,26 +409,65 @@ public class App {
 
             opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);
 
+            boolean ok = false;
+            int idInicial = 0, idFinal = 0;
+            if (opcioMenuEliminarClasse != 7) {
+                do {
+                    logger.info(">> Introdueix l'identificador inicial");
+                    idInicial = utils.ValidadorOpcioMenu.validador(in);
+
+                    logger.info(">> Introdueix l'identificador final");
+                    idFinal = utils.ValidadorOpcioMenu.validador(in);
+
+                    if (idFinal < idInicial) {
+                        logger.info("L'identificador final no pot ser més petit que l'inicial.\n");
+                    } else {
+                        ok = true;
+                    }
+                } while (ok != true);
+            }
+
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcioMenuEliminarClasse) {
+                //Classe Combat
                 case 1:
-                    logger.info("Classe combat eliminada!");
+                    utils.EliminarAeronau.eliminarAeronau(singleton, idInicial, idFinal);
                     break;
+                //Classe Dron
                 case 2:
-                    logger.info("Classe dron eliminada!");
+                    utils.EliminarAeronau.eliminarAeronau(singleton, idInicial, idFinal);
                     break;
+                //Classe Mecànic
                 case 3:
-                    logger.info("Classe mecànic eliminada!");
+                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal);
                     break;
+                //Classe Missió
                 case 4:
-                    logger.info("Classe missió eliminada!");
+                    singleton.getSessio().beginTransaction();
+                    for (int i = idInicial; i <= idFinal; i++) {
+                        Missio missio = singleton.getSessio().get(Missio.class, i);
+                        if (missio != null) {
+                            try {
+                                singleton.getSessio().remove(missio);
+                                singleton.getSessio().flush();
+                                logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString());
+                            } catch (JDBCException ex) {
+                                singleton.getSessio().getTransaction().rollback();
+                            }
+                        } else {
+                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                        }
+                    }
+                    singleton.getSessio().getTransaction().commit();
                     break;
+                //Classe Pilot
                 case 5:
-                    logger.info("Classe pilot eliminada!");
+                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal);
                     break;
+                //Classe Transport
                 case 6:
-                    logger.info("Classe transport eliminada!");
+                    utils.EliminarAeronau.eliminarAeronau(singleton, idInicial, idFinal);
                     break;
                 case 7:
                     break;

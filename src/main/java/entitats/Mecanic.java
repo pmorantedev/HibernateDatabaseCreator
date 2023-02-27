@@ -2,6 +2,7 @@ package entitats;
 
 import interficies.TesteableEntity;
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     @Column(name = "repairSpeed", nullable = false)
     private Float repairSpeed;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_pilotada")
     private Pilotada pilotada;
 
