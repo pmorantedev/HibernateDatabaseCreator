@@ -26,13 +26,11 @@ public final class SingleSession {                                           // 
         InitSessionFactory();
     }
 
-    /**
-     * Mètode per configurar la sessió d'Hibernate: defineix la connexió i crea
-     * i obre la sessió.
-     *
-     * @author Txell Llanas: Creació/Implementació
-     */
-    private void InitSessionFactory() {
+    private SingleSession(Boolean user) {
+        InitSessionFactory(user);
+    }
+
+    private void InitSessionFactory(Boolean user) {
         Scanner in = new Scanner(System.in);
         Boolean error = false;
         Boolean loginError = false;
@@ -40,13 +38,13 @@ public final class SingleSession {                                           // 
 
         do {
             // Configurar la sessió d'Hibernate
-        Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
+            Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
             logger.info("  _      ____   _____ _____ _   _ \n"
-                + " | |    / __ \\ / ____|_   _| \\ | |\n"
-                + " | |   | |  | | |  __  | | |  \\| |\n"
-                + " | |   | |  | | | |_ | | | | . ` |\n"
-                + " | |___| |__| | |__| |_| |_| |\\  |\n"
-                + " |______\\____/ \\_____|_____|_| \\_|\n");
+                    + " | |    / __ \\ / ____|_   _| \\ | |\n"
+                    + " | |   | |  | | |  __  | | |  \\| |\n"
+                    + " | |   | |  | | | |_ | | | | . ` |\n"
+                    + " | |___| |__| | |__| |_| |_| |\\  |\n"
+                    + " |______\\____/ \\_____|_____|_| \\_|\n");
             do {
                 logger.info("\n" + ">> Introdueix el nom d'usuari: ");
                 username = in.nextLine();
@@ -95,7 +93,20 @@ public final class SingleSession {                                           // 
                 loginError = true;
             }
         } while (loginError);
-        
+
+        this.session = sessionFactory.openSession();
+    }
+
+    /**
+     * Mètode per configurar la sessió d'Hibernate: defineix la connexió i crea
+     * i obre la sessió.
+     *
+     * @author Txell Llanas: Creació/Implementació
+     */
+    private void InitSessionFactory() {
+        Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
+        this.sessionFactory = configuration.buildSessionFactory();
+
         this.session = sessionFactory.openSession();
 
     }
@@ -111,6 +122,14 @@ public final class SingleSession {                                           // 
     public static SingleSession getInstance() {
         if (instancia == null) {
             instancia = new SingleSession();
+        }
+
+        return instancia;
+    }
+    
+    public static SingleSession getInstance(Boolean user) {
+        if (instancia == null) {
+            instancia = new SingleSession(user);
         }
 
         return instancia;
@@ -135,7 +154,7 @@ public final class SingleSession {                                           // 
     public void closeSessio() {
         session.close();
     }
-    
+
     /**
      * Mètode per tancar la sessió actual d'Hibernate.
      *

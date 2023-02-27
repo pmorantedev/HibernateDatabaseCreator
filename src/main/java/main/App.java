@@ -30,7 +30,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        SingleSession singleton = SingleSession.getInstance();
+        SingleSession singleton = SingleSession.getInstance(true);
 
         menu(singleton);
 
