@@ -44,7 +44,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     @ColumnDefault("10000.0")
     @Column(name = "missionBudget", nullable = false)
-    private float missionBudget;
+    private Float missionBudget;
 
     @Column(name = "limitDate", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -62,7 +62,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     }
 
-    public Missio(int cosmicMissionCode, String targetName, float missionBudget, Date limitDate, boolean accomplished) {
+    public Missio(int cosmicMissionCode, String targetName, Float missionBudget, Date limitDate, boolean accomplished) {
         this.cosmicMissionCode = cosmicMissionCode;
         this.targetName = targetName;
         this.missionBudget = missionBudget;

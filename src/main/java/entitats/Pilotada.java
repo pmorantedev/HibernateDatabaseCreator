@@ -27,7 +27,7 @@ public abstract class Pilotada extends Aeronau {
     @Column(nullable = false)
     private boolean hasEjectoSeat;
     @Column(nullable = false)
-    private float shellCapacity;
+    private Float shellCapacity;
 
     // (RF04) Cardinalitat No Propietària (Costat invers)
     @OneToOne(mappedBy = "pilotada", fetch = FetchType.LAZY)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
@@ -41,11 +41,20 @@ public abstract class Pilotada extends Aeronau {
 
     }
 
-    public Pilotada(boolean hasEjectoSeat, float shellCapacity, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser, Pilot pilot) {
+    public Pilotada(boolean hasEjectoSeat, Float shellCapacity, String corporation,
+            Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser,
+            Pilot pilot) {
         super(corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.hasEjectoSeat = hasEjectoSeat;
         this.shellCapacity = shellCapacity;
         this.pilot = pilot;
+    }
+
+    public Pilotada(boolean hasEjectoSeat, Float shellCapacity, String corporation,
+            Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+        super(corporation, engineTorque, autodestructionDate, hasDeathLaser);
+        this.hasEjectoSeat = hasEjectoSeat;
+        this.shellCapacity = shellCapacity;
     }
 
     // Getters, Setters
@@ -82,7 +91,7 @@ public abstract class Pilotada extends Aeronau {
         return hasEjectoSeat;
     }
 
-    public float getShellCapacity() {
+    public Float getShellCapacity() {
         return shellCapacity;
     }
 
@@ -90,7 +99,7 @@ public abstract class Pilotada extends Aeronau {
         this.hasEjectoSeat = hasEjectoSeat;
     }
 
-    public void setShellCapacity(float shellCapacity) {
+    public void setShellCapacity(Float shellCapacity) {
         this.shellCapacity = shellCapacity;
     }
 

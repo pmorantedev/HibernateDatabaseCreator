@@ -41,7 +41,7 @@ public abstract class Soldat implements Serializable {
     
     @ColumnDefault("5.0")
     @Column(name="healing_speed", nullable = false)
-    private float healingSpeed;
+    private Float healingSpeed;
     
     @Column(name="last_drug_test_date", nullable = true)
     @Temporal(TemporalType.DATE)
@@ -54,7 +54,7 @@ public abstract class Soldat implements Serializable {
     public Soldat() {
     }
 
-    public Soldat(String nickname, float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
+    public Soldat(String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
         this.nickname = nickname;
         this.healingSpeed = healingSpeed;
         this.lastDrugTestDate = lastDrugTestDate;
@@ -77,11 +77,11 @@ public abstract class Soldat implements Serializable {
         this.nickname = nickname;
     }
 
-    public float getHealingSpeed() {
+    public Float getHealingSpeed() {
         return healingSpeed;
     }
 
-    public void setHealingSpeed(float healingSpeed) {
+    public void setHealingSpeed(Float healingSpeed) {
         this.healingSpeed = healingSpeed;
     }
 
