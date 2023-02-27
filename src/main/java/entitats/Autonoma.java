@@ -4,7 +4,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import java.sql.Date;
 
@@ -26,7 +25,8 @@ public abstract class Autonoma extends Aeronau {
         
     }
     
-    public Autonoma(boolean invisibilityPower, int batteryAutonomy, String corporation, Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
+    public Autonoma(boolean invisibilityPower, int batteryAutonomy, 
+                    String corporation, Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         super(corporation, engineTorque, autodestructionDate, hasDeathLaser);
         this.invisibilityPower = invisibilityPower;
         this.batteryAutonomy = batteryAutonomy;

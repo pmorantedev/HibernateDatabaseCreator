@@ -11,7 +11,6 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -43,14 +42,16 @@ public abstract class Aeronau {
     private Date autodestructionDate;
     @Column(nullable = false)
     private Boolean hasDeathLaser;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "Aeronau_Missio",
-            joinColumns = {
-                @JoinColumn(name = "aeronauFabricationNumber")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "cosmicMissionCode")}
-    )
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(
+//            name = "Aeronau_Missio",
+//            joinColumns = {
+//                @JoinColumn(name = "aeronauFabricationNumber")},
+//            inverseJoinColumns = {
+//                @JoinColumn(name = "cosmicMissionCode")}
+//    )
+    @ManyToMany(mappedBy = "aeronaus")
+
     List<Missio> missions = new ArrayList<>();
 
     public Aeronau() {

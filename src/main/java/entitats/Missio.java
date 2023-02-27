@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -16,8 +18,6 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.ColumnDefault;
 import java.util.List;
 import java.util.ArrayList;
@@ -55,7 +55,15 @@ public class Missio implements TesteableEntity, Serializable {
     @Column(name = "accomplished")
     private boolean accomplished;
 
-    @ManyToMany(mappedBy = "missions", cascade = CascadeType.ALL)
+//  @ManyToMany(mappedBy = "missions")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "Aeronau_Missio",
+            joinColumns = {
+                @JoinColumn(name = "cosmicMissionCode")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "aeronauFabricationNumber")}
+    )
     @Column(length = 8)
     private List<Aeronau> aeronaus = new ArrayList<>();
 

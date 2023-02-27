@@ -54,6 +54,7 @@ public class ClassFactory implements TesteableFactory {
     public Aeronau addMissionsToAeronau(List<Missio> lm, Aeronau a) throws Exception {
         try {
             a.setMissions(lm);
+            System.out.println(">> Nº Missions...(2)" + lm.size());
             return a;
         } catch (Exception e) {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -64,6 +65,7 @@ public class ClassFactory implements TesteableFactory {
     public Missio addAeronausToMissio(List<Aeronau> la, Missio m) throws Exception {
         try {
             m.setAeronaus(la);
+            System.out.println(">> Nº Aeronaus...(15)" + la.size());
             return m;
         } catch (Exception e) {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBod
