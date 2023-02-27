@@ -40,7 +40,7 @@ public class Missio implements TesteableEntity, Serializable {
     private int cosmicMissionCode;
 
     @Basic(optional = false)
-    @Column(name = "targetName", length = 10, nullable = false, unique = true)
+    @Column(name = "targetName", nullable = false, unique = true)
     private String targetName;
 
     @ColumnDefault("10000.0")
