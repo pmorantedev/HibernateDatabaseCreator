@@ -43,7 +43,7 @@ public abstract class Aeronau {
     private Date autodestructionDate;
     @Column(nullable = false)
     private Boolean hasDeathLaser;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "Aeronau_Missio",
             joinColumns = {

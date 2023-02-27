@@ -55,7 +55,7 @@ public class Missio implements TesteableEntity, Serializable {
     @Column(name = "accomplished")
     private boolean accomplished;
 
-    @ManyToMany(mappedBy = "missions", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "missions", cascade = CascadeType.MERGE)
     @Column(length = 8)
     private List<Aeronau> aeronaus = new ArrayList<>();
 
@@ -63,8 +63,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     }
 
-    public Missio(int cosmicMissionCode, String targetName, Float missionBudget, Date limitDate, boolean accomplished) {
-        this.cosmicMissionCode = cosmicMissionCode;
+    public Missio(String targetName, Float missionBudget, Date limitDate, boolean accomplished) {
         this.targetName = targetName;
         this.missionBudget = missionBudget;
         this.limitDate = limitDate;
@@ -123,48 +122,50 @@ public class Missio implements TesteableEntity, Serializable {
 
     @Override
     public Integer getAtributIdentificador() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return cosmicMissionCode;
     }
 
     @Override
     public String getAtributString() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return targetName;
     }
 
     @Override
     public Float getAtributFloat() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return missionBudget;
     }
 
     @Override
     public Date getAtributDate() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return limitDate;
     }
 
     @Override
     public Boolean getAtributBoolean() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return accomplished;
     }
 
     @Override
     public void setAtributString(String s) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.targetName = s;
     }
 
     @Override
     public void setAtributFloat(Float f) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.missionBudget = f;
     }
 
     @Override
     public void setAtributDate(Date d) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.limitDate = d;
     }
 
     @Override
     public void setAtributBoolean(Boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.accomplished = b;
     }
+    
+    
 
     @PrePersist
     @PreUpdate

@@ -129,10 +129,9 @@ public class ClassFactory implements TesteableFactory {
 
     @Override
     public Missio missioFactory() {
-        return new Missio(r.nextInt(999999), faker.food().spice(), r.nextFloat() * 10000.0f,
+        return new Missio(faker.food().spice(), r.nextFloat() * 10000.0f,
                 new Date(faker.date().future(r.nextInt(10) + 1, TimeUnit.DAYS).getTime()),
                 faker.bool().bool());
-//      throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
