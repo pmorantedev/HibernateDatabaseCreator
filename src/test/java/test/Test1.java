@@ -32,7 +32,7 @@ import org.junit.jupiter.api.TestInfo;
  *
  * @author manel
  * 
- * versió 22_23 1.1
+ * versió 22_23 1.2
  */
 public class Test1 {
     
