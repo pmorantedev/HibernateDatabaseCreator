@@ -32,7 +32,7 @@ public abstract class Pilotada extends Aeronau {
     private Float shellCapacity;
 
     // (RF04) Cardinalitat No Propietària (Costat invers)
-    @OneToOne(mappedBy = "pilotada", cascade = CascadeType.REMOVE)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
+    @OneToOne(cascade = CascadeType.ALL)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
     @JoinColumn(name = "pilot_id")
     private Pilot pilot;
 

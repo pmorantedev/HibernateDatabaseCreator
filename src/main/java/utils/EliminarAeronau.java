@@ -5,10 +5,14 @@
 package utils;
 
 import entitats.Aeronau;
+import java.util.Arrays;
+import java.util.List;
 import main.SingleSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import static org.hibernate.Hibernate.isInstance;
 import org.hibernate.JDBCException;
+import org.hibernate.stat.Statistics;
 
 /**
  *
@@ -18,22 +22,22 @@ public class EliminarAeronau {
     
     private static final Logger logger = LogManager.getLogger(LlistatMenuClasses.class);
     
-    public static void eliminarAeronau(SingleSession singleton, int idInicial, int idFinal){
-        singleton.getSessio().beginTransaction();
+    public static void eliminarAeronau(SingleSession singleton, int idInicial, int idFinal, Class<?> tipus){
+        singleton.getSessioUsuari().beginTransaction();
         for (int i = idInicial; i <= idFinal; i++) {
-            Aeronau combat = singleton.getSessio().get(Aeronau.class, i);
-            if (combat != null) {
+            Aeronau combat = singleton.getSessioUsuari().get(Aeronau.class, i);
+            if (combat != null && isInstance(combat, tipus)) {
                 try {
-                    singleton.getSessio().remove(combat);
-                    singleton.getSessio().flush();
-                    logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + combat.toString());
+                    singleton.getSessioUsuari().remove(combat);
+                    singleton.getSessioUsuari().flush();
+                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats: \n" + "   " + combat.toString() + "\n");
                 } catch (JDBCException ex) {
-                    singleton.getSessio().getTransaction().rollback();
+                    singleton.getSessioUsuari().getTransaction().rollback();
                 }
             } else {
-                logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
         }
-        singleton.getSessio().getTransaction().commit();
+        singleton.getSessioUsuari().getTransaction().commit();
     }
 }

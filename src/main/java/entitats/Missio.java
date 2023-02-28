@@ -56,7 +56,7 @@ public class Missio implements TesteableEntity, Serializable {
     private boolean accomplished;
 
 //  @ManyToMany(mappedBy = "missions")
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(
             name = "Aeronau_Missio",
             joinColumns = {

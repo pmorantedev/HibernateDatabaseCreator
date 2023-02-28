@@ -50,7 +50,7 @@ public abstract class Aeronau {
 //            inverseJoinColumns = {
 //                @JoinColumn(name = "cosmicMissionCode")}
 //    )
-    @ManyToMany(mappedBy = "aeronaus")
+    @ManyToMany(mappedBy = "aeronaus", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 
     List<Missio> missions = new ArrayList<>();
 

@@ -95,7 +95,7 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "Combat{"
+        return "Combat {"
                 + "fabricationNumber = " + super.getFabricationNumber()
                 + ", nuclearPower = " + nuclearPower
                 + ", totalAmmunition = " + totalAmmunition

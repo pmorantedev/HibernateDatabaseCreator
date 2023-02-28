@@ -32,8 +32,8 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
     
 
     // (RF04) Cardinalitat Propietària i dependent amb la classe 'Pilotada'
-    @OneToOne(cascade = CascadeType.ALL)                                      // cascade: enllaça les dades entre ambdues entitats (si eliminem la relació propietària, s'esborra les dades referenciades)
-    @JoinColumn(name = "nauPilotada_id")                                        // FK (Indica que la relació és la propietària i apunta a l'ID mostrat en aquest camp)
+    @OneToOne(mappedBy = "pilot", cascade = CascadeType.ALL)                                               // cascade: enllaça les dades entre ambdues entitats (si eliminem la relació propietària, s'esborra les dades referenciades)
+    //@JoinColumn(name = "nauPilotada_id")                                        // FK (Indica que la relació és la propietària i apunta a l'ID mostrat en aquest camp)
     private Pilotada pilotada;
 
     public Pilot() {

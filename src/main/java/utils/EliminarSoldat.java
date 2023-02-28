@@ -19,22 +19,22 @@ public class EliminarSoldat {
     private static final Logger logger = LogManager.getLogger(LlistatMenuClasses.class);
 
     public static void eliminarSoldat(SingleSession singleton, int idInicial, int idFinal) {
-        singleton.getSessio().beginTransaction();
+        singleton.getSessioUsuari().beginTransaction();
         for (int i = idInicial; i <= idFinal; i++) {
-            Soldat soldat = singleton.getSessio().get(Soldat.class, i);
+            Soldat soldat = singleton.getSessioUsuari().get(Soldat.class, i);
             if (soldat != null) {
                 try {
-                    singleton.getSessio().remove(soldat);
-                    singleton.getSessio().flush();
-                    logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + soldat.toString());
+                    singleton.getSessioUsuari().remove(soldat);
+                    singleton.getSessioUsuari().flush();
+                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats:\n" + soldat.toString());
                 } catch (JDBCException ex) {
-                    singleton.getSessio().getTransaction().rollback();
+                    singleton.getSessioUsuari().getTransaction().rollback();
                 }
             } else {
-                logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
         }
-        singleton.getSessio().getTransaction().commit();
+        singleton.getSessioUsuari().getTransaction().commit();
     }
 
 }

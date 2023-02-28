@@ -88,7 +88,7 @@ public class Transport extends Pilotada implements TesteableEntity, Serializable
     
     @Override
     public String toString() {
-        return "Combat{"
+        return "Transport {"
                 + "fabricationNumber = " + super.getFabricationNumber()
                 + ", itemsCapacity=" + itemsCapacity
                 + ", hasEjectoSeat = " + super.getHasEjectoSeat()

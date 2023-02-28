@@ -85,7 +85,7 @@ public class Dron extends Autonoma implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "Dron{" +
+        return "Dron {" +
                 "fabricationNumber = " + super.getFabricationNumber() +
                 ", meltingTemperature = " + meltingTemperature +
                 ", invisibilityPower = " + super.isInvisibilityPower() +
