@@ -111,17 +111,21 @@ public abstract class Aeronau {
     }
 
     public void setMissions(List<Missio> missions) {
-        this.missions = missions;
+        if (missions.size() > 2) {
+            throw new IllegalArgumentException("An Aeronau can have at most 2 missions");
+        } else {
+            this.missions = missions;
+        }
     }
     
     
 
-    @PrePersist
-    @PreUpdate
-    private void validateMissions() {
-        if (missions.size() > 2) {
-            throw new IllegalArgumentException("An Aeronau can have at most 2 missions");
-        }
-    }
+//    @PrePersist
+//    @PreUpdate
+//    private void validateMissions() {
+//        if (missions.size() > 2) {
+//            throw new IllegalArgumentException("An Aeronau can have at most 2 missions");
+//        }
+//    }
 
 }

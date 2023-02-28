@@ -64,7 +64,6 @@ public class Missio implements TesteableEntity, Serializable {
             inverseJoinColumns = {
                 @JoinColumn(name = "aeronauFabricationNumber")}
     )
-    @Column(length = 8)
     private List<Aeronau> aeronaus = new ArrayList<>();
 
     public Missio() {
@@ -83,10 +82,12 @@ public class Missio implements TesteableEntity, Serializable {
     }
 
     public void setAeronaus(List<Aeronau> aeronaus) {
-        this.aeronaus = aeronaus;
+        if (aeronaus.size() > 8) {
+            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
+        } else {
+            this.aeronaus = aeronaus;
+        }
     }
-    
-    
 
     public int getCosmicMissionCode() {
         return cosmicMissionCode;
@@ -172,16 +173,14 @@ public class Missio implements TesteableEntity, Serializable {
     public void setAtributBoolean(Boolean b) {
         this.accomplished = b;
     }
-    
-    
-
-    @PrePersist
-    @PreUpdate
-    private void validateAeronaus() {
-        if (aeronaus.size() > 8) {
-            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
-        }
-    }
+//
+//    @PrePersist
+//    @PreUpdate
+//    private void validateAeronaus() {
+//        if (aeronaus.size() > 8) {
+//            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
+//        }
+//    }
 
     @Override
     public String toString() {
