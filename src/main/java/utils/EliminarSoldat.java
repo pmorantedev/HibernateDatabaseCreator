@@ -18,6 +18,17 @@ public class EliminarSoldat {
 
     private static final Logger logger = LogManager.getLogger(LlistatMenuClasses.class);
 
+    /***
+     * Mètode que elimina un o més objectes de tipus Soldat i els objectes que 
+     * té associats.
+     * 
+     * @param singleton
+     * @param idInicial
+     * @param idFinal
+     * @param tipus 
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void eliminarSoldat(SingleSession singleton, int idInicial, int idFinal) {
         singleton.getSessioUsuari().beginTransaction();
         for (int i = idInicial; i <= idFinal; i++) {

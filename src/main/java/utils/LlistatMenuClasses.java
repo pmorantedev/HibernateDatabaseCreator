@@ -15,6 +15,11 @@ public class LlistatMenuClasses {
 
     private static final Logger logger = LogManager.getLogger(LlistatMenuClasses.class);
 
+    /***
+     * Mètode que retorna un llistat de classes per als menús.
+     * 
+     * @author Víctor García
+     */
     public static void retornaClasses() {
 
         logger.info("1. Combat" + "\n"

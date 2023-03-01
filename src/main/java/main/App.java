@@ -14,9 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.JDBCException;
 
-/**
- * JavaFX App
- */
 public class App {
 
     private static final Logger logger = LogManager.getLogger(App.class);
@@ -25,15 +22,17 @@ public class App {
 
         SingleSession singleton = SingleSession.getInstance();
 
-//        Faker faker = new Faker();
-//        for (int i = 0; i < 100; i++) {
-//            //System.out.println(faker.aviation().aircraft());
-//            System.out.println(faker.esports().game());
-//        }
         menu(singleton);
 
     }
 
+    /***
+     * Menú principal de l'aplicació on l'usuari pot escollir què vol fer o 
+     * tancar-la.
+     * 
+     * @param singleton
+     * @author Víctor García
+     */
     public static void menu(SingleSession singleton) {
 
         Scanner in = new Scanner(System.in);
@@ -81,6 +80,20 @@ public class App {
         } while (opcio != 4);
     }
 
+    /***
+     * (RF18) - L’usuari determina quina classe vol generar i la quantitat 
+     * d’aquesta. Si una entitat té entitats associades, es generen de forma 
+     * automàtica i en quantitats majors de zero a escollir per l’usuari. 
+     * Es mostra per pantalla a l’usuari el detall dels registres afectats.
+
+     * 
+     * @param in 
+     * @param singleton 
+     * @author Pablo Morante
+     * @author Víctor García
+     * @author Izan Jiménez 
+     * @author Txell Llanas
+     */
     public static void menuGenerarClasse(Scanner in, SingleSession singleton) {
 
         int opcioMenuGenerarClasse = 0;
@@ -131,6 +144,16 @@ public class App {
         } while (opcioMenuGenerarClasse != 7);
     }
 
+    /***
+     * (RF18) - L’usuari determina quina classe vol llistar a través del menú  
+     * i els identificadors inicials i finals d’aquesta. Si una entitat té 
+     * entitats associades, també es mostren.
+     * 
+     * @param in 
+     * @param singleton 
+     * @author Pablo Morante
+     * @author Víctor García
+     */
     public static void menuLlistarClasse(Scanner in, SingleSession singleton) {
         int opcioMenuLlistarClasse = 0;
 
@@ -265,6 +288,17 @@ public class App {
         } while (opcioMenuLlistarClasse != 7);
     }
 
+       /***
+     * (RF18) - L’usuari determina quina classe vol eliminar a través del menú 
+     * i els identificadors inicial i final. Si una instància té instàncies 
+     * associades, s'eliminen. També es mostra a l’usuari per pantalla el detall 
+     * dels registres afectats.
+     * 
+     * @param in 
+     * @param singleton 
+     * @author Pablo Morante
+     * @author Víctor García
+     */ 
     public static void menuEliminarClasse(Scanner in, SingleSession singleton) {
         int opcioMenuEliminarClasse = 0;
 
