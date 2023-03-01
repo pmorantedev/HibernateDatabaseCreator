@@ -83,7 +83,11 @@ public abstract class Pilotada extends Aeronau {
     }
 
     public void setMecanics(List<Mecanic> mecanics) {
-        this.mecanics = mecanics;
+        if (mecanics.size() > 2) {
+            throw new IllegalArgumentException("Una aeronau pot tenir com a màxim 2 mecànics");
+        } else {
+            this.mecanics = mecanics;
+        }
     }
 
     public List<Mecanic> getMecanics() {
@@ -104,14 +108,6 @@ public abstract class Pilotada extends Aeronau {
 
     public void setShellCapacity(Float shellCapacity) {
         this.shellCapacity = shellCapacity;
-    }
-    
-    @PrePersist
-    @PreUpdate
-    private void valideMecanics() {
-        if (mecanics.size() > 2) {
-            throw new IllegalArgumentException("An Aeronau can have at most 2 mecanics");
-        }
     }
 
 }

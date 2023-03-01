@@ -1,6 +1,5 @@
 package main;
 
-import com.github.javafaker.Faker;
 import entitats.Aeronau;
 import entitats.Combat;
 import entitats.Dron;
@@ -9,25 +8,11 @@ import entitats.Missio;
 import entitats.Pilot;
 import entitats.Pilotada;
 import entitats.Transport;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
-import main.SingleSession;
 import org.hibernate.JDBCException;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
-import org.hibernate.query.Query;
-import org.hibernate.transform.Transformers;
 
 /**
  * JavaFX App
@@ -168,7 +153,7 @@ public class App {
                     idFinal = utils.ValidadorOpcioMenu.validador(in);
 
                     if (idFinal < idInicial) {
-                        logger.info("L'identificador final no pot ser més petit que l'inicial.\n");
+                        logger.info("L'identificador final no pot ser més petit que l'inicial!!\n");
                     } else {
                         ok = true;
                     }
@@ -188,9 +173,9 @@ public class App {
                             List<Missio> missions = combat.getMissions();
                             Pilot pilot = combat.getPilotAeronau();
 
-                            logger.info(combat.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + mecanics + "\n          Missions: " + missions);
+                            logger.info("- " + combat.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -202,9 +187,9 @@ public class App {
                             
                             List<Missio> missions = dron.getMissions();
 
-                            logger.info(dron.toString() + "\n          Missions: " + missions);
+                            logger.info("- " + dron.toString() + "\n          · Missions: " + missions + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -215,9 +200,9 @@ public class App {
                         if (mecanic != null) {
 
                             Pilotada pilotada = mecanic.getPilotada();
-                            logger.info(mecanic.toString() + "\n          Pilotada: " + pilotada);
+                            logger.info("- " + mecanic.toString() + "\n          · Pilotada: " + pilotada + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -229,9 +214,9 @@ public class App {
 
                             List<Aeronau> aeronaus = missio.getAeronaus();
 
-                            logger.info(missio.toString() + "\n          Aeronau Pilotades associades: " + aeronaus);
+                            logger.info("- " + missio.toString() + "\n          · Aeronau pilotades associades: " + aeronaus + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -240,12 +225,15 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Pilot pilot = singleton.getSessioUsuari().get(Pilot.class, i);
                         if (pilot != null) {
-
+                            
                             Pilotada pilotada = pilot.getPilotada();
-
-                            logger.info(pilot.toString() + "\n          Pilotada: " + pilotada);
+                            if (pilot.getPilotada() == null){
+                                pilot.setPilotada(new Combat());
+                            }
+                            
+                            logger.info("- " + pilot.toString() + "\n          · Pilotada: " + pilotada + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -260,9 +248,9 @@ public class App {
                             List<Missio> missions = transport.getMissions();
                             List<Mecanic> mecanics = transport.getMecanics();
 
-                            logger.info(transport.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + mecanics + "\n          Missions: " + missions);
+                            logger.info("- " + transport.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
