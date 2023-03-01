@@ -6,7 +6,6 @@ import java.util.Scanner;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.stat.Statistics;
 
 /**
  * Classe 'SingletonSession' que representa una única sessió d'Hibernate.

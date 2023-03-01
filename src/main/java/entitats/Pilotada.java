@@ -4,18 +4,14 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.annotations.BatchSize;
 
 /**
  *
