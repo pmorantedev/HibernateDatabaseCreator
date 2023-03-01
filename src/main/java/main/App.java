@@ -53,25 +53,30 @@ public class App {
                     + "4. Sortir" + "\n\n"
                     + ">> Escull una de les opcions anteriors:");
 
-            opcio = (utils.ValidadorOpcioMenu.validador(in));
+            opcio = (utils.ValidadorOpcioMenu.validador(in));                   //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
 
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcio) {
+                //Obre menú per generar classes
                 case 1:
                     menuGenerarClasse(in, singleton);
                     break;
+                //Obre menú per llistar classes
                 case 2:
                     menuLlistarClasse(in, singleton);
                     break;
+                //Obre menú per eliminar classes
                 case 3:
                     menuEliminarClasse(in, singleton);
                     break;
+                //Tanca l'aplicació
                 case 4:
                     logger.info("Gràcies per utilitzar el nostre programa. Fins aviat!" + "\n");
                     singleton.closeSessio();
                     singleton.closeFactory();
                     System.exit(0);
+                //Es mostra si l'usuari introdueix un número que no és vàlid
                 default:
                     logger.info("Número introduït no vàlid!!" + "\n"
                             + "Introdueix un dels números del menú");
@@ -104,7 +109,7 @@ public class App {
                     + "Quina classe vols generar?");
             utils.LlistatMenuClasses.retornaClasses();
 
-            opcioMenuGenerarClasse = utils.ValidadorOpcioMenu.validador(in);
+            opcioMenuGenerarClasse = utils.ValidadorOpcioMenu.validador(in);    //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
 
             logger.info("------------------------------------------------------------------------" + "\n");
 
@@ -163,7 +168,7 @@ public class App {
                     + "Quina classe vols llistar?");
             utils.LlistatMenuClasses.retornaClasses();
 
-            opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);
+            opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);    //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
 
             boolean ok = false;
             int idInicial = 0, idFinal = 0;
@@ -308,7 +313,7 @@ public class App {
                     + "Quina classe vols eliminar?");
             utils.LlistatMenuClasses.retornaClasses();
 
-            opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);
+            opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);   //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
 
             boolean ok = false;
             int idInicial = 0, idFinal = 0;
