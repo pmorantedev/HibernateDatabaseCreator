@@ -183,20 +183,12 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Combat combat = singleton.getSessioUsuari().get(Combat.class, i);
                         if (combat != null) {
+                            
+                            List<Mecanic> mecanics = combat.getMecanics();
+                            List<Missio> missions = combat.getMissions();
+                            Pilot pilot = combat.getPilotAeronau();
 
-                            CriteriaBuilder cb = singleton.getSessioUsuari().getCriteriaBuilder();
-                            CriteriaQuery<Mecanic> cqm = cb.createQuery(Mecanic.class);
-                            Root<Mecanic> root = cqm.from(Mecanic.class);
-                            cqm.where(cb.equal(root.get("pilotada"), combat.getFabricationNumber()));
-                            List<Mecanic> list = singleton.getSessioUsuari().createQuery(cqm).getResultList();
-
-                            CriteriaQuery<Missio> cqmissio = cb.createQuery(Missio.class);
-                            Root<Missio> rootmissio = cqmissio.from(Missio.class);
-                            Predicate predicate = rootmissio.get("aeronaus").in(combat.getMissions());
-                            cqmissio.where(predicate);
-                            List<Missio> listmissions = singleton.getSessioUsuari().createQuery(cqmissio).getResultList();
-
-                            logger.info(combat.toString() + "\n          Mecànics: " + list + "\n          Missions: " + listmissions);
+                            logger.info(combat.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + mecanics + "\n          Missions: " + missions);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
                         }
@@ -207,15 +199,10 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Dron dron = singleton.getSessioUsuari().get(Dron.class, i);
                         if (dron != null) {
+                            
+                            List<Missio> missions = dron.getMissions();
 
-                            CriteriaBuilder cb = singleton.getSessioUsuari().getCriteriaBuilder();
-                            CriteriaQuery<Missio> cqmissio = cb.createQuery(Missio.class);
-                            Root<Missio> rootmissio = cqmissio.from(Missio.class);
-                            Predicate predicate = rootmissio.get("aeronaus").in(dron.getMissions());
-                            cqmissio.where(predicate);
-                            List<Missio> listmissions = new ArrayList<>(singleton.getSessio().createQuery(cqmissio).getResultList());
-
-                            logger.info(dron.toString() + "\n          Missions: " + listmissions);
+                            logger.info(dron.toString() + "\n          Missions: " + missions);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
                         }
@@ -227,7 +214,7 @@ public class App {
                         Mecanic mecanic = singleton.getSessioUsuari().get(Mecanic.class, i);
                         if (mecanic != null) {
 
-                            Pilotada pilotada = singleton.getSessioUsuari().get(Pilotada.class, mecanic.getPilotada());               
+                            Pilotada pilotada = mecanic.getPilotada();
                             logger.info(mecanic.toString() + "\n          Pilotada: " + pilotada);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
@@ -240,34 +227,9 @@ public class App {
                         Missio missio = singleton.getSessioUsuari().get(Missio.class, i);
                         if (missio != null) {
 
-                            CriteriaBuilder cb = singleton.getSessioUsuari().getCriteriaBuilder();
+                            List<Aeronau> aeronaus = missio.getAeronaus();
 
-                            CriteriaQuery<Missio> cqm = cb.createQuery(Missio.class);
-                            Root<Missio> root = cqm.from(Missio.class);
-                            Predicate predicate = cb.isNotNull(root.get("aeronaus"));
-                            cqm.where(predicate);
-                            Query<Missio> query = singleton.getSessioUsuari().createQuery(cqm);
-                            ScrollableResults sr = query.scroll(ScrollMode.FORWARD_ONLY);
-                            List<Aeronau> listaeronaus = new ArrayList<>();
-                            while (sr.next()){
-                                Aeronau aeronau = (Aeronau) sr.get();
-                                listaeronaus.add(aeronau);
-                            }
-                            sr.close();
-
-//                            CriteriaQuery<Dron> cqdron = cb.createQuery(Dron.class);
-//                            Root<Dron> rootdron = cqdron.from(Dron.class);
-//                            Predicate predicatedron = rootdron.get("aeronaus").in(missio.getAeronaus());
-//                            cqdron.where(predicatedron);
-//                            List<Dron> listdrons = singleton.getSessioUsuari().createQuery(cqdron).getResultList();
-//
-//                            CriteriaQuery<Transport> cqtransport = cb.createQuery(Transport.class);
-//                            Root<Transport> roottransport = cqtransport.from(Transport.class);
-//                            Predicate predicatetransport = roottransport.get("aeronaus").in(missio.getAeronaus());
-//                            cqtransport.where(predicatetransport);
-//                            List<Transport> listransport = singleton.getSessioUsuari().createQuery(cqtransport).getResultList();
-
-                            logger.info(missio.toString() + "\n          Aeronau Pilotada de Combat: " + listaeronaus);
+                            logger.info(missio.toString() + "\n          Aeronau Pilotades associades: " + aeronaus);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
                         }
@@ -279,7 +241,7 @@ public class App {
                         Pilot pilot = singleton.getSessioUsuari().get(Pilot.class, i);
                         if (pilot != null) {
 
-                            Pilotada pilotada = singleton.getSessioUsuari().get(Pilotada.class, pilot.getPilotada());
+                            Pilotada pilotada = pilot.getPilotada();
 
                             logger.info(pilot.toString() + "\n          Pilotada: " + pilotada);
                         } else {
@@ -293,22 +255,12 @@ public class App {
                         Transport transport = singleton.getSessioUsuari().get(Transport.class, i);
                         if (transport != null) {
 
-                            Pilot pilot = singleton.getSessioUsuari().byNaturalId(Pilot.class).using("nauPilotada_id", transport.getFabricationNumber()).load();
+                            Pilot pilot = transport.getPilotAeronau();
+                            
+                            List<Missio> missions = transport.getMissions();
+                            List<Mecanic> mecanics = transport.getMecanics();
 
-                            CriteriaBuilder cb = singleton.getSessioUsuari().getCriteriaBuilder();
-
-                            CriteriaQuery<Mecanic> cqm = cb.createQuery(Mecanic.class);
-                            Root<Mecanic> root = cqm.from(Mecanic.class);
-                            cqm.where(cb.equal(root.get("pilotada"), transport.getFabricationNumber()));
-                            List<Mecanic> list = singleton.getSessioUsuari().createQuery(cqm).getResultList();
-
-                            CriteriaQuery<Missio> cqmissio = cb.createQuery(Missio.class);
-                            Root<Missio> rootmissio = cqmissio.from(Missio.class);
-                            Predicate predicate = rootmissio.get("aeronaus").in(transport.getMissions());
-                            cqmissio.where(predicate);
-                            List<Missio> listmissions = singleton.getSessioUsuari().createQuery(cqmissio).getResultList();
-
-                            logger.info(transport.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + list + "\n          Missions: " + listmissions);
+                            logger.info(transport.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + mecanics + "\n          Missions: " + missions);
                         } else {
                             logger.info("No existeix cap registre amb aquest identificador -> " + i);
                         }

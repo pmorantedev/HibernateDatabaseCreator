@@ -51,7 +51,6 @@ public abstract class Aeronau {
 //                @JoinColumn(name = "cosmicMissionCode")}
 //    )
     @ManyToMany(mappedBy = "aeronaus", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-
     List<Missio> missions = new ArrayList<>();
 
     public Aeronau() {
