@@ -36,10 +36,26 @@ public abstract class Pilotada extends Aeronau {
     @OneToMany(mappedBy = "pilotada", cascade = CascadeType.ALL)
     private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
 
+    /**
+     * *
+     * Constructor vuit de Pilotada
+     */
     public Pilotada() {
 
     }
 
+    /**
+     * *
+     * COnstructor de la classe Pilotada
+     *
+     * @param hasEjectoSeat boolean
+     * @param shellCapacity Float
+     * @param corporation String
+     * @param engineTorque Float
+     * @param autodestructionDate Date
+     * @param hasDeathLaser Boolean
+     * @param pilot Pilot
+     */
     public Pilotada(boolean hasEjectoSeat, Float shellCapacity, String corporation,
             Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser,
             Pilot pilot) {
@@ -49,6 +65,17 @@ public abstract class Pilotada extends Aeronau {
         this.pilot = pilot;
     }
 
+    /**
+     * *
+     * Constructor de la classe Pilotada sense Pilot
+     *
+     * @param hasEjectoSeat boolean
+     * @param shellCapacity Float
+     * @param corporation String
+     * @param engineTorque Float
+     * @param autodestructionDate Date
+     * @param hasDeathLaser Boolean
+     */
     public Pilotada(boolean hasEjectoSeat, Float shellCapacity, String corporation,
             Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
         super(corporation, engineTorque, autodestructionDate, hasDeathLaser);
@@ -78,6 +105,14 @@ public abstract class Pilotada extends Aeronau {
         this.pilot = pilot;
     }
 
+    /**
+     * *
+     * (RF05) Mètode que estableix la Clau Forània (FK) amb la que està
+     * relacionada. Relació (0,1 : 0,2) bidireccional amb la classe 'Mecanic'.
+     *
+     *      * @author Izan JImenez: Creació/Implementació
+     * @param mecanics List
+     */
     public void setMecanics(List<Mecanic> mecanics) {
         if (mecanics.size() > 2) {
             throw new IllegalArgumentException("Una aeronau pot tenir com a màxim 2 mecànics");
@@ -86,6 +121,13 @@ public abstract class Pilotada extends Aeronau {
         }
     }
 
+    /**
+     * (RF05) Mètode que obté la Clau Forània (FK) amb la que està
+     * relacionada. Relació (0,1 : 0,2) bidireccional amb la classe 'Mecanic'.
+     *
+     * @author Izan Jimenez: Creació/Implementació
+     * @return Llista de mecanics
+     */
     public List<Mecanic> getMecanics() {
         return mecanics;
     }
