@@ -28,6 +28,7 @@ import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import utils.GenerarClasse;
 
 /**
  * JavaFX App
@@ -125,7 +126,7 @@ public class App {
                     break;
                 //Clase Missió
                 case 4:
-                    logger.info("Classe missió generada!");
+                    GenerarClasse.crearMissio();
                     break;
                 //Clase Pilot
                 case 5:
