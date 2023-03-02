@@ -309,16 +309,17 @@ public class GenerarClasse {
         session.beginTransaction();
         
         // Enllaçar Aeronaus Pilotades a Missió(ns)
+        int indexAeronau = 0;
         for ( int i = 0; i < llistaMissions.size(); i++ ) {                     // Nº de Missions
             List<Aeronau> temp = new ArrayList<>();
             int nausPilotades = numPilotades;
             int nausAutonomes = numAutonomes;
             
-            for (int j = 0; j < numAeronausPerMissio; j++) {                    // Nº aeronaus x Missió            
-                
+            //for (int j = indexAeronau; j < numAeronausPerMissio; j++) {       // Nº aeronaus x Missió     
+            for (int j = indexAeronau; j < numAeronausTotals; j++) {            // Nº aeronaus x Missió     
                
                 if ( nausPilotades > 0 ) { // Afegir si hi ha Pilotades (Transport/Combat)...
-                    //if (llistaPilotades.get(j).getMissions().size() < 2) {        // Validar cardinalitat Max 2 missions x aeronau
+                    //if (llistaPilotades.get(j).getMissions().size() < 2) {    // Validar cardinalitat Max 2 missions x aeronau
                         temp.add(llistaPilotades.get(j));
                         nausPilotades--;
                     //}
@@ -327,8 +328,10 @@ public class GenerarClasse {
                     temp.add(llistaAutonomes.get(j));
                     nausAutonomes--;
                 }
+                
             }
-            llistaMissions.get(i).setAeronaus(temp);            
+            llistaMissions.get(i).setAeronaus(temp);
+            indexAeronau += temp.size();
         }
         
         // Persistir a BBDD

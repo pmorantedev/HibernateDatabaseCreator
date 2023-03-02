@@ -58,9 +58,9 @@ public class Missio implements TesteableEntity, Serializable {
     @JoinTable(
             name = "Aeronau_Missio",
             joinColumns = {
-                @JoinColumn(name = "cosmicMissionCode")},
+                @JoinColumn(name = "missio_id")},
             inverseJoinColumns = {
-                @JoinColumn(name = "aeronauFabricationNumber")}
+                @JoinColumn(name = "aeronau_id")}
     )
     private List<Aeronau> aeronaus = new ArrayList<>();
 
