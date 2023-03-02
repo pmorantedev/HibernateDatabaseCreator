@@ -11,8 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -184,7 +182,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "Missio{" + "cosmicMissionCode=" + cosmicMissionCode + ", targetName=" + targetName + ", missionBudget=" + missionBudget + ", limitDate=" + limitDate + ", accomplished=" + accomplished + ", aeronaus=" + aeronaus + '}';
+        return "Missio{" + "cosmicMissionCode=" + cosmicMissionCode + ", targetName=" + targetName + ", missionBudget=" + missionBudget + ", limitDate=" + limitDate + ", accomplished=" + accomplished + '}';
     }
 
     

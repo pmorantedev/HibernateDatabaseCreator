@@ -3,7 +3,6 @@ package entitats;
 import interficies.TesteableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;

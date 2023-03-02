@@ -5,14 +5,11 @@
 package utils;
 
 import entitats.Aeronau;
-import java.util.Arrays;
-import java.util.List;
 import main.SingleSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static org.hibernate.Hibernate.isInstance;
 import org.hibernate.JDBCException;
-import org.hibernate.stat.Statistics;
 
 /**
  *
@@ -22,6 +19,17 @@ public class EliminarAeronau {
     
     private static final Logger logger = LogManager.getLogger(LlistatMenuClasses.class);
     
+    /***
+     * Mètode que elimina un o més objectes de tipus Aeronau i els objectes que 
+     * té associats.
+     * 
+     * @param singleton
+     * @param idInicial
+     * @param idFinal
+     * @param tipus 
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void eliminarAeronau(SingleSession singleton, int idInicial, int idFinal, Class<?> tipus){
         singleton.getSessioUsuari().beginTransaction();
         for (int i = idInicial; i <= idFinal; i++) {

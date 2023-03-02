@@ -39,14 +39,24 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
     @JoinColumn(name = "pilotada_id")
     private Pilotada pilotada;
 
+    /**
+     * *
+     * Constructor de la classe Mecanic
+     *
+     * @param speciality String
+     * @param repairSpeed Float
+     * @param pilotada Pilotada
+     * @param nickname String
+     * @param healingSpeed FLoat
+     * @param lastDrugTestDate Date
+     * @param isOtaku Boolean
+     */
     public Mecanic(String speciality, Float repairSpeed, Pilotada pilotada, String nickname, Float healingSpeed, Date lastDrugTestDate, boolean isOtaku) {
         super(nickname, healingSpeed, lastDrugTestDate, isOtaku);
         this.speciality = speciality;
         this.repairSpeed = repairSpeed;
         this.pilotada = pilotada;
     }
-
-    
 
     public Mecanic() {
     }
@@ -67,15 +77,26 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
         this.repairSpeed = repairSpeed;
     }
 
+    /**
+     * *
+     * (RF05) Mètode que obté la Clau Forània (FK) amb la que està relacionada.
+     * Relació (0,1 : 0,2) bidireccional amb la classe 'Pilotada'.
+     *
+     * @return Pilotada
+     */
     public Pilotada getPilotada() {
         return pilotada;
     }
 
+    /**
+     * (RF05) Mètode que estableix la Clau Forània (FK) amb la que està
+     * relacionada. Relació (0,1 : 0,2) bidireccional amb la classe 'Pilotada'.
+     *
+     * @param pilotada Pilotada
+     */
     public void setPilotada(Pilotada pilotada) {
         this.pilotada = pilotada;
     }
-    
-    
 
     @Override
     public Integer getAtributIdentificador() {
@@ -124,14 +145,14 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "Mecanic{" +
-            "speciality = " + speciality +
-            ", repairSpeed = " + repairSpeed +
-            ", nickname = " + super.getNickname() +
-            ", healingSpeed = " + super.getHealingSpeed() +
-            ", lastDrugTestDate = " + super.getLastDrugTestDate() +
-            ", isOtaku = " + super.getIsOtaku() +
-            '}';
+        return "Mecanic{"
+                + "speciality = " + speciality
+                + ", repairSpeed = " + repairSpeed
+                + ", nickname = " + super.getNickname()
+                + ", healingSpeed = " + super.getHealingSpeed()
+                + ", lastDrugTestDate = " + super.getLastDrugTestDate()
+                + ", isOtaku = " + super.getIsOtaku()
+                + '}';
     }
-    
+
 }

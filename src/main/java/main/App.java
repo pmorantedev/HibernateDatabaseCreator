@@ -1,6 +1,5 @@
 package main;
 
-import com.github.javafaker.Faker;
 import entitats.Aeronau;
 import entitats.Combat;
 import entitats.Dron;
@@ -9,30 +8,13 @@ import entitats.Missio;
 import entitats.Pilot;
 import entitats.Pilotada;
 import entitats.Transport;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
-import main.SingleSession;
 import org.hibernate.JDBCException;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
-import org.hibernate.query.Query;
-import org.hibernate.transform.Transformers;
 import utils.GenerarClasse;
 
-/**
- * JavaFX App
- */
 public class App {
 
     private static final Logger logger = LogManager.getLogger(App.class);
@@ -41,15 +23,18 @@ public class App {
 
         SingleSession singleton = SingleSession.getInstance();
 
-//        Faker faker = new Faker();
-//        for (int i = 0; i < 100; i++) {
-//            //System.out.println(faker.aviation().aircraft());
-//            System.out.println(faker.esports().game());
-//        }
         menu(singleton);
 
     }
 
+    /**
+     * *
+     * Menú principal de l'aplicació on l'usuari pot escollir què vol fer o
+     * tancar-la.
+     *
+     * @param singleton
+     * @author Víctor García
+     */
     public static void menu(SingleSession singleton) {
 
         Scanner in = new Scanner(System.in);
@@ -70,25 +55,30 @@ public class App {
                     + "4. Sortir" + "\n\n"
                     + ">> Escull una de les opcions anteriors:");
 
-            opcio = (utils.ValidadorOpcioMenu.validador(in));
+            opcio = (utils.ValidadorOpcioMenu.validador(in));                   //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
 
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcio) {
+                //Obre menú per generar classes
                 case 1:
                     menuGenerarClasse(in, singleton);
                     break;
+                //Obre menú per llistar classes
                 case 2:
                     menuLlistarClasse(in, singleton);
                     break;
+                //Obre menú per eliminar classes
                 case 3:
                     menuEliminarClasse(in, singleton);
                     break;
+                //Tanca l'aplicació
                 case 4:
                     logger.info("Gràcies per utilitzar el nostre programa. Fins aviat!" + "\n");
                     singleton.closeSessio();
                     singleton.closeFactory();
                     System.exit(0);
+                //Es mostra si l'usuari introdueix un número que no és vàlid
                 default:
                     logger.info("Número introduït no vàlid!!" + "\n"
                             + "Introdueix un dels números del menú");
@@ -97,6 +87,21 @@ public class App {
         } while (opcio != 4);
     }
 
+    /**
+     * *
+     * (RF18) - L’usuari determina quina classe vol generar i la quantitat
+     * d’aquesta. Si una entitat té entitats associades, es generen de forma
+     * automàtica i en quantitats majors de zero a escollir per l’usuari. Es
+     * mostra per pantalla a l’usuari el detall dels registres afectats.
+     *
+     *
+     * @param in
+     * @param singleton
+     * @author Pablo Morante
+     * @author Víctor García
+     * @author Izan Jiménez
+     * @author Txell Llanas
+     */
     public static void menuGenerarClasse(Scanner in, SingleSession singleton) {
 
         int opcioMenuGenerarClasse = 0;
@@ -107,7 +112,7 @@ public class App {
                     + "Quina classe vols generar?");
             utils.LlistatMenuClasses.retornaClasses();
 
-            opcioMenuGenerarClasse = utils.ValidadorOpcioMenu.validador(in);
+            opcioMenuGenerarClasse = utils.ValidadorOpcioMenu.validador(in);    //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
 
             logger.info("------------------------------------------------------------------------" + "\n");
 
@@ -147,6 +152,17 @@ public class App {
         } while (opcioMenuGenerarClasse != 7);
     }
 
+    /**
+     * *
+     * (RF18) - L’usuari determina quina classe vol llistar a través del menú i
+     * els identificadors inicials i finals d’aquesta. Si una entitat té
+     * entitats associades, també es mostren.
+     *
+     * @param in
+     * @param singleton
+     * @author Pablo Morante
+     * @author Víctor García
+     */
     public static void menuLlistarClasse(Scanner in, SingleSession singleton) {
         int opcioMenuLlistarClasse = 0;
 
@@ -156,7 +172,13 @@ public class App {
                     + "Quina classe vols llistar?");
             utils.LlistatMenuClasses.retornaClasses();
 
-            opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);
+            do {
+                opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);    //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
+                if (opcioMenuLlistarClasse <= 0 || opcioMenuLlistarClasse > 7) {
+                    logger.info("Número introduït no vàlid!!" + "\n"
+                            + "Introdueix un dels números del menú");
+                }
+            } while (opcioMenuLlistarClasse <= 0 || opcioMenuLlistarClasse > 7);
 
             boolean ok = false;
             int idInicial = 0, idFinal = 0;
@@ -169,7 +191,7 @@ public class App {
                     idFinal = utils.ValidadorOpcioMenu.validador(in);
 
                     if (idFinal < idInicial) {
-                        logger.info("L'identificador final no pot ser més petit que l'inicial.\n");
+                        logger.info("L'identificador final no pot ser més petit que l'inicial!!\n");
                     } else {
                         ok = true;
                     }
@@ -184,14 +206,14 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Combat combat = singleton.getSessioUsuari().get(Combat.class, i);
                         if (combat != null) {
-                            
+
                             List<Mecanic> mecanics = combat.getMecanics();
                             List<Missio> missions = combat.getMissions();
                             Pilot pilot = combat.getPilotAeronau();
 
-                            logger.info(combat.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + mecanics + "\n          Missions: " + missions);
+                            logger.info("- " + combat.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -200,12 +222,12 @@ public class App {
                     for (int i = idInicial; i <= idFinal; i++) {
                         Dron dron = singleton.getSessioUsuari().get(Dron.class, i);
                         if (dron != null) {
-                            
+
                             List<Missio> missions = dron.getMissions();
 
-                            logger.info(dron.toString() + "\n          Missions: " + missions);
+                            logger.info("- " + dron.toString() + "\n          · Missions: " + missions + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -216,9 +238,9 @@ public class App {
                         if (mecanic != null) {
 
                             Pilotada pilotada = mecanic.getPilotada();
-                            logger.info(mecanic.toString() + "\n          Pilotada: " + pilotada);
+                            logger.info("- " + mecanic.toString() + "\n          · Pilotada: " + pilotada + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -230,9 +252,9 @@ public class App {
 
                             List<Aeronau> aeronaus = missio.getAeronaus();
 
-                            logger.info(missio.toString() + "\n          Aeronau Pilotades associades: " + aeronaus);
+                            logger.info("- " + missio.toString() + "\n          · Aeronaus associades: " + aeronaus + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -243,10 +265,13 @@ public class App {
                         if (pilot != null) {
 
                             Pilotada pilotada = pilot.getPilotada();
+                            if (pilot.getPilotada() == null) {
+                                pilot.setPilotada(new Combat());
+                            }
 
-                            logger.info(pilot.toString() + "\n          Pilotada: " + pilotada);
+                            logger.info("- " + pilot.toString() + "\n          · Pilotada: " + pilotada + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
@@ -257,27 +282,36 @@ public class App {
                         if (transport != null) {
 
                             Pilot pilot = transport.getPilotAeronau();
-                            
+
                             List<Missio> missions = transport.getMissions();
                             List<Mecanic> mecanics = transport.getMecanics();
 
-                            logger.info(transport.toString() + "\n          Pilot: " + pilot + "\n          Mecànics: " + mecanics + "\n          Missions: " + missions);
+                            logger.info("- " + transport.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
                         } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
+                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
                         }
                     }
                     break;
                 //Sortir al menú principal
                 case 7:
                     break;
-                default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
             }
 
         } while (opcioMenuLlistarClasse != 7);
     }
 
+    /**
+     * *
+     * (RF18) - L’usuari determina quina classe vol eliminar a través del menú i
+     * els identificadors inicial i final. Si una instància té instàncies
+     * associades, s'eliminen. També es mostra a l’usuari per pantalla el detall
+     * dels registres afectats.
+     *
+     * @param in
+     * @param singleton
+     * @author Pablo Morante
+     * @author Víctor García
+     */
     public static void menuEliminarClasse(Scanner in, SingleSession singleton) {
         int opcioMenuEliminarClasse = 0;
 
@@ -287,7 +321,13 @@ public class App {
                     + "Quina classe vols eliminar?");
             utils.LlistatMenuClasses.retornaClasses();
 
-            opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);
+            do {
+                opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);   //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
+                if (opcioMenuEliminarClasse <= 0 || opcioMenuEliminarClasse > 7) {
+                    logger.info("Número introduït no vàlid!!" + "\n"
+                            + "Introdueix un dels números del menú");
+                }
+            } while (opcioMenuEliminarClasse <= 0 || opcioMenuEliminarClasse > 7);
 
             boolean ok = false;
             int idInicial = 0, idFinal = 0;
@@ -320,7 +360,7 @@ public class App {
                     break;
                 //Classe Mecànic
                 case 3:
-                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal);
+                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal, Mecanic.class);
                     break;
                 //Classe Missió
                 case 4:
@@ -331,7 +371,8 @@ public class App {
                             try {
                                 singleton.getSessioUsuari().remove(missio);
                                 singleton.getSessioUsuari().flush();
-                                logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString());
+                                List<Aeronau> aeronaus = missio.getAeronaus();
+                                logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString() + "\n          · Aeronaus associades: " + aeronaus + "\n");
                             } catch (JDBCException ex) {
                                 singleton.getSessioUsuari().getTransaction().rollback();
                             }
@@ -343,7 +384,7 @@ public class App {
                     break;
                 //Classe Pilot
                 case 5:
-                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal);
+                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal, Pilot.class);
                     break;
                 //Classe Transport
                 case 6:
@@ -352,9 +393,6 @@ public class App {
                 //Sortir al menú principal
                 case 7:
                     break;
-                default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
             }
 
         } while (opcioMenuEliminarClasse != 7);

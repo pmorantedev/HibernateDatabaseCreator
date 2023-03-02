@@ -8,11 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -111,20 +107,10 @@ public abstract class Aeronau {
 
     public void setMissions(List<Missio> missions) {
         if (missions.size() > 2) {
-            throw new IllegalArgumentException("An Aeronau can have at most 2 missions");
+            throw new IllegalArgumentException("Una aeronau pot tenir com a màxim 2 missions");
         } else {
             this.missions = missions;
         }
     }
-    
-    
-
-//    @PrePersist
-//    @PreUpdate
-//    private void validateMissions() {
-//        if (missions.size() > 2) {
-//            throw new IllegalArgumentException("An Aeronau can have at most 2 missions");
-//        }
-//    }
 
 }

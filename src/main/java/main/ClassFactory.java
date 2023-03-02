@@ -23,7 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *
- * @author victor
+ *
+ * @author Izan Jimenez
  */
 public class ClassFactory implements TesteableFactory {
 
