@@ -150,7 +150,7 @@ public final class SingleSession {                                           // 
 
         return session;
     }
-    
+
     /**
      * Mètode que retorna la mateixa sessió creada a 'InitSessionFactory'.
      *

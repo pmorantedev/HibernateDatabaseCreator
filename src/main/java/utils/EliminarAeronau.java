@@ -5,14 +5,11 @@
 package utils;
 
 import entitats.Aeronau;
-import java.util.Arrays;
-import java.util.List;
 import main.SingleSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static org.hibernate.Hibernate.isInstance;
 import org.hibernate.JDBCException;
-import org.hibernate.stat.Statistics;
 
 /**
  *
