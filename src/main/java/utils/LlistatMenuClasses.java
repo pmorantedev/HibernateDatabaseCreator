@@ -22,12 +22,12 @@ public class LlistatMenuClasses {
      */
     public static void retornaClasses() {
 
-        logger.info("1. Combat" + "\n"
-                + "2. Dron" + "\n"
-                + "3. Mecànic" + "\n"
-                + "4. Missió" + "\n"
+        logger.info("1. Missió" + "\n"
+                + "2. Aeronau de Transport" + "\n"
+                + "3. Aeronau de Combat" + "\n"
+                + "4. Dron" + "\n"
                 + "5. Pilot" + "\n"
-                + "6. Transport" + "\n"
+                + "6. Mecànic" + "\n"
                 + "7. Sortir al menú principal" + "\n\n"
                 + ">> Escull una de les opcions anteriors:");
     }
