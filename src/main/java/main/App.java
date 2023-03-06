@@ -22,7 +22,8 @@ public class App {
 
     public static void main(String[] args) {
 
-        SingleSession singleton = menuLogin();
+        SingleSession singleton = SingleSession.getInstance();
+//menuLogin();
 
         menu(singleton);
 
@@ -321,9 +322,9 @@ public class App {
     }
 
     /**
-     * Mètode per mostrar el login a l'usuari, s'accedeix a la base de dades
-     * a través de les dades introduïdes per l'usuari
-     * 
+     * Mètode per mostrar el login a l'usuari, s'accedeix a la base de dades a
+     * través de les dades introduïdes per l'usuari
+     *
      * @return SingleSession
      * @author Pablo Morante
      */
@@ -384,9 +385,9 @@ public class App {
                 logger.info(">> Nom d'usuari o contrasenya incorrectes.");
                 loginError = true;
             }
-            
+
         } while (loginError);
-        
+
         return singleton;
     }
 }

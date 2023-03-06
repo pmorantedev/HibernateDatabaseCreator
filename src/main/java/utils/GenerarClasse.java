@@ -442,12 +442,13 @@ public class GenerarClasse {
             session.getTransaction().commit();                                  //persistim a BBDD            
 
         } else {
+            int i = 0;
 
-            for (int i = 1; i < llistaMissions.size(); i++) {                     // Iniciar en 1 per fer packs de 2 missions
+            while (i < llistaMissions.size()) {                    // Iniciar en 1 per fer packs de 2 missions
 
                 session.beginTransaction();
                 llistaMissions.stream().forEach(x -> session.persist(x));
-                
+
                 List<Aeronau> tempNau = new ArrayList<>();
 
                 // Seleccionar aeronaus x cada Missió
@@ -465,19 +466,23 @@ public class GenerarClasse {
 
                 // Assignar Aeronaus a una Missió (màx.8)          
                 try {
-                    if ((i % 2 != 0)) {                                         // Si l'ID de la missió és SENAR, resto una posició (pack de 2 missions)
-                        llistaMissions.get(i-1).setAeronaus(tempNau);
-                        
+                    if (i % 2 == 0) { // si el índice es par
+                        llistaMissions.get(i).setAeronaus(tempNau);
+                        if (i + 1 < llistaMissions.size()) {
+                            llistaMissions.get(i + 1).setAeronaus(tempNau);
+                        }
+                    } else { // si el índice es impar
+                        llistaMissions.get(i - 1).setAeronaus(tempNau);
+                        llistaMissions.get(i).setAeronaus(tempNau);
                     }
-                    llistaMissions.get(i).setAeronaus(tempNau);
 
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                 }
-                
+
                 //llistaMissions.stream().forEach(x -> x.setAeronaus(tempNau));
                 session.getTransaction().commit();
-
+                i += 2;
             }
         }
     }
