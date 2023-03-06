@@ -72,6 +72,15 @@ public final class SingleSession {                                           // 
         return instancia;
     }
 
+    /**
+     * Mètode per retornar una nova instància de 'SingleSession' amb paràmetres. Si la
+     * instància encara no existeix, la crea.
+     *
+     * @return instancia de tipus 'SingletonSession' que obre una sessió de
+     * connexió a una BD
+     * @author Txell Llanas: Creació/Implementació
+     * @author Pablo Morante: Implementació
+     */
     public static SingleSession getInstance(String username, String password, String BDname) throws org.hibernate.service.spi.ServiceException {
         if (instancia == null) {
             instancia = new SingleSession(username, password, BDname);
@@ -85,6 +94,7 @@ public final class SingleSession {                                           // 
      *
      * @return session Instància de la mateixa sessió d'Hibernate
      * @author Txell Llanas: Creació/Implementació
+     * @author Pablo Morante: Implementació
      */
     public Session getSessio() {
         if (session.getTransaction() != null) {
