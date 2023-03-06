@@ -118,29 +118,33 @@ public class App {
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcioMenuGenerarClasse) {
-                //Clase Combat
+                //Clase Missio
                 case 1:
-                    //pruebaGenerarClase(singleton);
+                    GenerarClasse.iniciarGeneracions(1);
+                    break;
+                //Clase Transport
+                case 2:
+                    GenerarClasse.iniciarGeneracions(2);
+                    //logger.info("Classe dron generada!");
+                    break;
+                //Clase Combat
+                case 3:
+                    GenerarClasse.iniciarGeneracions(3);
+                    //logger.info("Classe mecànic generada!");
                     break;
                 //Clase Dron
-                case 2:
-                    logger.info("Classe dron generada!");
-                    break;
-                //Clase Mecànic
-                case 3:
-                    logger.info("Classe mecànic generada!");
-                    break;
-                //Clase Missió
                 case 4:
-                    GenerarClasse.crearMissio();
+                    GenerarClasse.iniciarGeneracions(4);
                     break;
                 //Clase Pilot
                 case 5:
-                    logger.info("Classe pilot generada!");
+                    GenerarClasse.iniciarGeneracions(5);
+                    //logger.info("Classe pilot generada!");
                     break;
-                //Clase Transport
+                //Clase Mecanic
                 case 6:
-                    logger.info("Classe transport generada!");
+                    GenerarClasse.iniciarGeneracions(6);
+                    //logger.info("Classe transport generada!");
                     break;
                 //Sortir al menú principal
                 case 7:
