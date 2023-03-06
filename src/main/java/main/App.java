@@ -208,94 +208,27 @@ public class App {
             switch (opcioMenuLlistarClasse) {
                 //Classe Combat
                 case 1:
-                    for (int i = idInicial; i <= idFinal; i++) {
-                        Combat combat = singleton.getSessioUsuari().get(Combat.class, i);
-                        if (combat != null) {
-
-                            List<Mecanic> mecanics = combat.getMecanics();
-                            List<Missio> missions = combat.getMissions();
-                            Pilot pilot = combat.getPilotAeronau();
-
-                            logger.info("- " + combat.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
-                        } else {
-                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
-                        }
-                    }
+                    utils.LlistarClasse.llistarCombat(singleton, idInicial, idFinal);
                     break;
                 //Classe Dron    
                 case 2:
-                    for (int i = idInicial; i <= idFinal; i++) {
-                        Dron dron = singleton.getSessioUsuari().get(Dron.class, i);
-                        if (dron != null) {
-
-                            List<Missio> missions = dron.getMissions();
-
-                            logger.info("- " + dron.toString() + "\n          · Missions: " + missions + "\n");
-                        } else {
-                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
-                        }
-                    }
+                    utils.LlistarClasse.llistarDron(singleton, idInicial, idFinal);
                     break;
                 //Classe Mecànic
                 case 3:
-                    for (int i = idInicial; i <= idFinal; i++) {
-                        Mecanic mecanic = singleton.getSessioUsuari().get(Mecanic.class, i);
-                        if (mecanic != null) {
-
-                            Pilotada pilotada = mecanic.getPilotada();
-                            logger.info("- " + mecanic.toString() + "\n          · Pilotada: " + pilotada + "\n");
-                        } else {
-                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
-                        }
-                    }
+                    utils.LlistarClasse.llistarMecanic(singleton, idInicial, idFinal);
                     break;
                 //Classe Missió
                 case 4:
-                    for (int i = idInicial; i <= idFinal; i++) {
-                        Missio missio = singleton.getSessioUsuari().get(Missio.class, i);
-                        if (missio != null) {
-
-                            List<Aeronau> aeronaus = missio.getAeronaus();
-
-                            logger.info("- " + missio.toString() + "\n          · Aeronaus associades: " + aeronaus + "\n");
-                        } else {
-                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
-                        }
-                    }
+                    utils.LlistarClasse.llistarMissio(singleton, idInicial, idFinal);
                     break;
                 //Classe Pilot
                 case 5:
-                    for (int i = idInicial; i <= idFinal; i++) {
-                        Pilot pilot = singleton.getSessioUsuari().get(Pilot.class, i);
-                        if (pilot != null) {
-
-                            Pilotada pilotada = pilot.getPilotada();
-                            if (pilot.getPilotada() == null) {
-                                pilot.setPilotada(new Combat());
-                            }
-
-                            logger.info("- " + pilot.toString() + "\n          · Pilotada: " + pilotada + "\n");
-                        } else {
-                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
-                        }
-                    }
+                    utils.LlistarClasse.llistarPilot(singleton, idInicial, idFinal);
                     break;
                 //Classe Transport
                 case 6:
-                    for (int i = idInicial; i <= idFinal; i++) {
-                        Transport transport = singleton.getSessioUsuari().get(Transport.class, i);
-                        if (transport != null) {
-
-                            Pilot pilot = transport.getPilotAeronau();
-
-                            List<Missio> missions = transport.getMissions();
-                            List<Mecanic> mecanics = transport.getMecanics();
-
-                            logger.info("- " + transport.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
-                        } else {
-                            logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
-                        }
-                    }
+                    utils.LlistarClasse.llistarTransport(singleton, idInicial, idFinal);
                     break;
                 //Sortir al menú principal
                 case 7:
@@ -357,56 +290,27 @@ public class App {
             switch (opcioMenuEliminarClasse) {
                 //Classe Combat
                 case 1:
-                    utils.EliminarAeronau.eliminarAeronau(singleton, idInicial, idFinal, Combat.class);
+                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Combat.class);
                     break;
                 //Classe Dron
                 case 2:
-                    utils.EliminarAeronau.eliminarAeronau(singleton, idInicial, idFinal, Dron.class);
+                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Dron.class);
                     break;
                 //Classe Mecànic
                 case 3:
-                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal, Mecanic.class);
+                    utils.EliminarClasse.eliminarSoldat(singleton, idInicial, idFinal, Mecanic.class);
                     break;
                 //Classe Missió
                 case 4:
-                    singleton.getSessioUsuari().beginTransaction();
-                    for (int i = idInicial; i <= idFinal; i++) {
-                        Missio missio = singleton.getSessioUsuari().get(Missio.class, i);
-                        if (missio != null) {
-                            try {
-                                singleton.getSessioUsuari().remove(missio);
-                                singleton.getSessioUsuari().flush();
-                                List<Aeronau> aeronaus = missio.getAeronaus();
-
-                                logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString() + "\n");
-                                for (Aeronau item : aeronaus) {
-                                    List<Missio> missions = item.getMissions();
-                                    missions.remove(missio);
-                                    if (item instanceof Pilotada) {
-                                        Pilotada pilotada = (Pilotada) item;
-                                        Pilot pilot = pilotada.getPilotAeronau();
-                                        List<Mecanic> mecanics = pilotada.getMecanics();
-                                        logger.info("          · Aeronau pilotada associada: " + item + "\n          · Missions: " + missions + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n");
-                                    } else {
-                                        logger.info("          · Aeronau autònoma associada: " + item + "\n          · Missions: " + missions + "\n");
-                                    }
-                                }
-                            } catch (JDBCException ex) {
-                                singleton.getSessioUsuari().getTransaction().rollback();
-                            }
-                        } else {
-                            logger.info("No existeix cap registre amb aquest identificador -> " + i);
-                        }
-                    }
-                    singleton.getSessioUsuari().getTransaction().commit();
+                    utils.EliminarClasse.eliminarMissio(singleton, idInicial, idFinal);
                     break;
                 //Classe Pilot
                 case 5:
-                    utils.EliminarSoldat.eliminarSoldat(singleton, idInicial, idFinal, Pilot.class);
+                    utils.EliminarClasse.eliminarSoldat(singleton, idInicial, idFinal, Pilot.class);
                     break;
                 //Classe Transport
                 case 6:
-                    utils.EliminarAeronau.eliminarAeronau(singleton, idInicial, idFinal, Transport.class);
+                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Transport.class);
                     break;
                 //Sortir al menú principal
                 case 7:
