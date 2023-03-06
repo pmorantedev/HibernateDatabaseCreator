@@ -320,6 +320,13 @@ public class App {
         } while (opcioMenuEliminarClasse != 7);
     }
 
+    /**
+     * Mètode per mostrar el login a l'usuari, s'accedeix a la base de dades
+     * a través de les dades introduïdes per l'usuari
+     * 
+     * @return SingleSession
+     * @author Pablo Morante
+     */
     public static SingleSession menuLogin() {
         Scanner in = new Scanner(System.in);
         Boolean error = false;

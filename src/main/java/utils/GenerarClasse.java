@@ -427,8 +427,6 @@ public class GenerarClasse {
 
     public static void assignarAeronaus() {
 
-        List<Aeronau> tempNau = new ArrayList<>();
-
         if (numMissions == 1) {
 
             session.beginTransaction();                                         // Iniciar Transacció
@@ -449,11 +447,13 @@ public class GenerarClasse {
 
                 session.beginTransaction();
                 llistaMissions.stream().forEach(x -> session.persist(x));
+                
+                List<Aeronau> tempNau = new ArrayList<>();
 
                 // Seleccionar aeronaus x cada Missió
                 for (int j = 0; j < aeronausPerMissio; j++) {
 
-                    if (!llistaPilotades.isEmpty()) {                           // Afegir si hi ha Pilotades (Transport/Combat)...                    
+                    if (!llistaPilotades.isEmpty() && indexPilotada < llistaPilotades.size()) {                           // Afegir si hi ha Pilotades (Transport/Combat)...                    
                         tempNau.add(llistaPilotades.get(indexPilotada));
                         indexPilotada++;                                        // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                         
                     }
@@ -477,7 +477,6 @@ public class GenerarClasse {
                 
                 //llistaMissions.stream().forEach(x -> x.setAeronaus(tempNau));
                 session.getTransaction().commit();
-                tempNau.clear();
 
             }
         }
