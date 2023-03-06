@@ -6,6 +6,7 @@ package utils;
 
 import entitats.Combat;
 import entitats.Mecanic;
+import entitats.Missio;
 import entitats.Pilot;
 import entitats.Pilotada;
 import entitats.Soldat;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static org.hibernate.Hibernate.isInstance;
 import org.hibernate.JDBCException;
+import java.util.List;
 
 /**
  *
@@ -56,8 +58,10 @@ public class EliminarSoldat {
                         Mecanic mecanic = (Mecanic) tipusSoldat;
                         pilotada = mecanic.getPilotada();
                     }
+                    
+                    List<Missio> missions = pilotada.getMissions();
 
-                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats:\n" + soldat.toString() + "\n          · Pilotada: " + pilotada + "\n");
+                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats:\n" + soldat.toString() + "\n          · Pilotada associada: " + pilotada + "\n          · Missions associades: " + missions + "\n");
                 } catch (JDBCException ex) {
                     singleton.getSessioUsuari().getTransaction().rollback();
                 }

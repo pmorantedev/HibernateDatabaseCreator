@@ -376,7 +376,20 @@ public class App {
                                 singleton.getSessioUsuari().remove(missio);
                                 singleton.getSessioUsuari().flush();
                                 List<Aeronau> aeronaus = missio.getAeronaus();
-                                logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString() + "\n          · Aeronaus associades: " + aeronaus + "\n");
+                                
+                                logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString() + "\n");
+                                for (Aeronau item : aeronaus) {
+                                    List<Missio> missions = item.getMissions();
+                                    missions.remove(missio);
+                                    if (item instanceof Pilotada) {
+                                        Pilotada pilotada = (Pilotada) item;
+                                        Pilot pilot = pilotada.getPilotAeronau();
+                                        List<Mecanic> mecanics = pilotada.getMecanics();
+                                        logger.info("          · Aeronau pilotada associada: " + item + "\n          · Missions: " + missions + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n");
+                                    } else {
+                                        logger.info("          · Aeronau autònoma associada: " + item + "\n          · Missions: " + missions + "\n");
+                                    }
+                                }
                             } catch (JDBCException ex) {
                                 singleton.getSessioUsuari().getTransaction().rollback();
                             }
