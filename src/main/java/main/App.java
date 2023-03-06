@@ -13,6 +13,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.JDBCException;
+import org.hibernate.cfg.Configuration;
 import utils.GenerarClasse;
 
 public class App {
@@ -21,7 +22,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        SingleSession singleton = SingleSession.getInstance();
+        SingleSession singleton = menuLogin();
 
         menu(singleton);
 
@@ -372,7 +373,7 @@ public class App {
                                 singleton.getSessioUsuari().remove(missio);
                                 singleton.getSessioUsuari().flush();
                                 List<Aeronau> aeronaus = missio.getAeronaus();
-                                
+
                                 logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString() + "\n");
                                 for (Aeronau item : aeronaus) {
                                     List<Missio> missions = item.getMissions();
@@ -409,5 +410,68 @@ public class App {
             }
 
         } while (opcioMenuEliminarClasse != 7);
+    }
+
+    public static SingleSession menuLogin() {
+        Scanner in = new Scanner(System.in);
+        Boolean error = false;
+        Boolean loginError = false;
+        String username, password, BDname;
+        SingleSession singleton = null;
+
+        do {
+            logger.info("  _      ____   _____ _____ _   _ \n"
+                    + " | |    / __ \\ / ____|_   _| \\ | |\n"
+                    + " | |   | |  | | |  __  | | |  \\| |\n"
+                    + " | |   | |  | | | |_ | | | | . ` |\n"
+                    + " | |___| |__| | |__| |_| |_| |\\  |\n"
+                    + " |______\\____/ \\_____|_____|_| \\_|\n");
+            do {
+                logger.info("\n" + ">> Introdueix el nom d'usuari: ");
+                username = in.nextLine();
+                if (username == null) {
+                    error = true;
+                } else if (username.isEmpty()) {
+                    error = true;
+                } else {
+                    error = false;
+                }
+
+            } while (error);
+
+            do {
+                logger.info("\n" + ">> Introdueix la constrasenya: ");
+                password = in.nextLine();
+                if (password == null) {
+                    error = true;
+                } else if (password.isEmpty()) {
+                    error = true;
+                } else {
+                    error = false;
+                }
+            } while (error);
+
+            do {
+                logger.info("\n" + ">> Introdueix el nom de la BD: ");
+                BDname = in.nextLine();
+                if (BDname == null) {
+                    error = true;
+                } else if (BDname.isEmpty()) {
+                    error = true;
+                } else {
+                    error = false;
+                }
+            } while (error);
+            try {
+                singleton = SingleSession.getInstance(username, password, BDname);
+                loginError = false;
+            } catch (org.hibernate.service.spi.ServiceException ex) {
+                logger.info(">> Nom d'usuari o contrasenya incorrectes.");
+                loginError = true;
+            }
+            
+        } while (loginError);
+        
+        return singleton;
     }
 }

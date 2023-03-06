@@ -21,80 +21,19 @@ public final class SingleSession {                                           // 
     private SessionFactory sessionFactory;
     private Session session;
     private static final Logger logger = LogManager.getLogger(SingleSession.class);
+    private String username = null;
+    private String password = null;
+    private String BDname = null;
 
     private SingleSession() {                                                // Constructor privat per evitar que es pugui instanciar des de fora
         InitSessionFactory();
     }
 
-    private SingleSession(Boolean user) {
-        InitSessionFactory(user);
-    }
-
-    private void InitSessionFactory(Boolean user) {
-        Scanner in = new Scanner(System.in);
-        Boolean error = false;
-        Boolean loginError = false;
-        String username, password, BDname;
-
-        do {
-            // Configurar la sessió d'Hibernate
-            Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
-            logger.info("  _      ____   _____ _____ _   _ \n"
-                    + " | |    / __ \\ / ____|_   _| \\ | |\n"
-                    + " | |   | |  | | |  __  | | |  \\| |\n"
-                    + " | |   | |  | | | |_ | | | | . ` |\n"
-                    + " | |___| |__| | |__| |_| |_| |\\  |\n"
-                    + " |______\\____/ \\_____|_____|_| \\_|\n");
-            do {
-                logger.info("\n" + ">> Introdueix el nom d'usuari: ");
-                username = in.nextLine();
-                if (username == null) {
-                    error = true;
-                } else if (username.isEmpty()) {
-                    error = true;
-                } else {
-                    error = false;
-                }
-
-            } while (error);
-
-            do {
-                logger.info("\n" + ">> Introdueix la constrasenya: ");
-                password = in.nextLine();
-                if (password == null) {
-                    error = true;
-                } else if (password.isEmpty()) {
-                    error = true;
-                } else {
-                    error = false;
-                }
-            } while (error);
-
-            do {
-                logger.info("\n" + ">> Introdueix el nom de la BD: ");
-                BDname = in.nextLine();
-                if (BDname == null) {
-                    error = true;
-                } else if (BDname.isEmpty()) {
-                    error = true;
-                } else {
-                    error = false;
-                }
-            } while (error);
-
-            configuration.setProperty("hibernate.connection.username", username);
-            configuration.setProperty("hibernate.connection.password", password);
-            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/" + BDname + "?createDatabaseIfNotExist=true");
-            try {
-                this.sessionFactory = configuration.buildSessionFactory();
-                loginError = false;
-            } catch (org.hibernate.service.spi.ServiceException ex) {
-                logger.info(">> Nom d'usuari o contrasenya incorrectes.");
-                loginError = true;
-            }
-        } while (loginError);
-
-        this.session = sessionFactory.openSession();
+    private SingleSession(String username, String password, String BDname) throws org.hibernate.service.spi.ServiceException {
+        this.username = username;
+        this.password = password;
+        this.BDname = BDname;
+        InitSessionFactory();
     }
 
     /**
@@ -103,10 +42,16 @@ public final class SingleSession {                                           // 
      *
      * @author Txell Llanas: Creació/Implementació
      */
-    private void InitSessionFactory() {
+    private void InitSessionFactory() throws org.hibernate.service.spi.ServiceException {
         Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
-        this.sessionFactory = configuration.buildSessionFactory();
 
+        if (username != null && password != null && BDname != null) {
+            configuration.setProperty("hibernate.connection.username", username);
+            configuration.setProperty("hibernate.connection.password", password);
+            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/" + BDname + "?createDatabaseIfNotExist=true");
+        }
+
+        this.sessionFactory = configuration.buildSessionFactory();
         this.session = sessionFactory.openSession();
 
     }
@@ -127,9 +72,9 @@ public final class SingleSession {                                           // 
         return instancia;
     }
 
-    public static SingleSession getInstance(Boolean user) {
+    public static SingleSession getInstance(String username, String password, String BDname) throws org.hibernate.service.spi.ServiceException {
         if (instancia == null) {
-            instancia = new SingleSession(user);
+            instancia = new SingleSession(username, password, BDname);
         }
 
         return instancia;
