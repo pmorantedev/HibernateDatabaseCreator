@@ -36,7 +36,7 @@ public class GenerarClasse {
     private static ClassFactory factory = new ClassFactory();
 
     // Còmputs i Xivatos
-    private static int numMissions, aeronausPerMissio, aeronausTotals, numMecanicsPerAeronau,
+    private static int numMissions, aeronausPerMissio, aeronausTotals,
             numPilotades, numAutonomes, numPilots, numMecanics,
             opcioAeronau, opcioPilotada,
             numPilotadesTotals, numAutonomesTotals, indexNau, indexPilotada, indexAutonoma, tipusPilotada, tipusAeronau = 0;
@@ -134,7 +134,7 @@ public class GenerarClasse {
             has_drons = false;
             has_pilots = false;
             has_mecanics = false;
-            correcte = false;            
+            correcte = false;
             resum_aeronausTransport = "";
             resum_aeronausCombat = "";
             resum_aeronausDron = "";
@@ -312,8 +312,8 @@ public class GenerarClasse {
                     resum_aeronausTransport = "- Generades " + (aeronausTotals)
                             + " aeronaus de Transport per cobrir " + numMissions
                             + " Missió(ns), [1 aeronau participa a 2 Missions com a màxim]";
-                    resum_pilots = "- Generats " + aeronausTotals+" pilot(s), 1 pilot per aeronau Pilotada.";
-                    resum_mecanics = "- Generats " + numMecanics*aeronausTotals +" mecànic(s), " + numMecanics +" mecànic(s) per aeronau Pilotada.";
+                    resum_pilots = "- Generats " + aeronausTotals + " pilot(s), 1 pilot per aeronau Pilotada.";
+                    resum_mecanics = "- Generats " + numMecanics * aeronausTotals + " mecànic(s), " + numMecanics + " mecànic(s) per aeronau Pilotada.";
                     has_aeronaus = true;
                     has_nausTransport = true;
                     has_pilots = true;
@@ -322,8 +322,8 @@ public class GenerarClasse {
                     resum_aeronausCombat = "- Generades " + (aeronausTotals)
                             + " aeronaus de Combat per cobrir " + numMissions
                             + " Missió(ns), [1 aeronau participa a 2 Missions com a màxim]";
-                    resum_pilots = "- Generats " + aeronausTotals+" pilot(s), 1 pilot per aeronau Pilotada.";
-                    resum_mecanics = "- Generats " + numMecanics*aeronausTotals +" mecànic(s), " + numMecanics +" mecànic(s) per aeronau Pilotada.";
+                    resum_pilots = "- Generats " + aeronausTotals + " pilot(s), 1 pilot per aeronau Pilotada.";
+                    resum_mecanics = "- Generats " + numMecanics * aeronausTotals + " mecànic(s), " + numMecanics + " mecànic(s) per aeronau Pilotada.";
                     has_aeronaus = true;
                     has_nausCombat = true;
                     has_pilots = true;
@@ -332,6 +332,7 @@ public class GenerarClasse {
                     resum_aeronausDron = "- Generats " + (aeronausTotals)
                             + " Drons per cobrir " + numMissions
                             + " Missió(ns), [1 aeronau participa a 2 Missions com a màxim]";
+                    resum_mecanics = "- Generats " + numMecanics * aeronausTotals + " mecànic(s), " + numMecanics + " mecànic(s) per aeronau Pilotada.";
                     has_aeronaus = true;
                     has_drons = true;
                     break;
@@ -350,7 +351,7 @@ public class GenerarClasse {
     }
 
     /**
-     * Mètode per assignar una o vàries instàncies de tipus Aeronau i Mecànic a 
+     * Mètode per assignar una o vàries instàncies de tipus Aeronau i Mecànic a
      * una Missió.
      *
      * @author Txell Llanas: Creació/ Implementació
@@ -362,7 +363,7 @@ public class GenerarClasse {
 
         int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
-        if (tipusAeronau != 4) {
+        if (tipusAeronau != 4 && !has_mecanics) {
             logger.info(">> Quants Mecànics vols assignar per Aeronau? [Mín. 1 - Màx. 2]");
             numMecanics = utils.ValidadorOpcioMenu.numAeronausMissio(in);
 
@@ -408,7 +409,7 @@ public class GenerarClasse {
 
             // Assignar Pilot i Mecanics a Aeronau
             if (tipusAeronau != 4) {                                            // Si l'aeronau està pilotada (No és un Dron)
-                
+
                 for (Aeronau p : tempNau) {
                     llistaMecanics = new ArrayList<>();
                     List<Soldat> s = new ArrayList<>();
@@ -418,7 +419,6 @@ public class GenerarClasse {
                     }
                     llistaMecanics.stream().forEach(x -> session.persist(x));
                 }
-
             }
 
             session.getTransaction().commit();
@@ -428,7 +428,7 @@ public class GenerarClasse {
 
     public static void crearPilot() {
 
-        if (numPilots == 0) {            
+        if (numPilots == 0) {
             logger.info(">> Quants Pilots vols crear?");
             aeronausPerMissio = utils.ValidadorOpcioMenu.validador(in);
             tipusAeronau = (int) (Math.floor(Math.random() * (3 - 2 + 1)) + 2);
@@ -442,12 +442,15 @@ public class GenerarClasse {
 
     public static void crearMecanic() {
 
-        if (numMecanics == 0) {           
-            logger.info(">> Quants Mecànics vols crear?");
-            numMecanics = utils.ValidadorOpcioMenu.validador(in);
+        if (numMecanics == 0) {
+            logger.info(">> Quants Mecànics vols crear? ");
+            numMecanics = utils.ValidadorOpcioMenu.numMecanicAeronau(in);
+            has_mecanics = true;
+            tipusAeronau = (int) (Math.floor(Math.random() * (4 - 2 + 1)) + 2);
             crearAeronau();
+
         }
-        has_mecanics = true;
+
     }
 
 }
