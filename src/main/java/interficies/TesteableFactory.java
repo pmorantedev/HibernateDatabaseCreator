@@ -1,19 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package interficies;
 
 import entitats.Aeronau;
-import entitats.Aeronau;
-import entitats.Missio;
 import entitats.Missio;
 import entitats.Pilot;
-import entitats.Pilot;
 import entitats.Pilotada;
-import entitats.Pilotada;
-import entitats.Soldat;
 import entitats.Soldat;
 import java.util.List;
 
