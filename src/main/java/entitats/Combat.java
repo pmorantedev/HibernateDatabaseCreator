@@ -8,8 +8,9 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
- *
- * @author pablomorante
+ * Classe abstracta per representar objectes de tipus Combat.
+ * 
+ * @author Pablo Morante: Creació/Implementació
  */
 @Entity
 @Table(name = "combat")

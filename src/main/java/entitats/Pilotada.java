@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author pablomorante
+ * Classe abstracta per representar objectes de tipus Pilotada.
+ * 
+ * @author Pablo Morante: Creació/Implementació
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
