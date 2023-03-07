@@ -16,8 +16,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        SingleSession singleton = SingleSession.getInstance();
-//menuLogin();
+        SingleSession singleton = menuLogin();
 
         menu(singleton);
 

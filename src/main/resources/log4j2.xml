@@ -16,12 +16,12 @@ usuaris no autoritzats.
     </Root>
   
      <!-- Hibernate -->
-    <Logger name="org.hibernate" level="OFF" additivity="false">
+    <Logger name="org.hibernate" level="ERROR" additivity="false">
       <AppenderRef ref="Console" />
     </Logger>
 
     <!-- Sentències SQL -->
-    <Logger name="org.hibernate.SQL" level="OFF" additivity="false">
+    <Logger name="org.hibernate.SQL" level="ERROR" additivity="false">
       <AppenderRef ref="Console" />
     </Logger>
   </Loggers>

@@ -41,7 +41,8 @@ public class LlistarClasse {
             if (mecanic != null) {
 
                 Pilotada pilotada = mecanic.getPilotada();
-                logger.info("- " + mecanic.toString() + "\n          · Pilotada: " + pilotada + "\n");
+                List<Missio> missions = pilotada.getMissions();
+                logger.info("- " + mecanic.toString() + "\n          · Pilotada: " + pilotada + "\n          · Missions: " + missions + "\n");
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
@@ -67,8 +68,9 @@ public class LlistarClasse {
                 if (pilot.getPilotada() == null) {
                     pilot.setPilotada(new Combat());
                 }
+                List<Missio> missions = pilotada.getMissions();
 
-                logger.info("- " + pilot.toString() + "\n          · Pilotada: " + pilotada + "\n");
+                logger.info("- " + pilot.toString() + "\n          · Pilotada: " + pilotada + "\n          · Missions: " + missions + "\n");
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
