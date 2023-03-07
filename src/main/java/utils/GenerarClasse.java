@@ -373,55 +373,72 @@ public class GenerarClasse {
      */
     public static void assignarAeronaus() {
 
+        int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
-            int i = 0, indexAutonoma = 0, indexPilotada = 0;
+        while (i < llistaMissions.size()) {
 
-            while (i < llistaMissions.size()) {
+            session.beginTransaction();
+            
+            llistaMissions.stream().forEach(x -> session.persist(x));
 
-                session.beginTransaction();
-//                llistaAutonomes.stream().forEach(x -> session.persist(x));
-                llistaMissions.stream().forEach(x -> session.persist(x));
+            List<Aeronau> tempNau = new ArrayList<>();
 
-                List<Aeronau> tempNau = new ArrayList<>();
+            // Seleccionar aeronaus x cada Missió
+            for (int j = 0; j < aeronausPerMissio; j++) {
 
-                // Seleccionar aeronaus x cada Missió
-                for (int j = 0; j < aeronausPerMissio; j++) {
-
-                    if (!llistaPilotades.isEmpty() && indexPilotada < llistaPilotades.size()) {  // Evitar desbordament de l'índex  // Afegir si hi ha Pilotades (Transport/Combat)...                    
-                        tempNau.add(llistaPilotades.get(indexPilotada));
-                        indexPilotada++;                                        // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                         
-                    }
-                    if (!llistaAutonomes.isEmpty() && indexAutonoma < llistaAutonomes.size()) {  // Evitar desbordament de l'índex  // Afegir si hi ha Drons...
-                        tempNau.add(llistaAutonomes.get(indexAutonoma));
-                        indexAutonoma++;                                        // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                            
-                    }
+                if (!llistaPilotades.isEmpty() && indexPilotada < llistaPilotades.size()) {  // Evitar desbordament de l'índex  // Afegir si hi ha Pilotades (Transport/Combat)...                    
+                    tempNau.add(llistaPilotades.get(indexPilotada));
+                    indexPilotada++;                                        // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                         
                 }
-//                llistaAutonomes.stream().forEach(x -> session.persist(x));
-                // Assignar Aeronaus a una Missió (màx.8)          
-                try {
-                    if (i % 2 == 0) { // si el índice es par
-                        factory.addAeronausToMissio(tempNau, llistaMissions.get(i));
-                        //llistaMissions.get(i).setAeronaus(tempNau);
-                        if (i + 1 < llistaMissions.size()) {
-                            factory.addAeronausToMissio(tempNau, llistaMissions.get(i + 1));
-                            //llistaMissions.get(i + 1).setAeronaus(tempNau);
-                        }
-                    } else { // si el índice es impar
-                        factory.addAeronausToMissio(tempNau, llistaMissions.get(i - 1));
-                        factory.addAeronausToMissio(tempNau, llistaMissions.get(i));
-                        //llistaMissions.get(i - 1).setAeronaus(tempNau);
-                        //llistaMissions.get(i).setAeronaus(tempNau);
-                    }
-
-                } catch (Exception e) {
-                    logger.error(e.getMessage());
+                if (!llistaAutonomes.isEmpty() && indexAutonoma < llistaAutonomes.size()) {  // Evitar desbordament de l'índex  // Afegir si hi ha Drons...
+                    tempNau.add(llistaAutonomes.get(indexAutonoma));
+                    indexAutonoma++;                                        // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                            
                 }
-                
-//                llistaMissions.stream().forEach(x -> session.persist(x));
-                //llistaMissions.stream().forEach(x -> x.setAeronaus(tempNau));
-                session.getTransaction().commit();
-                i += 2;
             }
+//                llistaAutonomes.stream().forEach(x -> session.persist(x));
+            // Assignar Aeronaus a una Missió (màx.8)          
+            try {
+                if (i % 2 == 0) { // si el índice es par
+                    factory.addAeronausToMissio(tempNau, llistaMissions.get(i));
+                    //llistaMissions.get(i).setAeronaus(tempNau);
+                    if (i + 1 < llistaMissions.size()) {
+                        factory.addAeronausToMissio(tempNau, llistaMissions.get(i + 1));
+                        //llistaMissions.get(i + 1).setAeronaus(tempNau);
+                    }
+                } else { // si el índice es impar
+                    factory.addAeronausToMissio(tempNau, llistaMissions.get(i - 1));
+                    factory.addAeronausToMissio(tempNau, llistaMissions.get(i));
+                    //llistaMissions.get(i - 1).setAeronaus(tempNau);
+                    //llistaMissions.get(i).setAeronaus(tempNau);
+                }
+
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+
+            // HO POSEM TOT AQUÍ PER UNIFICAR FUNCIONALITATS, o SEPAREM EN MÈTODES...? 
+            // Assignar Pilot a Aeronau
+            if (tipusAeronau != 4) {  // Si l'aeronau està pilotada (No és un Dron)
+                try {
+                    factory.addPilotToAeronauPilotada((Pilot)factory.pilotsFactory(1), (Pilotada) tempNau);  //(Pilotada)factory.aeronauFactory(Transport.class)
+                } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(GenerarClasse.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            // Assignar Mecanic(s) a Aeronau
+            if (tipusAeronau != 4) {  // Si l'aeronau està pilotada (No és un Dron)
+                try {
+                    factory.addMecanicsToPilotada(factory.mecanicsFactory(numMecanicsPerAeronau), (Pilotada) tempNau);  //(Pilotada)factory.aeronauFactory(Transport.class)
+                } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(GenerarClasse.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+//                llistaMissions.stream().forEach(x -> session.persist(x));
+            //llistaMissions.stream().forEach(x -> x.setAeronaus(tempNau));
+            session.getTransaction().commit();
+            i += 2;
+        }
 //        }
     }
 
@@ -433,6 +450,8 @@ public class GenerarClasse {
             numPilots = utils.ValidadorOpcioMenu.validador(in);
         }
         aeronausPerMissio = numPilots;
+        
+        has_pilots = true;
 
     }
 
@@ -443,16 +462,17 @@ public class GenerarClasse {
             logger.info(">> Quants Mecànics vols crear?");
             numMecanics = utils.ValidadorOpcioMenu.validador(in);
 
-            if (numMecanics % 2 == 0) {
-                numMecanicsPerAeronau = 2;
+//            if (numMecanics % 2 == 0) {
+//                numMecanicsPerAeronau = 2;
 //                if (!llistaAutonomes.isEmpty())
 //                    factory.addMecanicsToPilotada(factory.mecanicsFactory(numMecanicsPerAeronau), tempNaus);
-                //llistaMecanics.stream().forEach(x -> x.setPilotada(llistaAeronaus));
-            } else {
-                numMecanicsPerAeronau = 1;
-            }
+//                llistaMecanics.stream().forEach(x -> x.setPilotada(llistaAeronaus));
+//            } else {
+//                numMecanicsPerAeronau = 1;
+//            }
 
         }
+        has_mecanics = true;
     }
 
     public static void assignarMecanics() {
