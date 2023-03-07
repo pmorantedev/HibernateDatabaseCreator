@@ -363,7 +363,7 @@ public class GenerarClasse {
 
         int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
-        if (tipusAeronau != 4 && !has_mecanics) {
+        if (!has_mecanics) {
             logger.info(">> Quants Mecànics vols assignar per Aeronau? [Mín. 1 - Màx. 2]");
             numMecanics = utils.ValidadorOpcioMenu.numAeronausMissio(in);
 
@@ -408,17 +408,14 @@ public class GenerarClasse {
             }
 
             // Assignar Pilot i Mecanics a Aeronau
-            if (tipusAeronau != 4) {                                            // Si l'aeronau està pilotada (No és un Dron)
-
-                for (Aeronau p : tempNau) {
-                    llistaMecanics = new ArrayList<>();
-                    List<Soldat> s = new ArrayList<>();
-                    s = factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) p);
-                    for (Soldat m : s) {
-                        llistaMecanics.add((Mecanic) m);
-                    }
-                    llistaMecanics.stream().forEach(x -> session.persist(x));
+            for (Aeronau p : tempNau) {
+                llistaMecanics = new ArrayList<>();
+                List<Soldat> s = new ArrayList<>();
+                s = factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) p);
+                for (Soldat m : s) {
+                    llistaMecanics.add((Mecanic) m);
                 }
+                llistaMecanics.stream().forEach(x -> session.persist(x));
             }
 
             session.getTransaction().commit();
