@@ -7,6 +7,7 @@ import entitats.Mecanic;
 import entitats.Missio;
 import entitats.Pilot;
 import entitats.Pilotada;
+import entitats.Soldat;
 import entitats.Transport;
 import java.util.ArrayList;
 import java.util.List;
@@ -375,10 +376,11 @@ public class GenerarClasse {
 
         int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
+        assignarMecanics();
         while (i < llistaMissions.size()) {
 
             session.beginTransaction();
-            
+
             llistaMissions.stream().forEach(x -> session.persist(x));
 
             List<Aeronau> tempNau = new ArrayList<>();
@@ -417,21 +419,27 @@ public class GenerarClasse {
             }
 
             // HO POSEM TOT AQUÍ PER UNIFICAR FUNCIONALITATS, o SEPAREM EN MÈTODES...? 
-            // Assignar Pilot a Aeronau
+            // Assignar Pilot i Mecanics a Aeronau
             if (tipusAeronau != 4) {  // Si l'aeronau està pilotada (No és un Dron)
-                try {
-                    factory.addPilotToAeronauPilotada((Pilot)factory.pilotsFactory(1), (Pilotada) tempNau);  //(Pilotada)factory.aeronauFactory(Transport.class)
-                } catch (Exception ex) {
-                    java.util.logging.Logger.getLogger(GenerarClasse.class.getName()).log(Level.SEVERE, null, ex);
+                //factory.addPilotToAeronauPilotada((Pilot) factory.pilotsFactory(1), (Pilotada) pilotada);  //(Pilotada)factory.aeronauFactory(Transport.class) 
+                for (Aeronau p : tempNau) {
+                    llistaMecanics = new ArrayList<>();
+                    List<Soldat> s = new ArrayList<>();
+                    s = factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) p);
+                    for (Soldat m : s) {
+                        llistaMecanics.add((Mecanic) m);
+                    }
+                    llistaMecanics.stream().forEach(x -> session.persist(x));
                 }
-            }
-            // Assignar Mecanic(s) a Aeronau
-            if (tipusAeronau != 4) {  // Si l'aeronau està pilotada (No és un Dron)
-                try {
-                    factory.addMecanicsToPilotada(factory.mecanicsFactory(numMecanicsPerAeronau), (Pilotada) tempNau);  //(Pilotada)factory.aeronauFactory(Transport.class)
-                } catch (Exception ex) {
-                    java.util.logging.Logger.getLogger(GenerarClasse.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+//                tempNau.stream().forEach(x -> {
+//                    try {
+//                        factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) x);
+//                    } catch (Exception ex) {
+//                        java.util.logging.Logger.getLogger(GenerarClasse.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                });
+                //factory.addMecanicsToPilotada(mecanics, (Pilotada) tempNau.get(indexPilotada));  //(Pilotada)factory.aeronauFactory(Transport.class)
             }
 
 //                llistaMissions.stream().forEach(x -> session.persist(x));
@@ -450,7 +458,7 @@ public class GenerarClasse {
             numPilots = utils.ValidadorOpcioMenu.validador(in);
         }
         aeronausPerMissio = numPilots;
-        
+
         has_pilots = true;
 
     }
@@ -470,7 +478,6 @@ public class GenerarClasse {
 //            } else {
 //                numMecanicsPerAeronau = 1;
 //            }
-
         }
         has_mecanics = true;
     }

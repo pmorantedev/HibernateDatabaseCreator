@@ -195,5 +195,44 @@ public class ClassFactory implements TesteableFactory {
 
         return nouSoldat;
     }
+    
+     public List<Soldat> mecanicsToAeronauFactory(int elements, Pilotada p) {
+
+        try {
+            List<Soldat> llistaMecanics = new ArrayList<>();
+            for (int i = 0; i < elements; i++) {
+                llistaMecanics.add(soldatConPilotadaFactory(Mecanic.class, p));
+            }
+            return llistaMecanics;
+        } catch (Exception e) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        }
+
+    }
+     
+     public Soldat soldatConPilotadaFactory(Class<?> tipus, Pilotada p) {
+
+        Soldat nouSoldat;
+
+        //s'ha d'implementar javaFacker per fer caa clase diferent
+        if (Mecanic.class.isAssignableFrom(tipus)) {
+            nouSoldat = new Mecanic(faker.company().profession(),
+                    r.nextFloat() * 100.0f, p,
+                    faker.funnyName().name(), r.nextFloat() * 10.0f,
+                    new Date(faker.date().past(r.nextInt(10) + 1, TimeUnit.DAYS).getTime()),
+                    faker.bool().bool());
+
+        } else if (Pilot.class.isAssignableFrom(tipus)) {
+            //un pilot no implementa una pilotada?
+            nouSoldat = new Pilot(faker.funnyName().name(), r.nextFloat() * 10.0f,
+                    new Date(faker.date().past(r.nextInt(10) + 1, TimeUnit.DAYS).getTime()),
+                    faker.bool().bool(), r.nextFloat() * 7.0f);
+        } else {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        return nouSoldat;
+    }
 
 }
