@@ -120,12 +120,10 @@ public class App {
                 //Clase Transport
                 case 2:
                     GenerarClasse.iniciarGeneracions(2);
-                    //logger.info("Classe dron generada!");
                     break;
                 //Clase Combat
                 case 3:
                     GenerarClasse.iniciarGeneracions(3);
-                    //logger.info("Classe mecànic generada!");
                     break;
                 //Clase Dron
                 case 4:
@@ -134,12 +132,10 @@ public class App {
                 //Clase Pilot
                 case 5:
                     GenerarClasse.iniciarGeneracions(5);
-                    //logger.info("Classe pilot generada!");
                     break;
                 //Clase Mecanic
                 case 6:
                     GenerarClasse.iniciarGeneracions(6);
-                    //logger.info("Classe transport generada!");
                     break;
                 //Sortir al menú principal
                 case 7:
@@ -201,29 +197,29 @@ public class App {
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcioMenuLlistarClasse) {
-                //Classe Combat
+                //Classe Missió
                 case 1:
+                    utils.LlistarClasse.llistarMissio(singleton, idInicial, idFinal);
+                    break;
+                //Classe Transport    
+                case 2:
+                    utils.LlistarClasse.llistarTransport(singleton, idInicial, idFinal);
+                    break;
+                //Classe Combat
+                case 3:
                     utils.LlistarClasse.llistarCombat(singleton, idInicial, idFinal);
                     break;
-                //Classe Dron    
-                case 2:
-                    utils.LlistarClasse.llistarDron(singleton, idInicial, idFinal);
-                    break;
-                //Classe Mecànic
-                case 3:
-                    utils.LlistarClasse.llistarMecanic(singleton, idInicial, idFinal);
-                    break;
-                //Classe Missió
+                //Classe Dron
                 case 4:
-                    utils.LlistarClasse.llistarMissio(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarDron(singleton, idInicial, idFinal);
                     break;
                 //Classe Pilot
                 case 5:
                     utils.LlistarClasse.llistarPilot(singleton, idInicial, idFinal);
                     break;
-                //Classe Transport
+                //Classe Mecànic
                 case 6:
-                    utils.LlistarClasse.llistarTransport(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarMecanic(singleton, idInicial, idFinal);
                     break;
                 //Sortir al menú principal
                 case 7:
@@ -283,29 +279,29 @@ public class App {
             logger.info("------------------------------------------------------------------------" + "\n");
 
             switch (opcioMenuEliminarClasse) {
-                //Classe Combat
+                //Classe Missió
                 case 1:
+                    utils.EliminarClasse.eliminarMissio(singleton, idInicial, idFinal);
+                    break;
+                //Classe Transport
+                case 2:
+                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Transport.class);
+                    break;
+                //Classe Combat
+                case 3:
                     utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Combat.class);
                     break;
                 //Classe Dron
-                case 2:
-                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Dron.class);
-                    break;
-                //Classe Mecànic
-                case 3:
-                    utils.EliminarClasse.eliminarSoldat(singleton, idInicial, idFinal, Mecanic.class);
-                    break;
-                //Classe Missió
                 case 4:
-                    utils.EliminarClasse.eliminarMissio(singleton, idInicial, idFinal);
+                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Dron.class);
                     break;
                 //Classe Pilot
                 case 5:
                     utils.EliminarClasse.eliminarSoldat(singleton, idInicial, idFinal, Pilot.class);
                     break;
-                //Classe Transport
+                //Classe Mecànic
                 case 6:
-                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Transport.class);
+                    utils.EliminarClasse.eliminarSoldat(singleton, idInicial, idFinal, Mecanic.class);
                     break;
                 //Sortir al menú principal
                 case 7:
