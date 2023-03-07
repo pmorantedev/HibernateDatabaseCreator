@@ -375,7 +375,10 @@ public class GenerarClasse {
 
         int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
-        assignarMecanics();
+        if (tipusAeronau != 4) {
+            assignarMecanics();
+        }
+
         while (i < llistaMissions.size()) {
 
             session.beginTransaction();
