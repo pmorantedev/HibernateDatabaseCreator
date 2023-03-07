@@ -118,7 +118,7 @@ public class GenerarClasse {
                 logger.info(resum_mecanics);
             }
 
-            // Resetejar variables ???
+            // Resetejar variables
             llistaMissions.clear();
             llistaPilotades.clear();
             llistaAutonomes.clear();
@@ -134,7 +134,12 @@ public class GenerarClasse {
             has_drons = false;
             has_pilots = false;
             has_mecanics = false;
-            correcte = false;
+            correcte = false;            
+            resum_aeronausTransport = "";
+            resum_aeronausCombat = "";
+            resum_aeronausDron = "";
+            resum_pilots = "";
+            resum_mecanics = "";
 
         } catch (HibernateException ex) {
             if (session.getTransaction() != null) {
@@ -214,12 +219,6 @@ public class GenerarClasse {
 
                 crearAeronau();
             }
-//            
-//            // GENERAR + ASSIGNAR MECÀNIC(S)
-//            if ( !has_mecanics ) {
-//                crearMecanic();
-//            }
-//            //assignarMecanics();
 
         } catch (HibernateException ex) {
             if (session.getTransaction() != null) {
@@ -262,7 +261,6 @@ public class GenerarClasse {
 
             // Calcular les naus necessàries a generar (respectant cardinalitat de 2 Missions màx.)
             if ((numMissions > 1) && (aeronausPerMissio >= 2)) {  // Sobretot és aeronausPerMissio el filtre important!
-                //aeronausTotals = 2 + aeronausPerMissio * (int) Math.floor((numMissions-1)/2);
                 aeronausTotals = aeronausPerMissio + aeronausPerMissio * (int) Math.floor((numMissions - 1) / 2);
             } else {
                 aeronausTotals = aeronausPerMissio * numMissions;
@@ -305,39 +303,30 @@ public class GenerarClasse {
             // Desar a BBDD
             session.getTransaction().commit();
 
-            // ASSIGNAR: AERONAUS <--> MISSIONS
+            // ASSIGNAR: /AERONAUS <--> MISSIONS/ + /MECÀNIC(S) <--> AERONAUS/
             assignacions();
 
-//            // GENERAR + ASSIGNAR PILOT(S)
-//            if ( !has_pilots ) {
-//                crearPilot();
-//                assignarPilot();
-//            } else {
-//                assignarPilot();
-//            }
-//
-//            // GENERAR + ASSIGNAR MECÀNIC(S)
-//            if ( !has_mecanics ) {
-//                crearMecanic();
-//                assignarMecanics();
-//            } else {
-//                assignarMecanics();
-//            }
             // Desar detalls Aeronaus generades
             switch (tipusAeronau) {
                 case 2:
                     resum_aeronausTransport = "- Generades " + (aeronausTotals)
                             + " aeronaus de Transport per cobrir " + numMissions
                             + " Missió(ns), [1 aeronau participa a 2 Missions com a màxim]";
+                    resum_pilots = "- Generats " + aeronausTotals+" pilot(s), 1 pilot per aeronau Pilotada.";
+                    resum_mecanics = "- Generats " + numMecanics*aeronausTotals +" mecànic(s), " + numMecanics +" mecànic(s) per aeronau Pilotada.";
                     has_aeronaus = true;
                     has_nausTransport = true;
+                    has_pilots = true;
                     break;
                 case 3:
                     resum_aeronausCombat = "- Generades " + (aeronausTotals)
                             + " aeronaus de Combat per cobrir " + numMissions
                             + " Missió(ns), [1 aeronau participa a 2 Missions com a màxim]";
+                    resum_pilots = "- Generats " + aeronausTotals+" pilot(s), 1 pilot per aeronau Pilotada.";
+                    resum_mecanics = "- Generats " + numMecanics*aeronausTotals +" mecànic(s), " + numMecanics +" mecànic(s) per aeronau Pilotada.";
                     has_aeronaus = true;
                     has_nausCombat = true;
+                    has_pilots = true;
                     break;
                 case 4:
                     resum_aeronausDron = "- Generats " + (aeronausTotals)
@@ -361,8 +350,8 @@ public class GenerarClasse {
     }
 
     /**
-     * Mètode per assignar una o vàries instàncies de tipus Aeronau a una
-     * Missió.
+     * Mètode per assignar una o vàries instàncies de tipus Aeronau i Mecànic a 
+     * una Missió.
      *
      * @author Txell Llanas: Creació/ Implementació
      * @author Izan Jimenez: Implementació
@@ -374,7 +363,10 @@ public class GenerarClasse {
         int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
         if (tipusAeronau != 4) {
-            assignarMecanics();
+            logger.info(">> Quants Mecànics vols assignar per Aeronau? [Mín. 1 - Màx. 2]");
+            numMecanics = utils.ValidadorOpcioMenu.numAeronausMissio(in);
+
+            has_mecanics = true;
         }
 
         while (i < llistaMissions.size()) {
@@ -390,38 +382,33 @@ public class GenerarClasse {
 
                 if (!llistaPilotades.isEmpty() && indexPilotada < llistaPilotades.size()) {  // Evitar desbordament de l'índex  // Afegir si hi ha Pilotades (Transport/Combat)...                    
                     tempNau.add(llistaPilotades.get(indexPilotada));
-                    indexPilotada++;                                        // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                         
+                    indexPilotada++;                                            // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                         
                 }
                 if (!llistaAutonomes.isEmpty() && indexAutonoma < llistaAutonomes.size()) {  // Evitar desbordament de l'índex  // Afegir si hi ha Drons...
                     tempNau.add(llistaAutonomes.get(indexAutonoma));
-                    indexAutonoma++;                                        // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                            
+                    indexAutonoma++;                                            // Evitar assignar índexs repetits: avanço al següent del total d'elements de la llista                            
                 }
             }
-//                llistaAutonomes.stream().forEach(x -> session.persist(x));
+
             // Assignar Aeronaus a una Missió (màx.8)          
             try {
-                if (i % 2 == 0) { // si el índice es par
+                if (i % 2 == 0) {                                               // si l'índex és PARELL
                     factory.addAeronausToMissio(tempNau, llistaMissions.get(i));
-                    //llistaMissions.get(i).setAeronaus(tempNau);
                     if (i + 1 < llistaMissions.size()) {
                         factory.addAeronausToMissio(tempNau, llistaMissions.get(i + 1));
-                        //llistaMissions.get(i + 1).setAeronaus(tempNau);
                     }
-                } else { // si el índice es impar
+                } else {                                                        // si l'índex és SENAR
                     factory.addAeronausToMissio(tempNau, llistaMissions.get(i - 1));
                     factory.addAeronausToMissio(tempNau, llistaMissions.get(i));
-                    //llistaMissions.get(i - 1).setAeronaus(tempNau);
-                    //llistaMissions.get(i).setAeronaus(tempNau);
                 }
 
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }
 
-            // HO POSEM TOT AQUÍ PER UNIFICAR FUNCIONALITATS, o SEPAREM EN MÈTODES...? 
             // Assignar Pilot i Mecanics a Aeronau
-            if (tipusAeronau != 4) {  // Si l'aeronau està pilotada (No és un Dron)
-                //factory.addPilotToAeronauPilotada((Pilot) factory.pilotsFactory(1), (Pilotada) pilotada);  //(Pilotada)factory.aeronauFactory(Transport.class) 
+            if (tipusAeronau != 4) {                                            // Si l'aeronau està pilotada (No és un Dron)
+                
                 for (Aeronau p : tempNau) {
                     llistaMecanics = new ArrayList<>();
                     List<Soldat> s = new ArrayList<>();
@@ -432,32 +419,22 @@ public class GenerarClasse {
                     llistaMecanics.stream().forEach(x -> session.persist(x));
                 }
 
-//                tempNau.stream().forEach(x -> {
-//                    try {
-//                        factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) x);
-//                    } catch (Exception ex) {
-//                        java.util.logging.Logger.getLogger(GenerarClasse.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                });
-                //factory.addMecanicsToPilotada(mecanics, (Pilotada) tempNau.get(indexPilotada));  //(Pilotada)factory.aeronauFactory(Transport.class)
             }
 
-//                llistaMissions.stream().forEach(x -> session.persist(x));
-            //llistaMissions.stream().forEach(x -> x.setAeronaus(tempNau));
             session.getTransaction().commit();
             i += 2;
         }
-//        }
     }
 
     public static void crearPilot() {
 
-        if (numPilots == 0) {
-            // GENERAR PILOT(S)            
+        if (numPilots == 0) {            
             logger.info(">> Quants Pilots vols crear?");
-            numPilots = utils.ValidadorOpcioMenu.validador(in);
+            aeronausPerMissio = utils.ValidadorOpcioMenu.validador(in);
+            tipusAeronau = (int) (Math.floor(Math.random() * (3 - 2 + 1)) + 2);
+            crearAeronau();
         }
-        aeronausPerMissio = numPilots;
+        //aeronausPerMissio = numPilots;
 
         has_pilots = true;
 
@@ -465,35 +442,12 @@ public class GenerarClasse {
 
     public static void crearMecanic() {
 
-        if (numMecanics == 0) {
-            // GENERAR MECÀNIC(S)            
+        if (numMecanics == 0) {           
             logger.info(">> Quants Mecànics vols crear?");
             numMecanics = utils.ValidadorOpcioMenu.validador(in);
-
-//            if (numMecanics % 2 == 0) {
-//                numMecanicsPerAeronau = 2;
-//                if (!llistaAutonomes.isEmpty())
-//                    factory.addMecanicsToPilotada(factory.mecanicsFactory(numMecanicsPerAeronau), tempNaus);
-//                llistaMecanics.stream().forEach(x -> x.setPilotada(llistaAeronaus));
-//            } else {
-//                numMecanicsPerAeronau = 1;
-//            }
+            crearAeronau();
         }
         has_mecanics = true;
     }
 
-    public static void assignarMecanics() {
-
-        logger.info(">> Quants Mecànics vols assignar per Aeronau? [Mín. 1 - Màx. 2]");
-        numMecanics = utils.ValidadorOpcioMenu.numAeronausMissio(in);
-
-        has_mecanics = true;
-
-    }
-
-    public static void assignarPilot() {
-
-        has_pilots = true;
-
-    }
 }
