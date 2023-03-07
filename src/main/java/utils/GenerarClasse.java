@@ -12,7 +12,6 @@ import entitats.Transport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
 import main.ClassFactory;
 import main.SingleSession;
 import org.apache.logging.log4j.LogManager;

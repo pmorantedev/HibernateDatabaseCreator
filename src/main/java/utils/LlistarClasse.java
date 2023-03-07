@@ -25,6 +25,16 @@ public class LlistarClasse {
 
     private static final Logger logger = LogManager.getLogger(LlistatMenuClasses.class);
 
+    /***
+     * (RF18) - Aquest mètode permet llistar mecànics amb un rang especificat 
+     * per l'usuari.
+     * 
+     * @param singleton - instància de la classe SingleSession
+     * @param idInicial - identificador inicial del rang
+     * @param idFinal - identificador final del rang
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void llistarMecanic(SingleSession singleton, int idInicial, int idFinal) {
         for (int i = idInicial; i <= idFinal; i++) {
             Mecanic mecanic = singleton.getSessioUsuari().get(Mecanic.class, i);
@@ -38,6 +48,16 @@ public class LlistarClasse {
         }
     }
 
+    /***
+     * (RF18) - Aquest mètode permet llistar pilots amb un rang especificat 
+     * per l'usuari.
+     * 
+     * @param singleton - instància de la classe SingleSession
+     * @param idInicial - identificador inicial del rang
+     * @param idFinal - identificador final del rang
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void llistarPilot(SingleSession singleton, int idInicial, int idFinal) {
         for (int i = idInicial; i <= idFinal; i++) {
             Pilot pilot = singleton.getSessioUsuari().get(Pilot.class, i);
@@ -55,6 +75,16 @@ public class LlistarClasse {
         }
     }
 
+    /***
+     * (RF18) - Aquest mètode permet llistar missions amb un rang especificat 
+     * per l'usuari.
+     * 
+     * @param singleton - instància de la classe SingleSession
+     * @param idInicial - identificador inicial del rang
+     * @param idFinal - identificador final del rang
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void llistarMissio(SingleSession singleton, int idInicial, int idFinal) {
         for (int i = idInicial; i <= idFinal; i++) {
             Missio missio = singleton.getSessioUsuari().get(Missio.class, i);
@@ -69,6 +99,16 @@ public class LlistarClasse {
         }
     }
 
+    /***
+     * (RF18) - Aquest mètode permet llistar drons amb un rang especificat 
+     * per l'usuari.
+     * 
+     * @param singleton - instància de la classe SingleSession
+     * @param idInicial - identificador inicial del rang
+     * @param idFinal - identificador final del rang
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void llistarDron(SingleSession singleton, int idInicial, int idFinal) {
         for (int i = idInicial; i <= idFinal; i++) {
             Dron dron = singleton.getSessioUsuari().get(Dron.class, i);
@@ -83,6 +123,16 @@ public class LlistarClasse {
         }
     }
 
+    /***
+     * (RF18) - Aquest mètode permet llistar combats amb un rang especificat 
+     * per l'usuari.
+     * 
+     * @param singleton - instància de la classe SingleSession
+     * @param idInicial - identificador inicial del rang
+     * @param idFinal - identificador final del rang
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void llistarCombat(SingleSession singleton, int idInicial, int idFinal) {
         for (int i = idInicial; i <= idFinal; i++) {
             Combat combat = singleton.getSessioUsuari().get(Combat.class, i);
@@ -99,6 +149,16 @@ public class LlistarClasse {
         }
     }
 
+    /***
+     * (RF18) - Aquest mètode permet llistar transports amb un rang especificat 
+     * per l'usuari.
+     * 
+     * @param singleton - instància de la classe SingleSession
+     * @param idInicial - identificador inicial del rang
+     * @param idFinal - identificador final del rang
+     * @author Víctor García
+     * @author Pablo Morante
+     */
     public static void llistarTransport(SingleSession singleton, int idInicial, int idFinal) {
         for (int i = idInicial; i <= idFinal; i++) {
             Transport transport = singleton.getSessioUsuari().get(Transport.class, i);

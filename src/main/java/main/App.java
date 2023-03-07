@@ -1,19 +1,13 @@
 package main;
 
-import entitats.Aeronau;
 import entitats.Combat;
 import entitats.Dron;
 import entitats.Mecanic;
-import entitats.Missio;
 import entitats.Pilot;
-import entitats.Pilotada;
 import entitats.Transport;
-import java.util.List;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.JDBCException;
-import org.hibernate.cfg.Configuration;
 import utils.GenerarClasse;
 
 public class App {
@@ -327,6 +321,7 @@ public class App {
      *
      * @return SingleSession
      * @author Pablo Morante
+     * @author Víctor García - UI
      */
     public static SingleSession menuLogin() {
         Scanner in = new Scanner(System.in);
