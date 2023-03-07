@@ -241,7 +241,9 @@ public class GenerarClasse {
      * forma automàtica i en quantitats majors de zero a escollir per l’usuari,
      * les entitats associades a aquesta.
      *
-     * @author Txell Llanas: Creació/ Implementació
+     * @author Txell Llanas: Creació/Implementació
+     * @author Izan Jimenez: Implementació
+     *
      */
     public static void crearAeronau() {
 
@@ -250,16 +252,12 @@ public class GenerarClasse {
             // GENERAR + ASSIGNAR AERONAU(S)
             if (aeronausPerMissio == 0) {
                 logger.info(">> Quantes Aeronaus vols assignar a una Missió? [Mín. 1 - Màx. 8]");
-                //logger.info(">> Quantes Aeronaus d'aquest tipus vols crear?");
                 aeronausPerMissio = utils.ValidadorOpcioMenu.numAeronausMissio(in);
 
             }
 
             if (numMissions == 0) {
-                // Calcular el nº de missions necessàries per cobrir la proporció de màx. 2 naus per missió
-                numMissions = (int) Math.ceil((double) aeronausPerMissio / MAX_NAUS_PER_MISSIO);
                 crearMissio();
-                logger.info("::: S'han autogenerat " + numMissions + " Missions amb " + aeronausPerMissio + " naus assignades cadascuna :::");
             }
 
             // Calcular les naus necessàries a generar (respectant cardinalitat de 2 Missions màx.)
@@ -308,7 +306,7 @@ public class GenerarClasse {
             session.getTransaction().commit();
 
             // ASSIGNAR: AERONAUS <--> MISSIONS
-            assignarAeronaus();
+            assignacions();
 
 //            // GENERAR + ASSIGNAR PILOT(S)
 //            if ( !has_pilots ) {
@@ -371,7 +369,7 @@ public class GenerarClasse {
      * @author Pablo Morante: Implementació
      * @author Víctor García: Implementació
      */
-    public static void assignarAeronaus() {
+    public static void assignacions() {
 
         int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
