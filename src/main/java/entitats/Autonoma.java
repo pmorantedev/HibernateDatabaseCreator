@@ -8,8 +8,10 @@ import jakarta.persistence.Table;
 import java.sql.Date;
 
 /**
- *
- * @author pablomorante
+ * Classe abstracta per representar objectes de tipus Autonoma.
+ * 
+ * @author Pablo Morante: Creació/Implementació
+ * @author Víctor García: Implementació
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

@@ -6,9 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.sql.Date;
 import java.io.Serializable;
+
 /**
- *
- * @author pablomorante
+ * Classe abstracta per representar objectes de tipus Transport.
+ * 
+ * @author Pablo Morante: Creació/Implementació
  */
 @Entity
 @Table(name = "transport")

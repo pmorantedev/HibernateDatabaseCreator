@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package utils;
 
 import java.util.Scanner;
@@ -20,7 +16,7 @@ public class ValidadorOpcioMenu {
      * Mètode que permet a l'usuari escollir una de les opcions del menú i 
      * valida que l'opció introduïda sigui un número.
      * 
-     * @param in
+     * @param in - objecte Scanner per llegir la entrada de l'usuari
      * @return opcioMenu - Retorna l'opció escollida per l'usuari
      * @author Víctor García
      */
@@ -49,6 +45,15 @@ public class ValidadorOpcioMenu {
         return opcioMenu;
     }
     
+    /***
+     * Aquest mètode demana a l'usuari que introdueixi un nombre enter vàlid
+     * que representi el nombre d'aeronaus en una missió determinada.
+     * També assegura que compleix la cardinalitat.
+     * 
+     * @param in - objecte Scanner per llegir la entrada de l'usuari
+     * @return totalAeronaus - retorna el nombre d'aeronaus en la missió
+     * @author Txell Llanas
+     */
     public static Integer numAeronausMissio(Scanner in) {
 
         int totalAeronaus = 0;

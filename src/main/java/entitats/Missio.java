@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Classe que defineix l'objecte de tipus Mecanic, que deriva de la Classe mare
- * 'Soldat' (RF01)
+ * Classe que defineix l'objecte de tipus Missió (RF01)
  *
  * @author pablomorante: Creació
  * @author Izan Jimenez: Implementació
@@ -51,9 +50,10 @@ public class Missio implements TesteableEntity, Serializable {
 
     @Basic
     @Column(name = "accomplished")
-    private boolean accomplished;
-
-//  @ManyToMany(mappedBy = "missions")
+    private boolean accomplished;   
+    
+    //Junta els id de misió i de les aeronaus d'aquesta missió en una nova taula
+    //cascade: es fa cascade quan s'elimina la clase
     @ManyToMany(cascade = {CascadeType.REMOVE})
     @JoinTable(
             name = "Aeronau_Missio",

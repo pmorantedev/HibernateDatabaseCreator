@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- *
- * @author pablomorante
+ * Classe abstracta per representar objectes de tipus Aeronau.
+ * 
+ * @author Pablo Morante: Creació/Implementació
+ * @author Víctor García: Implementació
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -38,14 +40,7 @@ public abstract class Aeronau {
     private Date autodestructionDate;
     @Column(nullable = false)
     private Boolean hasDeathLaser;
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(
-//            name = "Aeronau_Missio",
-//            joinColumns = {
-//                @JoinColumn(name = "aeronauFabricationNumber")},
-//            inverseJoinColumns = {
-//                @JoinColumn(name = "cosmicMissionCode")}
-//    )
+
     @ManyToMany(mappedBy = "aeronaus", cascade = {CascadeType.REMOVE})
     List<Missio> missions = new ArrayList<>();
 
@@ -54,7 +49,6 @@ public abstract class Aeronau {
     }
 
     public Aeronau(String corporation, Float engineTorque, Date autodestructionDate, Boolean hasDeathLaser) {
-//        this.fabricationNumber = fabricationNumber;
         this.corporation = corporation;
         this.engineTorque = engineTorque;
         this.autodestructionDate = autodestructionDate;
