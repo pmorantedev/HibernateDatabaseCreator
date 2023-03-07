@@ -18,7 +18,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
+ * Implementa les funcions necessaries per la generació i fer la relació
  *
  * @author Izan Jimenez
  */
@@ -81,7 +81,6 @@ public class ClassFactory implements TesteableFactory {
     public Aeronau aeronauFactory(Class<?> tipus) {
         Aeronau novaAeronau;
 
-        //s'ha d'implementar javaFacker per fer caa clase diferent
         if (Combat.class.isAssignableFrom(tipus)) {
             novaAeronau = new Combat(faker.bool().bool(), faker.number().numberBetween(1, 10000), faker.bool().bool(),
                     r.nextFloat() * 500.0f, faker.company().name(), r.nextFloat() * 100.0f,
@@ -140,7 +139,6 @@ public class ClassFactory implements TesteableFactory {
             return llistaMissions;
         } catch (Exception e) {
             throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
         }
 
     }
