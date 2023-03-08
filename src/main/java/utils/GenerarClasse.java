@@ -5,7 +5,6 @@ import entitats.Combat;
 import entitats.Dron;
 import entitats.Mecanic;
 import entitats.Missio;
-import entitats.Pilot;
 import entitats.Pilotada;
 import entitats.Soldat;
 import entitats.Transport;
@@ -28,34 +27,31 @@ import org.hibernate.Session;
 public class GenerarClasse {
 
     private static Scanner in = new Scanner(System.in);
-    private static final int MAX_NAUS_PER_MISSIO = 2;
 
     private static final Logger logger = LogManager.getLogger(GenerarClasse.class); // Crear Logs per aquesta classe
-    private static final SingleSession singleton = SingleSession.getInstance(); // Recuperar instància de la Sessió única actual
+    //private static final SingleSession singleton = SingleSession.getInstance(); // Recuperar instància de la Sessió única actual
     private static Session session;
     private static ClassFactory factory = new ClassFactory();
 
     // Còmputs i Xivatos
-    private static int numMissions, aeronausPerMissio, aeronausTotals, mecanicsPerAeronau,
-            numPilotades, numAutonomes, numPilots, numMecanics,
-            opcioAeronau, opcioPilotada,
-            numPilotadesTotals, numAutonomesTotals, indexNau, indexPilotada, indexAutonoma, tipusPilotada, tipusAeronau = 0;
-    private static boolean has_missions, has_aeronaus, has_nausTransport,
-            has_nausCombat, has_drons, has_pilots, has_mecanics, contesta_usuari, correcte = false;
+    private static int numMissions, aeronausPerMissio, aeronausTotals, numPilots, numMecanics, tipusAeronau, tipusSoldat = 0;
+    private static boolean has_missions, has_aeronaus, has_nausTransport, has_nausCombat, has_drons, has_pilots, has_mecanics = false;
 
     // Textes detalls objectes creats
-    private static String resum_missions, resum_aeronausTransport,
-            resum_aeronausCombat, resum_aeronausDron, resum_pilots,
-            resum_mecanics = "";
+    private static String resum_missions, resum_pilots, resum_mecanics, resum_aeronausTransport, resum_aeronausCombat, resum_aeronausDron = "";
 
     // Instàncies
     private static List<Missio> llistaMissions = null;
-    private static List<Aeronau> llistaAeronaus = null;
     private static List<Aeronau> llistaPilotades = null;
     private static List<Aeronau> llistaAutonomes = null;
     private static List<Mecanic> llistaMecanics = null;
-    private static List<Pilot> llistaPilots = null;
 
+    /**
+     * Mètode que personalitza el titular de l'apartat actual segons l'objecte a crear.
+     * 
+     * @param opcio Valor enter que determina quin objecte crear
+     * @author Txell Llanas: Creació / Implementació
+     */
     public static void iniciarGeneracions(int opcio) {
 
         try {
@@ -87,11 +83,13 @@ public class GenerarClasse {
                     break;
                 case 5:
                     logger.info("GENERADOR D'INSTÀNCIES: << PILOTS >>\n");
-                    crearPilot();
+                    tipusSoldat = 1;
+                    crearSoldat();
                     break;
                 case 6:
                     logger.info("GENERADOR D'INSTÀNCIES: << MECÀNICS >>\n");
-                    crearMecanic();
+                    tipusSoldat = 2;
+                    crearSoldat();
                     break;
             }
 
@@ -102,19 +100,19 @@ public class GenerarClasse {
             logger.info("\n" + "------------------------------------------------------------------------" + "\n\n"
                     + "RESUM D'OBJECTES GENERATS: \n\n"
                     + resum_missions);
-            if (has_nausTransport) {
+            if ( has_nausTransport ) {
                 logger.info(resum_aeronausTransport);
             }
-            if (has_nausCombat) {
+            if ( has_nausCombat ) {
                 logger.info(resum_aeronausCombat);
             }
-            if (has_drons) {
+            if ( has_drons ) {
                 logger.info(resum_aeronausDron);
             }
-            if (has_pilots) {
+            if ( has_pilots ) {
                 logger.info(resum_pilots);
             }
-            if (has_mecanics) {
+            if ( has_mecanics ) {
                 logger.info(resum_mecanics);
             }
 
@@ -122,13 +120,14 @@ public class GenerarClasse {
             llistaMissions.clear();
             llistaPilotades.clear();
             llistaAutonomes.clear();
+                    
             numMissions = 0;
             aeronausPerMissio = 0;
-            mecanicsPerAeronau = 0;
             aeronausTotals = 0;
             numPilots = 0;
             numMecanics = 0;
             tipusAeronau = 0;
+            
             has_missions = false;
             has_aeronaus = false;
             has_nausTransport = false;
@@ -136,7 +135,7 @@ public class GenerarClasse {
             has_drons = false;
             has_pilots = false;
             has_mecanics = false;
-            correcte = false;
+            
             resum_aeronausTransport = "";
             resum_aeronausCombat = "";
             resum_aeronausDron = "";
@@ -171,13 +170,13 @@ public class GenerarClasse {
         try {
 
             // DEMANAR Nº MISSIÓ(NS) A PARTICIPAR (Nómés per PILOTS)
-            if (aeronausTotals > 0) {
+            if ( numPilots > 0 ) {
                 logger.info(">> A quantes Missions participa un Pilot? [mín.1 - màx. 2]");
                 numMissions = utils.ValidadorOpcioMenu.validador(in);
             }
             
             // DEMANAR Nº MISSIÓ(NS)
-            if (numMissions == 0) {
+            if ( numMissions == 0 ) {
                 logger.info(">> Quantes Missions vols crear? [mín.1]");
                 numMissions = utils.ValidadorOpcioMenu.validador(in);
             }
@@ -244,9 +243,10 @@ public class GenerarClasse {
     }
 
     /**
-     * Mètode per generar una o vàries instàncies de tipus Transport. Genera de
-     * forma automàtica i en quantitats majors de zero a escollir per l’usuari,
-     * les entitats associades a aquesta.
+     * Mètode per generar una o vàries instàncies dels 3 tipus d'aeronaus: 
+     * Transport, Combat o Dron. 
+     * Genera de forma automàtica i en quantitats majors de zero a escollir per 
+     * l’usuari, les entitats associades a aquesta.
      *
      * @author Txell Llanas: Creació/Implementació
      * @author Izan Jimenez: Implementació
@@ -446,26 +446,29 @@ public class GenerarClasse {
         }
     }
 
-    public static void crearPilot() {
+    /**
+     * Mètode per generar una o vàries instàncies de tipus Soldat (Pilot, Mecànic).
+     * Assigna de forma random el valor pel tipus d'aeronau Pilotada (Transport, Combat)
+     * i redirigeix al mètode per crear l'aeronau.
+     * 
+     * @author Txell Llanas: Creació/ Implementació
+     */
+    public static void crearSoldat() {
 
-        if (numPilots == 0) {
-            logger.info(">> Quants Pilots vols crear?");
-            numPilots = utils.ValidadorOpcioMenu.validador(in);
+        if ( numPilots == 0 && numMecanics == 0 ) {
+            
+            if ( tipusSoldat == 1 ) {
+                logger.info(">> Quants Pilots vols crear?");
+                numPilots = utils.ValidadorOpcioMenu.validador(in);
+            } else {
+                logger.info(">> Quants Mecànics vols assignar per Aeronau? [Mín. 1 - Màx. 2]");
+                numMecanics = utils.ValidadorOpcioMenu.numMecanicAeronau(in);
+                has_mecanics = true;
+            }  
+            
             aeronausTotals = numPilots;
-//            aeronausPerMissio = utils.ValidadorOpcioMenu.validador(in);
             tipusAeronau = (int) (Math.floor(Math.random() * (3 - 2 + 1)) + 2);
             crearAeronau();            
-        }
-    }
-
-    public static void crearMecanic() {
-
-        if (numMecanics == 0) {
-            logger.info(">> Quants Mecànics vols assignar per Aeronau? [Mín. 1 - Màx. 2]");
-            numMecanics = utils.ValidadorOpcioMenu.numMecanicAeronau(in);
-            tipusAeronau = (int) (Math.floor(Math.random() * (4 - 2 + 1)) + 2);            
-            has_mecanics = true;
-            crearAeronau();
         }
     }
 

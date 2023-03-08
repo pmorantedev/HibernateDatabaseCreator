@@ -37,6 +37,7 @@ public final class SingleSession {                                           // 
      * i obre la sessió.
      *
      * @author Txell Llanas: Creació/Implementació
+     * @author Pablo Morante: Implementació
      */
     private void InitSessionFactory() throws org.hibernate.service.spi.ServiceException {
         Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
@@ -106,7 +107,7 @@ public final class SingleSession {                                           // 
      * Mètode que retorna la mateixa sessió creada a 'InitSessionFactory'.
      *
      * @return session Instància de la mateixa sessió d'Hibernate
-     * @author Txell Llanas: Creació/Implementació
+     * @author Víctor García: Creació/Implementació
      */
     public Session getSessioUsuari() {
         return session;
