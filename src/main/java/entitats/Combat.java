@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  * Classe abstracta per representar objectes de tipus Combat.
- * 
+ *
  * @author Pablo Morante: Creació/Implementació
  */
 @Entity
@@ -96,17 +96,8 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "Combat {"
-                + "fabricationNumber = " + super.getFabricationNumber()
-                + ", nuclearPower = " + nuclearPower
-                + ", totalAmmunition = " + totalAmmunition
-                + ", hasEjectoSeat = " + super.getHasEjectoSeat()
-                + ", shellCapacity = " + super.getShellCapacity()
-                + ", corporation = " + super.getCorporation()
-                + ", engineTorque = " + super.getEngineTorque()
-                + ", autodestructionDate = " + super.getAutodestructionDate()
-                + ", hasDeathLaser = " + super.getHasDeathLaser()
-                + '}';
+        return "· File for COMBAT AIRCRAFT number " + super.getFabricationNumber() + ". Property of corporation " + super.getCorporation() + ", with an scheduled date for autodestruction in " + super.getAutodestructionDate() + ". Peacekeeper Fusion Blaster gun ammunition " + totalAmmunition + " and a shell defence capacity of " + super.getShellCapacity() + " electrons.";
+
     }
 
 }

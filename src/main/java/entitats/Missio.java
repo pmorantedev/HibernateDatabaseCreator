@@ -182,7 +182,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "Missio{" + "cosmicMissionCode=" + cosmicMissionCode + ", targetName=" + targetName + ", missionBudget=" + missionBudget + ", limitDate=" + limitDate + ", accomplished=" + accomplished + '}';
+        return "· HELP WANTED: Cosmic Mission Code(" + cosmicMissionCode + ") for TARGET --> " + targetName + ". Budget: " + missionBudget + " gold. Limit date: " + limitDate;
     }
 
     

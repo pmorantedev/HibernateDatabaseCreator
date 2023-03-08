@@ -439,7 +439,6 @@ public class GenerarClasse {
                 for (Soldat mecanic : soldat) {
                     llistaMecanics.add((Mecanic) mecanic);
                 }
-                llistaMecanics.stream().forEach(x -> session.persist(x));
             }
 
             session.getTransaction().commit();

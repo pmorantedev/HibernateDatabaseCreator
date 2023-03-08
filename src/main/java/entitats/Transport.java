@@ -9,23 +9,22 @@ import java.io.Serializable;
 
 /**
  * Classe abstracta per representar objectes de tipus Transport.
- * 
+ *
  * @author Pablo Morante: Creació/Implementació
  */
 @Entity
 @Table(name = "transport")
 public class Transport extends Pilotada implements TesteableEntity, Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Column(nullable = false)
     private int itemsCapacity;
-    
 
     public Transport() {
-        
+
     }
-    
+
     public Transport(int itemsCapacity, boolean hasEjectoSeat, float shellCapacity, String corporation, float engineTorque, Date autodestructionDate, Boolean hasDeathLaser, Pilot pilot) {
         super(hasEjectoSeat, shellCapacity, corporation, engineTorque, autodestructionDate, hasDeathLaser, pilot);
         this.itemsCapacity = itemsCapacity;
@@ -83,18 +82,11 @@ public class Transport extends Pilotada implements TesteableEntity, Serializable
     public void setAtributBoolean(Boolean b) {
         super.setHasDeathLaser(b);
     }
-    
+
     @Override
     public String toString() {
-        return "Transport {"
-                + "fabricationNumber = " + super.getFabricationNumber()
-                + ", itemsCapacity=" + itemsCapacity
-                + ", hasEjectoSeat = " + super.getHasEjectoSeat()
-                + ", shellCapacity = " + super.getShellCapacity()
-                + ", corporation = " + super.getCorporation()
-                + ", engineTorque = " + super.getEngineTorque()
-                + ", autodestructionDate = " + super.getAutodestructionDate()
-                + ", hasDeathLaser = " + super.getHasDeathLaser()
-                + '}';
+        return "· File for TRANSPORT AIRCRAFT number " + super.getFabricationNumber() + ". Property of corporation " + super.getCorporation() + ", with an scheduled date for autodestruction in " + super.getAutodestructionDate() + ". Doofenshmirtz Evil Inc. Container capacity: " + itemsCapacity + " and a shell defence capacity of " + super.getShellCapacity() + " electrons.";
+
     }
+
 }

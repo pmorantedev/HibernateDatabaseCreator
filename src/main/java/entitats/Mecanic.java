@@ -146,14 +146,8 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "Mecanic{"
-                + "speciality = " + speciality
-                + ", repairSpeed = " + repairSpeed
-                + ", nickname = " + super.getNickname()
-                + ", healingSpeed = " + super.getHealingSpeed()
-                + ", lastDrugTestDate = " + super.getLastDrugTestDate()
-                + ", isOtaku = " + super.getIsOtaku()
-                + '}';
+                return "· Mechanic File: OperatingID(" + super.getOperatingNumber() + ") for AMONGUS named " + super.getNickname() + ". Last drug test date: " + super.getLastDrugTestDate() + ". Born in aircraft number " + pilotada.getFabricationNumber() + " property of the corporation: " + pilotada.getCorporation() + ". Specialty in field: " + speciality;
+
     }
 
 }
