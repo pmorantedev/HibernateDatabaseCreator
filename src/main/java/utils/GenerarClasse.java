@@ -363,7 +363,7 @@ public class GenerarClasse {
 
         int i = 0, indexAutonoma = 0, indexPilotada = 0;
 
-        if (!has_mecanics) {
+        if (!has_mecanics && tipusAeronau != 4) {
             logger.info(">> Quants Mecànics vols assignar per Aeronau? [Mín. 1 - Màx. 2]");
             numMecanics = utils.ValidadorOpcioMenu.numAeronausMissio(in);
 
@@ -407,15 +407,17 @@ public class GenerarClasse {
                 logger.error(e.getMessage());
             }
 
-            // Assignar Pilot i Mecanics a Aeronau
-            for (Aeronau p : tempNau) {
-                llistaMecanics = new ArrayList<>();
-                List<Soldat> s = new ArrayList<>();
-                s = factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) p);
-                for (Soldat m : s) {
-                    llistaMecanics.add((Mecanic) m);
+            if (tipusAeronau != 4) {
+                // Assignar Pilot i Mecanics a Aeronau
+                for (Aeronau p : tempNau) {
+                    llistaMecanics = new ArrayList<>();
+                    List<Soldat> s = new ArrayList<>();
+                    s = factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) p);
+                    for (Soldat m : s) {
+                        llistaMecanics.add((Mecanic) m);
+                    }
+                    llistaMecanics.stream().forEach(x -> session.persist(x));
                 }
-                llistaMecanics.stream().forEach(x -> session.persist(x));
             }
 
             session.getTransaction().commit();
