@@ -90,9 +90,8 @@ public class App {
      * automàtica i en quantitats majors de zero a escollir per l’usuari. Es
      * mostra per pantalla a l’usuari el detall dels registres afectats.
      *
-     *
-     * @param in
-     * @param singleton
+     * @param in    Valor enter introduït per l'usuari
+     * @param singleton Instància de la sessió actual
      * @author Pablo Morante
      * @author Víctor García
      * @author Izan Jiménez
