@@ -146,7 +146,7 @@ public class Mecanic extends Soldat implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-                return "· Mechanic File: OperatingID(" + super.getOperatingNumber() + ") for AMONGUS named " + super.getNickname() + ". Last drug test date: " + super.getLastDrugTestDate() + ". Born in aircraft number " + pilotada.getFabricationNumber() + " property of the corporation: " + pilotada.getCorporation() + ". Specialty in field: " + speciality;
+                return "· Arxiu de mecànic: Identificació(" + super.getOperatingNumber() + ") per l'AMONGUS anomenat " + super.getNickname() + ". Data de l'última prova de drogues: " + super.getLastDrugTestDate() + ". Nascut a l'aeronau número " + pilotada.getFabricationNumber() + " propietat de la corporació: " + pilotada.getCorporation() + ". Especialitat al camp: " + speciality;
 
     }
 

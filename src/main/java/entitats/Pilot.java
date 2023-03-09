@@ -122,7 +122,7 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "· Pilot File: OperatingID(" + super.getOperatingNumber() + ") for AMONGUS named " + super.getNickname() + ". Last drug test date: " + super.getLastDrugTestDate() + ". Born in aircraft number " + pilotada.getFabricationNumber() + " property of the corporation: " + pilotada.getCorporation() + ". Disability recorded (otaku): " + super.getIsOtaku();
+        return "· Arxiu de pilot: Identificació(" + super.getOperatingNumber() + ") per l'AMONGUS anomenat " + super.getNickname() + ". Data de l'última prova de drogues: " + super.getLastDrugTestDate() + ". Nascut a l'aeronau número " + pilotada.getFabricationNumber() + " propietat de la corporació: " + pilotada.getCorporation() + ". Participant del Saló del Manga: " + super.getIsOtaku();
     }
     
 }

@@ -37,7 +37,7 @@ public class LlistarClasse {
             if (mecanic != null) {
 
                 Pilotada pilotada = mecanic.getPilotada();
-                logger.info("- " + mecanic.toString() + "\n          · Pilotada: " + pilotada + "\n");
+                logger.info("- " + mecanic.toString() + "\n\n          · Treballant a: " + pilotada + "\n");
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
@@ -64,7 +64,7 @@ public class LlistarClasse {
                     pilot.setPilotada(new Combat());
                 }
 
-                logger.info("- " + pilot.toString() + "\n          · Pilotada: " + pilotada + "\n");
+                logger.info("- " + pilot.toString() + "\n\n          · Aeronau capitanejada: " + pilotada + "\n");
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
@@ -88,7 +88,11 @@ public class LlistarClasse {
 
                 List<Aeronau> aeronaus = missio.getAeronaus();
 
-                logger.info("- " + missio.toString() + "\n          · Aeronaus associades: " + aeronaus + "\n");
+                logger.info("- " + missio.toString() + "\n");
+                for (Aeronau a : aeronaus) {
+                    logger.info("          · Aeronau assignada: " + a + "\n");
+                }
+                logger.info("\n");
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
@@ -112,7 +116,10 @@ public class LlistarClasse {
 
                 List<Missio> missions = dron.getMissions();
 
-                logger.info("- " + dron.toString() + "\n          · Missions: " + missions + "\n");
+                logger.info("- " + dron.toString() + "\n");
+                for (Missio m : missions) {
+                    logger.info("          · Assignat a la missió: " + m + "\n");
+                }
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
@@ -138,7 +145,13 @@ public class LlistarClasse {
                 List<Missio> missions = combat.getMissions();
                 Pilot pilot = combat.getPilotAeronau();
 
-                logger.info("- " + combat.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
+                logger.info("- " + combat.toString() + "\n\n          · Capità: " + pilot + "\n");
+                for (Mecanic m : mecanics) {
+                    logger.info("          · Tripulant: " + m + "\n");
+                }
+                for (Missio m : missions) {
+                    logger.info("          · Assignada a la missió: " + m + "\n");
+                }
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }
@@ -165,7 +178,13 @@ public class LlistarClasse {
                 List<Missio> missions = transport.getMissions();
                 List<Mecanic> mecanics = transport.getMecanics();
 
-                logger.info("- " + transport.toString() + "\n          · Pilot: " + pilot + "\n          · Mecànics: " + mecanics + "\n          · Missions: " + missions + "\n");
+                logger.info("- " + transport.toString() + "\n\n          · Capità: " + pilot + "\n");
+                for (Mecanic m : mecanics) {
+                    logger.info("          · Tripulant: " + m + "\n");
+                }
+                for (Missio m : missions) {
+                    logger.info("          · Assignada a la missió: " + m + "\n");
+                }
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }

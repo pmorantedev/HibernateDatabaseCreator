@@ -84,7 +84,7 @@ public class Dron extends Autonoma implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "· File for DRONE number " + super.getFabricationNumber() + ". Property of corporation " + super.getCorporation() + ", with an scheduled date for autodestruction in " + super.getAutodestructionDate() + ". Melting temperature of " + meltingTemperature + " and has an autonomy of " + super.getBatteryAutonomy() + " cosmic hours.";
+        return "· Arxiu per el DRON número " + super.getFabricationNumber() + ". Propietat de la corporació " + super.getCorporation() + ", amb data programada per l'autodestrucció en " + super.getAutodestructionDate() + ". | Temperatura de fusió de " + meltingTemperature + " , amb una autonomia de " + super.getBatteryAutonomy() + " hores còsmiques.";
     }
     
     
