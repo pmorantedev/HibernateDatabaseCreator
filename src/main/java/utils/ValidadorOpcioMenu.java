@@ -34,7 +34,7 @@ public class ValidadorOpcioMenu {
                 in.next();
                 error = true;
                 if (!showError) {
-                    logger.info("\n" + "Només es poden introduïr números!!" + "\n" + "Introdueix un número:");
+                    logger.info("\n" + "[AVÍS!] Només es poden introduïr números!!" + "\n" + ">> Introdueix un número:");
                     showError = true;
                 }
             }

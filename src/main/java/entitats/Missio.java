@@ -81,7 +81,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     public void setAeronaus(List<Aeronau> aeronaus) {
         if (aeronaus.size() > 8) {
-            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
+            throw new IllegalArgumentException("Una missió pot tenir com a màxim 8 aeronaus");
         } else {
             this.aeronaus = aeronaus;
         }
@@ -171,14 +171,6 @@ public class Missio implements TesteableEntity, Serializable {
     public void setAtributBoolean(Boolean b) {
         this.accomplished = b;
     }
-//
-//    @PrePersist
-//    @PreUpdate
-//    private void validateAeronaus() {
-//        if (aeronaus.size() > 8) {
-//            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
-//        }
-//    }
 
     @Override
     public String toString() {

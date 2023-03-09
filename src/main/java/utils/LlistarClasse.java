@@ -90,9 +90,11 @@ public class LlistarClasse {
 
                 logger.info("- " + missio.toString() + "\n");
                 for (Aeronau a : aeronaus) {
+                    if(a != null){
                     logger.info("          · Aeronau assignada: " + a + "\n");
+                    }
                 }
-                logger.info("\n");
+                //logger.info("\n");
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
             }

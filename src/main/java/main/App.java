@@ -76,7 +76,7 @@ public class App {
                     System.exit(0);
                 //Es mostra si l'usuari introdueix un número que no és vàlid
                 default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
+                    logger.info("[AVÍS!] Número introduït no vàlid!!" + "\n"
                             + "Introdueix un dels números del menú");
             }
 
@@ -102,7 +102,7 @@ public class App {
         int opcioMenuGenerarClasse = 0;
 
         do {
-            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
+            logger.info("------------------------------------------------------------------------" + "\n"
                     + "\n" + "GENERAR CLASSE" + "\n\n"
                     + "Quina classe vols generar?");
             utils.LlistatMenuClasses.retornaClasses();
@@ -140,7 +140,7 @@ public class App {
                 case 7:
                     break;
                 default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
+                    logger.info("\n[AVÍS!] Número introduït no vàlid!!" + "\n"
                             + "Introdueix un dels números del menú");
             }
 
@@ -171,8 +171,8 @@ public class App {
             do {
                 opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);    //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
                 if (opcioMenuLlistarClasse <= 0 || opcioMenuLlistarClasse > 7) {
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
+                    logger.info("\n[AVÍS!] Número introduït no vàlid!!" + "\n"
+                            + ">> Introdueix un dels números del menú");
                 }
             } while (opcioMenuLlistarClasse <= 0 || opcioMenuLlistarClasse > 7);
 
@@ -255,8 +255,8 @@ public class App {
             do {
                 opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);   //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
                 if (opcioMenuEliminarClasse <= 0 || opcioMenuEliminarClasse > 7) {
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
+                    logger.info("\n[AVÍS!] Número introduït no vàlid!!" + "\n"
+                            + ">> Introdueix un dels números del menú");
                 }
             } while (opcioMenuEliminarClasse <= 0 || opcioMenuEliminarClasse > 7);
 
