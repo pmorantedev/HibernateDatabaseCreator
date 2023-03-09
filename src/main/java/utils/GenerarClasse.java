@@ -196,22 +196,22 @@ public class GenerarClasse {
             // Desar detalls Missions generades
             if (llistaMissions.size() > 1) {                                    // Vàries Missions
 
-                resum_missions = numMissions + " Missions creades: ";
+                resum_missions = numMissions + " Missions creades: " + "\n";
 
                 for (int i = 0; i < llistaMissions.size(); i++) {
                     if (i < llistaMissions.size() - 1) {
-                        resum_missions += llistaMissions.get(i).getAtributString()
-                                + " (id:" + llistaMissions.get(i).getCosmicMissionCode() + ")" + ", ";
+                        resum_missions += "- " + llistaMissions.get(i).getAtributString()
+                                + " (id:" + llistaMissions.get(i).getCosmicMissionCode() + ")" + ", " + "\n";
                     } else {
-                        resum_missions += llistaMissions.get(i).getAtributString()
-                                + " (id:" + llistaMissions.get(i).getCosmicMissionCode() + ")";
+                        resum_missions += "- " + llistaMissions.get(i).getAtributString()
+                                + " (id:" + llistaMissions.get(i).getCosmicMissionCode() + "). \n";
                     }
                 }
 
             } else {                                                            // 1 sola Missió
                 resum_missions = "- Nom Missió: "
                         + llistaMissions.get(0).getAtributString()
-                        + " (id:" + llistaMissions.get(0).getCosmicMissionCode() + ")";
+                        + " (id:" + llistaMissions.get(0).getCosmicMissionCode() + ").";
             }
 
             // GENERAR + ASSIGNAR AERONAU(S)

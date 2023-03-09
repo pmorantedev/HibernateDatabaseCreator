@@ -102,7 +102,7 @@ public class App {
         int opcioMenuGenerarClasse = 0;
 
         do {
-            logger.info("------------------------------------------------------------------------" + "\n"
+            logger.info("\n" + "------------------------------------------------------------------------" + "\n"
                     + "\n" + "GENERAR CLASSE" + "\n\n"
                     + "Quina classe vols generar?");
             utils.LlistatMenuClasses.retornaClasses();
