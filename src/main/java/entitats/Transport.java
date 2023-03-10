@@ -85,7 +85,7 @@ public class Transport extends Pilotada implements TesteableEntity, Serializable
 
     @Override
     public String toString() {
-        return "· Arxiu per l'AERONAU DE TRANSPORT número " + super.getFabricationNumber() + ". Propietat de la corporació " + super.getCorporation() + ", amb data programada per l'autodestrucció en " + super.getAutodestructionDate() + ". | Capacitat del Contenidor Doofenshmirtz Evil Inc.: " + itemsCapacity + " objectes, i una capacitat de defensa de l'escut de " + super.getShellCapacity() + " electrons.";
+        return "AERONAU DE TRANSPORT número " + super.getFabricationNumber() + " | Propietat de la corporació " + super.getCorporation() + ". | Capacitat del Contenidor Doofenshmirtz Evil Inc.: " + itemsCapacity + " objectes, i una capacitat de l'escut de " + super.getShellCapacity() + " electrons.";
 
     }
 

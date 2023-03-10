@@ -174,7 +174,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "· AJUDA NECESSITADA: Codi de la missió còsmica(" + cosmicMissionCode + ") per l'OBJECTIU --> " + targetName + ". Pressupost: " + missionBudget + " argents. | Data límit: " + limitDate;
+        return "MISSIÓ amb codi " + cosmicMissionCode + " per l'OBJECTIU --> " + targetName + ". Pressupost: " + missionBudget + " argents. | Data límit: " + limitDate;
     }
 
     

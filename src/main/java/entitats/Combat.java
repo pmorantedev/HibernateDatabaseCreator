@@ -96,7 +96,7 @@ public class Combat extends Pilotada implements TesteableEntity, Serializable {
 
     @Override
     public String toString() {
-        return "· Arxiu per la AERONAU DE COMBAT número " + super.getFabricationNumber() + ". Propietat de la corporació " + super.getCorporation() + ", amb data programada per l'autodestrucció en " + super.getAutodestructionDate() + ". | Munició de la Peacekeeper Fusion Blaster: " + totalAmmunition + " propellents electrotèrmics, i una capacitat de defensa de l'escut de " + super.getShellCapacity() + " electrons.";
+        return "AERONAU DE COMBAT número " + super.getFabricationNumber() + " | Propietat de la corporació " + super.getCorporation() + " | Munició de la Peacekeeper Fusion Blaster: " + totalAmmunition + " propellents electrotèrmics, i una capacitat de l'escut de " + super.getShellCapacity() + " electrons.";
 
     }
 
