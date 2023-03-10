@@ -43,7 +43,7 @@ public class EliminarClasse {
                     session.remove(combat);
                     session.flush();
                     List<Missio> missions = combat.getMissions();
-                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats: \n" + "   " + combat.toString() + "\n          · Missions associades: " + missions + "\n");
+                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats: \n" + " >> " + combat.toString() + "\n          · Missions associades: " + missions + "\n");
                     if (combat instanceof Pilotada) {
                         Pilotada pilotada = (Pilotada) combat;
                         Pilot pilot = pilotada.getPilotAeronau();
@@ -96,7 +96,7 @@ public class EliminarClasse {
 
                     List<Missio> missions = pilotada.getMissions();
 
-                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats:\n" + soldat.toString() + "\n          · Pilotada associada: " + pilotada + "\n          · Missions associades: " + missions + "\n");
+                    logger.info("- S'han eliminat correctament els següents registres i els seus items associats:\n >> " + soldat.toString() + "\n          · Pilotada associada: " + pilotada + "\n          · Missions associades: " + missions + "\n");
                 } catch (JDBCException ex) {
                     session.getTransaction().rollback();
                 }
@@ -127,7 +127,7 @@ public class EliminarClasse {
                     session.flush();
                     List<Aeronau> aeronaus = missio.getAeronaus();
 
-                    logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n" + missio.toString() + "\n");
+                    logger.info("S'han eliminat correctament els següents registres i els seus items associats:\n >> " + missio.toString() + "\n");
                     for (Aeronau item : aeronaus) {
                         List<Missio> missions = item.getMissions();
                         missions.remove(missio);

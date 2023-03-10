@@ -5,6 +5,7 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
@@ -31,7 +32,7 @@ public class Pilot extends Soldat implements TesteableEntity, Serializable {
     
 
     // (RF04) Cardinalitat Propietària i dependent amb la classe 'Pilotada'
-    @OneToOne(mappedBy = "pilot", cascade = CascadeType.ALL)                    // cascade: enllaça les dades entre ambdues entitats (si eliminem la relació propietària, s'esborra les dades referenciades)
+    @OneToOne(mappedBy = "pilot", cascade = CascadeType.ALL, fetch = FetchType.LAZY)                    // cascade: enllaça les dades entre ambdues entitats (si eliminem la relació propietària, s'esborra les dades referenciades)
     private Pilotada pilotada;
 
     public Pilot() {

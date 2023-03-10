@@ -3,6 +3,7 @@ package entitats;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,7 +42,7 @@ public abstract class Aeronau {
     @Column(nullable = false)
     private Boolean hasDeathLaser;
 
-    @ManyToMany(mappedBy = "aeronaus", cascade = {CascadeType.REMOVE})
+    @ManyToMany(mappedBy = "aeronaus", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     List<Missio> missions = new ArrayList<>();
 
     public Aeronau() {

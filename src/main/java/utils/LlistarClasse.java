@@ -120,7 +120,7 @@ public class LlistarClasse {
 
                 logger.info("- " + dron.toString() + "\n");
                 for (Missio m : missions) {
-                    logger.info("          · Assignat a la missió: " + m + "\n");
+                    logger.info("          · Assignat a la " + m + "\n");
                 }
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
@@ -147,12 +147,12 @@ public class LlistarClasse {
                 List<Missio> missions = combat.getMissions();
                 Pilot pilot = combat.getPilotAeronau();
 
-                logger.info("- " + combat.toString() + "\n\n          · Capità: " + pilot + "\n");
+                logger.info("- " + combat.toString() + "\n\n          · " + pilot + "\n");
                 for (Mecanic m : mecanics) {
-                    logger.info("          · Tripulant: " + m + "\n");
+                    logger.info("          · " + m + "\n");
                 }
                 for (Missio m : missions) {
-                    logger.info("          · Assignada a la missió: " + m + "\n");
+                    logger.info("          · Assignada a la " + m + "\n");
                 }
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
@@ -180,12 +180,12 @@ public class LlistarClasse {
                 List<Missio> missions = transport.getMissions();
                 List<Mecanic> mecanics = transport.getMecanics();
 
-                logger.info("- " + transport.toString() + "\n\n          · Capità: " + pilot + "\n");
+                logger.info("- " + transport.toString() + "\n\n          · " + pilot + "\n");
                 for (Mecanic m : mecanics) {
-                    logger.info("          · Tripulant: " + m + "\n");
+                    logger.info("          · " + m + "\n");
                 }
                 for (Missio m : missions) {
-                    logger.info("          · Assignada a la missió: " + m + "\n");
+                    logger.info("          · Assignada a la " + m + "\n");
                 }
             } else {
                 logger.info("- No existeix cap registre amb aquest identificador -> " + i + "\n");
