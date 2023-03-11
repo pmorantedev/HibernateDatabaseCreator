@@ -34,7 +34,7 @@ public class ValidadorOpcioMenu {
                 in.next();
                 error = true;
                 if (!showError) {
-                    logger.info("\n" + "Només es poden introduïr números!!" + "\n" + "Introdueix un número:");
+                    logger.info("\n" + "[AVÍS!] Només es poden introduïr números!!" + "\n" + ">> Introdueix un número:");
                     showError = true;
                 }
             }
@@ -89,6 +89,55 @@ public class ValidadorOpcioMenu {
         showError = false;
 
         return totalAeronaus;
+    
     }
 
+    
+        /***
+     * Aquest mètode demana a l'usuari que introdueixi un nombre enter vàlid
+     * que representi el nombre de mecànics per aeronau.
+     * També assegura que compleix la cardinalitat.
+     * 
+     * @param in - objecte Scanner per llegir la entrada de l'usuari
+     * @return totalAeronaus - retorna el nombre d'aeronaus en la missió
+     * @author Txell Llanas
+     */
+    public static Integer numMecanicAeronau(Scanner in) {
+
+        int totalMecanics = 0;
+        
+        boolean error = false;
+        boolean showError = false;
+        do {
+            if (!in.hasNextInt()) {
+                
+                in.next();
+                error = true;
+                if (!showError) {
+                    logger.info("\n" + "Només es poden introduïr números!!" + "\n" + "Introdueix un número:");
+                    showError = true;
+                }
+                    
+            } else {
+           
+                int valor = in.nextInt();
+                if ( valor <= 0 || valor > 2) {                                 // Quantitat incorrecta introduïda
+                    logger.info("\n[AVÍS!] Cal introduir un nombre enter entre 1 i 2."
+                              + "\n>> Nº de mecànics: ");
+                    error = true;
+                    
+                } else {
+                    totalMecanics = valor;
+                    error = false;
+                }
+            }
+                
+        } while (error);
+
+        showError = false;
+
+        return totalMecanics;
+    
+    }
+    
 }

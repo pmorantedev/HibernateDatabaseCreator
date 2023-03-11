@@ -5,6 +5,7 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -54,7 +55,7 @@ public class Missio implements TesteableEntity, Serializable {
     
     //Junta els id de misió i de les aeronaus d'aquesta missió en una nova taula
     //cascade: es fa cascade quan s'elimina la clase
-    @ManyToMany(cascade = {CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "Aeronau_Missio",
             joinColumns = {
@@ -81,7 +82,7 @@ public class Missio implements TesteableEntity, Serializable {
 
     public void setAeronaus(List<Aeronau> aeronaus) {
         if (aeronaus.size() > 8) {
-            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
+            throw new IllegalArgumentException("Una missió pot tenir com a màxim 8 aeronaus");
         } else {
             this.aeronaus = aeronaus;
         }
@@ -171,18 +172,10 @@ public class Missio implements TesteableEntity, Serializable {
     public void setAtributBoolean(Boolean b) {
         this.accomplished = b;
     }
-//
-//    @PrePersist
-//    @PreUpdate
-//    private void validateAeronaus() {
-//        if (aeronaus.size() > 8) {
-//            throw new IllegalArgumentException("A Missio can have at most 8 Aeronau objects");
-//        }
-//    }
 
     @Override
     public String toString() {
-        return "Missio{" + "cosmicMissionCode=" + cosmicMissionCode + ", targetName=" + targetName + ", missionBudget=" + missionBudget + ", limitDate=" + limitDate + ", accomplished=" + accomplished + '}';
+        return "MISSIÓ amb codi " + cosmicMissionCode + " per l'OBJECTIU --> " + targetName + ". Pressupost: " + missionBudget + " argents. | Data límit: " + limitDate;
     }
 
     

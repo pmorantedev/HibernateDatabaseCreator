@@ -8,6 +8,7 @@ import entitats.Transport;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 import utils.GenerarClasse;
 
 public class App {
@@ -75,7 +76,7 @@ public class App {
                     System.exit(0);
                 //Es mostra si l'usuari introdueix un número que no és vàlid
                 default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
+                    logger.info("[AVÍS!] Número introduït no vàlid!!" + "\n"
                             + "Introdueix un dels números del menú");
             }
 
@@ -89,9 +90,8 @@ public class App {
      * automàtica i en quantitats majors de zero a escollir per l’usuari. Es
      * mostra per pantalla a l’usuari el detall dels registres afectats.
      *
-     *
-     * @param in
-     * @param singleton
+     * @param in    Valor enter introduït per l'usuari
+     * @param singleton Instància de la sessió actual
      * @author Pablo Morante
      * @author Víctor García
      * @author Izan Jiménez
@@ -140,7 +140,7 @@ public class App {
                 case 7:
                     break;
                 default:
-                    logger.info("Número introduït no vàlid!!" + "\n"
+                    logger.info("\n[AVÍS!] Número introduït no vàlid!!" + "\n"
                             + "Introdueix un dels números del menú");
             }
 
@@ -159,6 +159,7 @@ public class App {
      * @author Víctor García
      */
     public static void menuLlistarClasse(Scanner in, SingleSession singleton) {
+        Session session = SingleSession.getInstance().getSessio();
         int opcioMenuLlistarClasse = 0;
 
         do {
@@ -170,8 +171,8 @@ public class App {
             do {
                 opcioMenuLlistarClasse = utils.ValidadorOpcioMenu.validador(in);    //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
                 if (opcioMenuLlistarClasse <= 0 || opcioMenuLlistarClasse > 7) {
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
+                    logger.info("\n[AVÍS!] Número introduït no vàlid!!" + "\n"
+                            + ">> Introdueix un dels números del menú");
                 }
             } while (opcioMenuLlistarClasse <= 0 || opcioMenuLlistarClasse > 7);
 
@@ -198,30 +199,31 @@ public class App {
             switch (opcioMenuLlistarClasse) {
                 //Classe Missió
                 case 1:
-                    utils.LlistarClasse.llistarMissio(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarMissio(session, idInicial, idFinal);
                     break;
                 //Classe Transport    
                 case 2:
-                    utils.LlistarClasse.llistarTransport(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarTransport(session, idInicial, idFinal);
                     break;
                 //Classe Combat
                 case 3:
-                    utils.LlistarClasse.llistarCombat(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarCombat(session, idInicial, idFinal);
                     break;
                 //Classe Dron
                 case 4:
-                    utils.LlistarClasse.llistarDron(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarDron(session, idInicial, idFinal);
                     break;
                 //Classe Pilot
                 case 5:
-                    utils.LlistarClasse.llistarPilot(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarPilot(session, idInicial, idFinal);
                     break;
                 //Classe Mecànic
                 case 6:
-                    utils.LlistarClasse.llistarMecanic(singleton, idInicial, idFinal);
+                    utils.LlistarClasse.llistarMecanic(session, idInicial, idFinal);
                     break;
                 //Sortir al menú principal
                 case 7:
+                    session.close();
                     break;
             }
 
@@ -241,6 +243,7 @@ public class App {
      * @author Víctor García
      */
     public static void menuEliminarClasse(Scanner in, SingleSession singleton) {
+        Session session = SingleSession.getInstance().getSessio();
         int opcioMenuEliminarClasse = 0;
 
         do {
@@ -252,8 +255,8 @@ public class App {
             do {
                 opcioMenuEliminarClasse = utils.ValidadorOpcioMenu.validador(in);   //Demanem a l'usuari que introdueixi quina opció vol i comprovem que l'opció introduïda sigui un número
                 if (opcioMenuEliminarClasse <= 0 || opcioMenuEliminarClasse > 7) {
-                    logger.info("Número introduït no vàlid!!" + "\n"
-                            + "Introdueix un dels números del menú");
+                    logger.info("\n[AVÍS!] Número introduït no vàlid!!" + "\n"
+                            + ">> Introdueix un dels números del menú");
                 }
             } while (opcioMenuEliminarClasse <= 0 || opcioMenuEliminarClasse > 7);
 
@@ -280,30 +283,31 @@ public class App {
             switch (opcioMenuEliminarClasse) {
                 //Classe Missió
                 case 1:
-                    utils.EliminarClasse.eliminarMissio(singleton, idInicial, idFinal);
+                    utils.EliminarClasse.eliminarMissio(session, idInicial, idFinal);
                     break;
                 //Classe Transport
                 case 2:
-                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Transport.class);
+                    utils.EliminarClasse.eliminarAeronau(session, idInicial, idFinal, Transport.class);
                     break;
                 //Classe Combat
                 case 3:
-                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Combat.class);
+                    utils.EliminarClasse.eliminarAeronau(session, idInicial, idFinal, Combat.class);
                     break;
                 //Classe Dron
                 case 4:
-                    utils.EliminarClasse.eliminarAeronau(singleton, idInicial, idFinal, Dron.class);
+                    utils.EliminarClasse.eliminarAeronau(session, idInicial, idFinal, Dron.class);
                     break;
                 //Classe Pilot
                 case 5:
-                    utils.EliminarClasse.eliminarSoldat(singleton, idInicial, idFinal, Pilot.class);
+                    utils.EliminarClasse.eliminarSoldat(session, idInicial, idFinal, Pilot.class);
                     break;
                 //Classe Mecànic
                 case 6:
-                    utils.EliminarClasse.eliminarSoldat(singleton, idInicial, idFinal, Mecanic.class);
+                    utils.EliminarClasse.eliminarSoldat(session, idInicial, idFinal, Mecanic.class);
                     break;
                 //Sortir al menú principal
                 case 7:
+                    session.close();
                     break;
             }
 

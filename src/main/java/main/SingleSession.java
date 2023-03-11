@@ -1,7 +1,5 @@
 package main;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -19,7 +17,6 @@ public final class SingleSession {                                           // 
     private static SingleSession instancia;
     private SessionFactory sessionFactory;
     private Session session;
-    private static final Logger logger = LogManager.getLogger(SingleSession.class);
     private String username = null;
     private String password = null;
     private String BDname = null;
@@ -40,6 +37,7 @@ public final class SingleSession {                                           // 
      * i obre la sessió.
      *
      * @author Txell Llanas: Creació/Implementació
+     * @author Pablo Morante: Implementació
      */
     private void InitSessionFactory() throws org.hibernate.service.spi.ServiceException {
         Configuration configuration = new Configuration().configure("hibernate/hibernate.cfg.xml");
@@ -109,7 +107,7 @@ public final class SingleSession {                                           // 
      * Mètode que retorna la mateixa sessió creada a 'InitSessionFactory'.
      *
      * @return session Instància de la mateixa sessió d'Hibernate
-     * @author Txell Llanas: Creació/Implementació
+     * @author Víctor García: Creació/Implementació
      */
     public Session getSessioUsuari() {
         return session;

@@ -4,6 +4,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
@@ -17,6 +18,7 @@ import java.util.List;
  * Classe abstracta per representar objectes de tipus Pilotada.
  * 
  * @author Pablo Morante: Creació/Implementació
+ * @author Txell Llanas: Implementació
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -29,17 +31,17 @@ public abstract class Pilotada extends Aeronau {
     private Float shellCapacity;
 
     // (RF04) Cardinalitat No Propietària (Costat invers)
-    @OneToOne(cascade = CascadeType.ALL)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)  // Entitat inversa a la relació, LAZY evita carregar aquest registre de nau Pilotada si no es demana expressament (no sobresatura la BD)
     @JoinColumn(name = "pilot_id")
     private Pilot pilot;
 
 //  (RF05)
-    @OneToMany(mappedBy = "pilotada", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pilotada", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Mecanic> mecanics = new ArrayList<Mecanic>(2);
 
     /**
      * *
-     * Constructor vuit de Pilotada
+     * Constructor buit de Pilotada
      */
     public Pilotada() {
 
@@ -47,7 +49,7 @@ public abstract class Pilotada extends Aeronau {
 
     /**
      * *
-     * COnstructor de la classe Pilotada
+     * Constructor de la classe Pilotada
      *
      * @param hasEjectoSeat boolean
      * @param shellCapacity Float
