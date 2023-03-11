@@ -29,13 +29,12 @@ public class GenerarClasse {
     private static Scanner in = new Scanner(System.in);
 
     private static final Logger logger = LogManager.getLogger(GenerarClasse.class); // Crear Logs per aquesta classe
-    //private static final SingleSession singleton = SingleSession.getInstance(); // Recuperar instància de la Sessió única actual
     private static Session session;
     private static ClassFactory factory = new ClassFactory();
 
     // Còmputs i Xivatos
     private static int numMissions, aeronausPerMissio, aeronausTotals, numPilots, numMecanics, tipusAeronau, tipusSoldat = 0;
-    private static boolean has_missions, has_aeronaus, has_nausTransport, has_nausCombat, has_drons, has_pilots, has_mecanics = false;
+    private static boolean has_aeronaus, has_nausTransport, has_nausCombat, has_drons, has_pilots, has_mecanics = false;
 
     // Textes detalls objectes creats
     private static String resum_missions, resum_pilots, resum_mecanics, resum_aeronausTransport, resum_aeronausCombat, resum_aeronausDron = "";
@@ -128,7 +127,6 @@ public class GenerarClasse {
             numMecanics = 0;
             tipusAeronau = 0;
             
-            has_missions = false;
             has_aeronaus = false;
             has_nausTransport = false;
             has_nausCombat = false;
@@ -218,7 +216,7 @@ public class GenerarClasse {
             if (aeronausPerMissio == 0) {                                       // Generar un tipus d'aeronau de forma random
 
                 if (tipusAeronau == 0) {
-                    // 2 = Transport, 3 = Combat, 4 = Dron,
+                    // Tipus: 2 = Transport, 3 = Combat, 4 = Dron,
                     int max = 4;
                     int min = 2;
                     tipusAeronau = (int) (Math.floor(Math.random() * (max - min + 1)) + min);
@@ -236,9 +234,6 @@ public class GenerarClasse {
             logger.error(ex.getMessage());
 
         }
-
-        // Xivato: Existeixen 1 o més missions
-        has_missions = true;
 
     }
 
@@ -269,7 +264,7 @@ public class GenerarClasse {
             try {
                 if (aeronausTotals == 0) {
                     // Calcular les naus necessàries a generar (respectant cardinalitat de 2 Missions màx.)
-                    if ((numMissions > 1) && (aeronausPerMissio >= 2)) {  // Sobretot és aeronausPerMissio el filtre important!
+                    if ((numMissions > 1) && (aeronausPerMissio >= 2)) {
                         aeronausTotals = aeronausPerMissio + aeronausPerMissio * (int) Math.floor((numMissions - 1) / 2);
                     } else {
                         aeronausTotals = aeronausPerMissio * numMissions;
@@ -427,10 +422,10 @@ public class GenerarClasse {
             }
 
             // Assignar Mecanics a Aeronau
+            llistaMecanics = new ArrayList<>();
+            List<Soldat> soldat = new ArrayList<>();
+            
             for (Aeronau aeronau : tempNau) {
-                
-                llistaMecanics = new ArrayList<>();
-                List<Soldat> soldat = new ArrayList<>();
                 
                 if( tipusAeronau != 4 ) {
                     soldat = factory.mecanicsToAeronauFactory(numMecanics, (Pilotada) aeronau);
@@ -441,6 +436,9 @@ public class GenerarClasse {
                 }
             }
 
+            // Persistir dades generades
+            llistaMecanics.stream().forEach(x -> session.persist(x));
+            
             session.getTransaction().commit();
             i += 2;
         }

@@ -29,10 +29,10 @@ public abstract class Soldat implements Serializable {
 
     private static final long serialVersionUID = 1L;                            // Permet detectar quan els atributs de l'objecte canvien
 
-    @Id                                                                         //defineix la clau primaria de la taula
-    @GeneratedValue(strategy = GenerationType.IDENTITY)                         //defineix que el id és autogenerat per la base de dades i és de tipus AI (autoincrement)
-    @Basic(optional = false)                                                    //camp no opcional (obligatòri) a nivell de Java
-    @Column(name="operating_number", nullable = false)                          //camp no opcional (obligatòri) a nivell de SQL
+    @Id                                                                         // Defineix la clau primària de la taula
+    @GeneratedValue(strategy = GenerationType.IDENTITY)                         // Defineix que el id és autogenerat per la base de dades i és de tipus AI (autoincrement)
+    @Basic(optional = false)                                                    // Camp no opcional (obligatòri) a nivell de Java
+    @Column(name="operating_number", nullable = false)                          // Camp no opcional (obligatòri) a nivell de SQL
     private int operatingNumber;
     
     @Basic(optional = false)

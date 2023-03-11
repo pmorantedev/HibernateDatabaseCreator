@@ -41,7 +41,7 @@ public abstract class Pilotada extends Aeronau {
 
     /**
      * *
-     * Constructor vuit de Pilotada
+     * Constructor buit de Pilotada
      */
     public Pilotada() {
 
@@ -49,7 +49,7 @@ public abstract class Pilotada extends Aeronau {
 
     /**
      * *
-     * COnstructor de la classe Pilotada
+     * Constructor de la classe Pilotada
      *
      * @param hasEjectoSeat boolean
      * @param shellCapacity Float
